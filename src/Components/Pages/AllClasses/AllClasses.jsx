@@ -2,23 +2,30 @@ import { useEffect, useRef, useState } from "react";
 import CompoHeading from "../../Shared/CompoHeading";
 import useAllClasses from "../../hooks/useAllClasses";
 import ClassCard from "./ClassCard";
-import { useLoaderData } from "react-router-dom";
 import LoadingSpinner from "../../Shared/LoadingSpinner";
 import { FaDumbbell, FaFire } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const AllClasses = () => {
-  // const [ classes, isLoading] = useAllClasses();
-
   const [search, setSearch] = useState("");
   const inputRef = useRef(null);
-  const { count } = useLoaderData();
+  const axiosPublic = useAxiosPublic();
 
-  //
+  // Fetch total count for pagination
+  const { data: countData } = useQuery({
+    queryKey: ["classCount"],
+    queryFn: async () => {
+      const res = await axiosPublic.get("/classesCount");
+      return res.data;
+    },
+  });
+
+  const count = countData?.count || 0;
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 6;
   const numberOfPages = Math.ceil(count / itemsPerPage);
   const pages = [...Array(numberOfPages).keys()];
-  console.log(pages);
   const [classes, isLoading] = useAllClasses(currentPage, itemsPerPage);
   //
 
