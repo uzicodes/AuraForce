@@ -18,23 +18,14 @@ const Login = () => {
     // TODO: Implement authentication
     toast.success("Login functionality coming soon!");
     // router.push("/");
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.message);
-    }
   };
-  const handleGoogleLogin = () => {
-    signInWithGoogle().then((res) => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Your LoggedIn Succesfuly!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      router.push("/");
-    });
+
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    // TODO: Implement Google authentication
+    toast.success("Google login functionality coming soon!");
   };
+
   return (
     <section className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen py-12">
       <div className="container flex items-center justify-center min-h-[calc(100vh-216px)] px-6 mx-auto">
