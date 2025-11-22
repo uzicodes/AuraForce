@@ -46,7 +46,7 @@ const Footer = () => {
               <div className="w-10 h-10 bg-[#57cc99] rounded-lg flex items-center justify-center transform transition-transform duration-300 group-hover:rotate-12">
                 <FaDumbbell className="text-white text-xl" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#57cc99] to-[#80ed99] bg-clip-text text-transparent">Fit Flow</span>
+              <span className="text-2xl font-bold bg-gradient-to-r from-[#57cc99] to-[#80ed99] bg-clip-text text-transparent">Aura Force</span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
               Empowering your fitness journey with personalized workouts, expert trainers, and a supportive community.
@@ -182,7 +182,7 @@ const Footer = () => {
         
         {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-          <p>© {currentYear} Fit Flow. All rights reserved.</p>
+          <p>© {currentYear} Aura Force. All rights reserved.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="#" className="hover:text-[#57cc99] transition-colors duration-300">Privacy Policy</Link>
             <Link href="#" className="hover:text-[#57cc99] transition-colors duration-300">Terms of Service</Link>

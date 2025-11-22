@@ -133,7 +133,7 @@ const Navbar = () => {
                 />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-[#16A34A] to-[#22c55e] bg-clip-text text-transparent">
-                Fit Flow
+                Aura Force
               </span>
             </Link>
 
