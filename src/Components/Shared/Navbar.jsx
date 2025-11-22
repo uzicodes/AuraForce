@@ -126,7 +126,7 @@ const Navbar = () => {
               <div className="relative w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
                 <Image
                   src="/logo_bgremoved.png"
-                  alt="Fit Flow Logo"
+                  alt="Aura Force Logo"
                   fill
                   className="object-contain"
                   priority

@@ -42,7 +42,7 @@ const AboutUs = () => {
 
             <div className="space-y-4 md:space-y-6">
               <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                Welcome to Fit Flow, where your fitness journey becomes a story
+                Welcome to Aura Force, where your fitness journey becomes a story
                 of progress, passion, and personal transformation. We believe in
                 empowering you with the tools and insights you need to reach
                 your goals, one step at a time.

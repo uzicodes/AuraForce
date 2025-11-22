@@ -46,7 +46,7 @@ const NewsLetter = () => {
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
                   Subscribe to{" "}
                   <span className="block text-white/90">
-                    Fit Flow Newsletter
+                    Aura Force Newsletter
                   </span>
                 </h2>
 
