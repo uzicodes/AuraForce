@@ -1,11 +1,7 @@
 'use client';
 
-import useAllClasses from "../hooks/useAllClasses";
-
 const TrainerBooked = ({ trainer }) => {
   const trainerDatas = trainer || {};
-  const classes = useAllClasses();
-//   console.log(classes);
   //  console.log(trainerDatas);
   const {
     _id,
