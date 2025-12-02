@@ -58,7 +58,7 @@ const RecentPosts = () => {
           {posts.slice(0, 6).map((post) => (
             <div key={post._id} className="group transform hover:scale-105 transition-all duration-300">
               <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-2xl hover:shadow-[#16A34A]/10 transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700">
-                <Post post={post} userDetails={userDetails} />
+                <Post post={post} />
               </div>
             </div>
           ))}
