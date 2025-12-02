@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import TrainerBooked from '@/src/Components/Shared/TrainerBooked';
-import PrivateRoute from '@/src/Components/Router/PrivateRoute';
-import LoadingSpinner from '@/src/Components/Shared/LoadingSpinner';
+import TrainerBooked from '@/Components/Shared/TrainerBooked';
+import PrivateRoute from '@/Components/Router/PrivateRoute';
+import LoadingSpinner from '@/Components/Shared/LoadingSpinner';
 
 export const dynamic = 'force-dynamic';
 

@@ -1,6 +1,6 @@
 'use client';
 
-import AllPosts from '@/src/Components/Pages/AllPosts/AllPosts';
+import AllPosts from '@/Components/Pages/AllPosts/AllPosts';
 
 export const dynamic = 'force-dynamic';
 
