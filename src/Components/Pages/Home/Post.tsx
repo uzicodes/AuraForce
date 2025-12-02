@@ -55,10 +55,10 @@ const Post = ({ post }) => {
         userId,
         previousVote: voteType
       });
-      
+
       const { action } = response.data;
       const userVotes = JSON.parse(localStorage.getItem('userVotes') || '{}');
-      
+
       // Handle different actions based on server response
       if (action === "removed") {
         // User clicked the same button again, remove their vote
@@ -67,13 +67,13 @@ const Post = ({ post }) => {
         } else {
           setDownvotes(downvotes - 1);
         }
-        
+
         // Remove vote from localStorage
         delete userVotes[_id];
         setHasVoted(false);
         setVoteType(null);
         toast.success(`Your ${type} has been removed`);
-      } 
+      }
       else if (action === "upvoted" || action === "downvoted") {
         // Handle switching from one vote type to another
         if (type === "upvote") {
@@ -89,14 +89,14 @@ const Post = ({ post }) => {
             setUpvotes(upvotes - 1);
           }
         }
-        
+
         // Update localStorage with new vote type
         userVotes[_id] = type;
         setHasVoted(true);
         setVoteType(type);
         toast.success(`Your ${type} has been recorded`);
       }
-      
+
       // Save updated votes to localStorage
       localStorage.setItem('userVotes', JSON.stringify(userVotes));
     } catch (error) {
@@ -113,7 +113,7 @@ const Post = ({ post }) => {
         <div className="absolute top-0 right-0 w-32 h-32 opacity-5">
           <div className="w-full h-full bg-[#1AAE51] rounded-full transform translate-x-16 -translate-y-16"></div>
         </div>
-        
+
         <div className="relative flex items-start gap-4">
           {/* Author Avatar */}
           <div className="relative flex-shrink-0">
@@ -167,9 +167,9 @@ const Post = ({ post }) => {
           {short_description}
         </p>
 
-        {/* View Full Link */}
         <div className="mt-auto">
-          <Link 
+          <Link
+            href={`/posts/${_id}`}
             className="inline-flex items-center gap-2 text-[#1AAE51] hover:text-[#158a41] font-semibold text-sm transition-colors duration-200 group/link"
           >
             <Eye size={16} />
@@ -189,9 +189,9 @@ const Post = ({ post }) => {
               onClick={() => handleVote("upvote")}
               className={`flex items-center gap-2 px-4 py-2 transition-colors duration-200 group/upvote ${voteType === "upvote" ? "bg-[#1AAE51]/10" : "hover:bg-[#1AAE51]/10"}`}
             >
-              <BiSolidUpvote 
-                className={`${voteType === "upvote" ? "text-[#1AAE51] scale-110" : "text-gray-500 dark:text-gray-400"} group-hover/upvote:scale-110 transition-transform duration-200`} 
-                size={18} 
+              <BiSolidUpvote
+                className={`${voteType === "upvote" ? "text-[#1AAE51] scale-110" : "text-gray-500 dark:text-gray-400"} group-hover/upvote:scale-110 transition-transform duration-200`}
+                size={18}
               />
               <span className={`font-medium ${voteType === "upvote" ? "text-[#1AAE51]" : "text-gray-700 dark:text-gray-300"}`}>{upvotes}</span>
             </button>
@@ -204,9 +204,9 @@ const Post = ({ post }) => {
               onClick={() => handleVote("downvote")}
               className={`flex items-center gap-2 px-4 py-2 transition-colors duration-200 group/downvote ${voteType === "downvote" ? "bg-red-50 dark:bg-red-900/20" : "hover:bg-red-50 dark:hover:bg-red-900/20"}`}
             >
-              <BiSolidDownvote 
-                className={`${voteType === "downvote" ? "text-red-500 scale-110" : "text-gray-500 dark:text-gray-400"} group-hover/downvote:scale-110 transition-transform duration-200`} 
-                size={18} 
+              <BiSolidDownvote
+                className={`${voteType === "downvote" ? "text-red-500 scale-110" : "text-gray-500 dark:text-gray-400"} group-hover/downvote:scale-110 transition-transform duration-200`}
+                size={18}
               />
               <span className={`font-medium ${voteType === "downvote" ? "text-red-500" : "text-gray-700 dark:text-gray-300"}`}>{downvotes}</span>
             </button>
