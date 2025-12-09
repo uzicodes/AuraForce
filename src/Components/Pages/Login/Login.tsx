@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaLock, FaDumbbell } from "react-icons/fa";
 
@@ -17,7 +16,6 @@ const Login = () => {
     
     // TODO: Implement authentication
     toast.success("Login functionality coming soon!");
-    // router.push("/");
   };
 
   const handleGoogleLogin = (e) => {
@@ -91,7 +89,7 @@ const Login = () => {
             >
               <svg className="w-5 h-5 mx-2" viewBox="0 0 40 40">
                 <path
-                  d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                  d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.3333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
                   fill="#FFC107"
                 />
                 <path
@@ -111,12 +109,16 @@ const Login = () => {
               <span className="mx-2">Sign in with Google</span>
             </a>
 
+            {/* UPDATED SECTION START */}
             <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {"Don't"} have an account yet?
+              </p>
               <Link
                 href="/register"
-                className="text-sm text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300 font-semibold hover:underline transition-colors duration-300"
+                className="inline-block mt-2 text-sm font-bold text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300 hover:underline transition-colors duration-300"
               >
-                {"Don't"} have an account yet? Sign up
+                Sign up
               </Link>
             </div>
           </form>
@@ -127,4 +129,3 @@ const Login = () => {
 };
 
 export default Login;
-
