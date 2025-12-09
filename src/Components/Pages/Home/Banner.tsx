@@ -7,7 +7,6 @@ const Banner = () => {
       
       {/* Background Image Container */}
       <div
-        // CHANGE MADE HERE: Changed 'bg-center' to 'bg-top'
         className="absolute inset-0 bg-cover bg-top bg-no-repeat"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2070&auto=format&fit=crop')`,
@@ -15,13 +14,6 @@ const Banner = () => {
       >
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/80 to-zinc-950/40"></div>
-      </div>
-
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-emerald-500/10 rounded-full animate-pulse blur-xl"></div>
-        <div className="absolute top-40 right-20 w-32 h-32 bg-emerald-500/5 rounded-full animate-bounce blur-xl"></div>
-        <div className="absolute bottom-20 left-1/4 w-16 h-16 bg-emerald-500/20 rounded-full animate-ping blur-lg"></div>
       </div>
 
       {/* Content */}
