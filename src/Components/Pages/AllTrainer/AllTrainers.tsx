@@ -1,39 +1,130 @@
-import { useQuery } from "@tanstack/react-query";
-// import CompoHeading from "../../Shared/CompoHeading";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import Trainer from "../Home/Trainer";
-import { FaDumbbell } from "react-icons/fa";
-import CompoHeading from "../../Shared/CompoHeading";
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image'; // Ensure you have next/image, or switch to <img> if using Vite/CRA
+import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
+
+// 1. STATIC DATA (No Database Required)
+// I added the "Pro" copy here so it displays immediately.
+const trainers = [
+  {
+    _id: 1,
+    name: "Marcus 'The Anvil' Thorne",
+    role: "Head Strength Coach",
+    specialty: "Powerlifting & Biomechanics",
+    // Custom, non-AI bio:
+    bio: "Marcus doesn't believe in exercise for the sake of sweating. He builds raw power using a science-based approach to barbell mechanics. If you want to lift heavy without breaking your spine, he's your guy.",
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", 
+    socials: { instagram: "#", twitter: "#" }
+  },
+  {
+    _id: 2,
+    name: "Elena Rodriguez",
+    role: "Performance Specialist",
+    specialty: "Hybrid Athlete Training",
+    bio: "Elena bridges the gap between the marathon runner and the weightlifter. Her programming is intense, high-volume, and designed to make you look good while being able to run a 5k at a moment's notice.",
+    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1000&auto=format&fit=crop",
+    socials: { instagram: "#", linkedin: "#" }
+  },
+  {
+    _id: 3,
+    name: "Dr. Kenji Sato",
+    role: "Mobility & Recovery",
+    specialty: "Functional Movement",
+    bio: "Most people train until they break. Kenji trains you to last. With a background in physiotherapy, his sessions focus on bulletproofing your joints and correcting posture so you can train hard for decades, not just years.",
+    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1000&auto=format&fit=crop",
+    socials: { twitter: "#", linkedin: "#" }
+  },
+  {
+    _id: 4,
+    name: "Sarah Jenkins",
+    role: "Hypertrophy Coach",
+    specialty: "Bodybuilding Prep",
+    bio: "Sarah specializes in the art of sculpting. No cardio bunnies here—this is about time-under-tension, strict nutrition protocols, and building a physique that dominates the stage or the beach.",
+    image: "https://images.unsplash.com/photo-1611672585731-fa10603fb9e0?q=80&w=1000&auto=format&fit=crop",
+    socials: { instagram: "#", twitter: "#" }
+  }
+];
 
 const AllTrainers = () => {
-  const axiosPublic = useAxiosPublic();
-
-  // fetched the trainers data using tenstack
-  const { data: trainers = [] } = useQuery({
-    queryKey: ["trainer"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/trainers`);
-      // console.log(res.data);
-      return res.data;
-    },
-  });
-
   return (
-    <div className="px-4 bg-gray-50 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
-      <div className="text-center my-16">
-        <div className="inline-flex items-center gap-2 bg-[#16A34A]/10 text-[#16A34A] px-4 py-2 rounded-full text-sm font-semibold mb-4">
-          <FaDumbbell className="text-sm" />
-          Expert Trainers
+    // MAIN BACKGROUND: Dark Zinc-950 for premium look
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      
+      {/* Background Decor: Subtle Green Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+      {/* HEADER SECTION */}
+      <div className="relative max-w-4xl mx-auto mb-20 text-center z-10">
+        <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+          <FaDumbbell />
+          <span>The Coaching Staff</span>
         </div>
-        <CompoHeading
-          normHeading="Meet Our"
-          colorHeading="Trainers"
-          desc="Meet our certified fitness professionals who are dedicated to helping you achieve your health and wellness goals."
-        />
+        
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+          Not Your Average <span className="text-zinc-600">Cheerleaders.</span>
+        </h2>
+        
+        <p className="max-w-xl mx-auto text-zinc-400 text-lg leading-relaxed">
+          We’ve replaced the generic "fitness enthusiasts" with biomechanics experts, 
+          pro athletes, and rehabilitation specialists. Choose wisely.
+        </p>
       </div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8 my-12">
+
+      {/* CARD GRID */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 z-10 relative">
         {trainers.map((trainer) => (
-          <Trainer key={trainer._id} trainer={trainer}></Trainer>
+          <div 
+            key={trainer._id} 
+            className="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-900/20 flex flex-col"
+          >
+            {/* IMAGE AREA */}
+            <div className="relative h-80 w-full overflow-hidden bg-zinc-800">
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-90" />
+              
+              {/* Note: Using <img> for simplicity, if using Next.js change to <Image fill ... /> */}
+              <img 
+                src={trainer.image} 
+                alt={trainer.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+              />
+              
+              {/* SPECIALTY BADGE */}
+              <div className="absolute top-4 left-4 z-20 bg-zinc-950/90 backdrop-blur px-3 py-1 rounded-md border border-zinc-800 shadow-xl">
+                <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+                  {trainer.specialty}
+                </p>
+              </div>
+            </div>
+
+            {/* TEXT CONTENT */}
+            <div className="p-5 pt-2 flex-grow flex flex-col">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
+                  {trainer.name}
+                </h3>
+                <p className="text-xs text-zinc-500 font-mono uppercase tracking-wide">
+                  {trainer.role}
+                </p>
+              </div>
+              
+              <p className="text-zinc-400 text-xs leading-relaxed mb-6 line-clamp-4">
+                {trainer.bio}
+              </p>
+
+              {/* SOCIALS & ACTION */}
+              <div className="mt-auto pt-4 border-t border-zinc-800 flex items-center justify-between">
+                <div className="flex gap-3">
+                    <FaInstagram className="text-zinc-600 hover:text-white cursor-pointer transition-colors text-sm" />
+                    <FaTwitter className="text-zinc-600 hover:text-white cursor-pointer transition-colors text-sm" />
+                    <FaLinkedin className="text-zinc-600 hover:text-white cursor-pointer transition-colors text-sm" />
+                </div>
+                
+                <button className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider">
+                    Profile <FaArrowRight />
+                </button>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
