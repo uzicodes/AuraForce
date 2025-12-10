@@ -62,14 +62,11 @@ export const AuthProvider = ({ children }) => {
 
   // get token from server
   const getToken = async (email) => {
-    const { data } = await axiosPublic
-      .post(`/jwt`, { email }, { withCredentials: true })
-      .then((res) => {
-        // console.log(`token response`, res.data)
-        localStorage.setItem("token", res.data.token);
-      });
-
-    return data;
+    const res = await axiosPublic
+      .post(`/jwt`, { email }, { withCredentials: true });
+    // console.log(`token response`, res.data)
+    localStorage.setItem("token", res.data.token);
+    return res.data;
   };
 
   // set role after login
