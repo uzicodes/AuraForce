@@ -1,116 +1,139 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import { FaQuoteLeft, FaStar } from "react-icons/fa";
-import { useQuery } from "@tanstack/react-query";
+import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import Image from "next/image";
+
+// 1. Static Data: Real-sounding testimonials
+const testimonials = [
+  {
+    id: 1,
+    name: "James 'The Tank' Miller",
+    location: "Pro Powerlifter",
+    rating: 5,
+    testimonial: "I've tried every fitness tracker out there,Aura Force is the one that actually handles complex progressive overload calculations without being a headache. My deadlift went up 40kg in 3 months.",
+    image: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 2,
+    name: "Sarah Jenkins",
+    location: "Marathon Runner",
+    rating: 5,
+    testimonial: "The community here is insane. I used to run alone, but connecting with other endurance athletes through the app kept me accountable during my winter training block. Highly recommend the specialized cardio plans.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 3,
+    name: "Marcus Thorne",
+    location: "CrossFit Athlete",
+    rating: 5,
+    testimonial: "The analytics are next level. Being able to see my heart rate variability alongside my lifting volume helped me avoid burnout. This isn't just a workout log; it's a complete coaching system. Gained my trust on myself Thanks to Aura Force.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
+  },
+  {
+    id: 4,
+    name: "Emily Chen",
+    location: "Yoga Instructor",
+    rating: 5,
+    testimonial: "Balance is everything. I love that I can switch from a heavy lifting program to a mobility flow seamlessly. The interface is beautiful, dark-mode friendly, and never crashes during a session.I feel stronger and more centered than ever.",
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop",
+  },
+];
 
 const Testimonials = () => {
-  const axiosPublic = useAxiosPublic();
-
-  const { data: testimonials = [] } = useQuery({
-    queryKey: ["testimonials"],
-    queryFn: async () => {
-      const res = await axiosPublic.get(`/testimonials`);
-      return res.data;
-    },
-  });
-
   return (
-    <section className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
-      {/* Background Decorations */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-[#16A34A]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-[#16A34A]/5 rounded-full blur-3xl"></div>
+    // MAIN BACKGROUND: Zinc-950 for that modern dark gym look
+    <section className="py-24 bg-zinc-950 relative overflow-hidden">
+      
+      {/* Background Glow Effects */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-20 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px]"></div>
       </div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-block bg-[#16A34A]/10 text-[#16A34A] px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            Testimonials
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+            <span>Success Stories</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            What Our{" "}
-            <span className="bg-gradient-to-r from-[#16A34A] to-[#22C55E] bg-clip-text text-transparent">
-              Clients
-            </span>{" "}
-            Say
+          
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            Voices of the <span className="text-emerald-500">Strong.</span>
           </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our amazing community has to say about their transformation journey.
+          <p className="text-lg text-zinc-400 leading-relaxed">
+            Real results from real athletes. Don't just take our word for it—hear from the community dominating their goals.
           </p>
         </div>
 
         {/* Testimonials Slider */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={30}
             slidesPerView={1}
             navigation={{
-              nextEl: '.swiper-button-next-custom',
-              prevEl: '.swiper-button-prev-custom',
+              nextEl: '.custom-next',
+              prevEl: '.custom-prev',
             }}
             pagination={{
               clickable: true,
-              bulletClass: 'swiper-pagination-bullet-custom',
-              bulletActiveClass: 'swiper-pagination-bullet-active-custom',
+              el: '.custom-pagination',
             }}
             autoplay={{
               delay: 5000,
               disableOnInteraction: false,
             }}
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-              },
-              1024: {
-                slidesPerView: 3,
-              },
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
             }}
-            className="testimonials-swiper"
+            className="pb-12"
           >
             {testimonials.map((testimonial) => (
-              <SwiperSlide key={testimonial._id}>
-                <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700 h-full">
-                  {/* Quote Icon */}
-                  <div className="mb-6">
-                    <div className="w-12 h-12 bg-[#16A34A]/10 rounded-full flex items-center justify-center">
-                      <FaQuoteLeft className="text-[#16A34A] text-lg" />
-                    </div>
-                  </div>
+              <SwiperSlide key={testimonial.id} className="h-auto">
+                {/* CARD DESIGN */}
+                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 h-full flex flex-col hover:border-emerald-500/50 transition-all duration-300 group">
                   
-                  {/* Rating */}
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <FaStar key={i} className="text-yellow-400 text-sm" />
-                    ))}
+                  {/* Quote Icon & Rating */}
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                      <FaQuoteLeft className="text-zinc-500 group-hover:text-emerald-500 transition-colors" />
+                    </div>
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <FaStar key={i} className="text-emerald-500 text-xs" />
+                      ))}
+                    </div>
                   </div>
                   
                   {/* Testimonial Text */}
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 italic">
+                  <p className="text-zinc-300 leading-relaxed mb-8 flex-grow italic text-sm md:text-base">
                     "{testimonial.testimonial}"
                   </p>
                   
-                  {/* Author */}
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <img
+                  {/* Author Info */}
+                  <div className="flex items-center gap-4 border-t border-zinc-800 pt-6 mt-auto">
+                    <div className="relative w-12 h-12">
+                      <Image
                         src={testimonial.image}
                         alt={testimonial.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-[#16A34A]/20"
+                        fill
+                        className="rounded-full object-cover border-2 border-zinc-700 group-hover:border-emerald-500 transition-colors"
                       />
-                      <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-[#16A34A] rounded-full border-2 border-white dark:border-gray-800"></div>
                     </div>
                     <div>
-                      <h4 className="font-bold text-gray-900 dark:text-white">
+                      <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors">
                         {testimonial.name}
                       </h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-xs text-zinc-500 font-mono uppercase tracking-wide">
                         {testimonial.location}
                       </p>
                     </div>
@@ -120,30 +143,40 @@ const Testimonials = () => {
             ))}
           </Swiper>
           
-          {/* Custom Navigation */}
-          <div className="flex justify-center gap-4 mt-8">
-            <button className="swiper-button-prev-custom w-12 h-12 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-full flex items-center justify-center transition-colors duration-300 shadow-lg">
-              ←
-            </button>
-            <button className="swiper-button-next-custom w-12 h-12 bg-[#16A34A] hover:bg-[#15803D] text-white rounded-full flex items-center justify-center transition-colors duration-300 shadow-lg">
-              →
-            </button>
+          {/* Custom Navigation & Pagination Wrapper */}
+          <div className="flex items-center justify-between mt-8 px-2">
+            
+            {/* Nav Buttons */}
+            <div className="flex gap-4">
+              <button className="custom-prev w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
+                <FaArrowLeft />
+              </button>
+              <button className="custom-next w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
+                <FaArrowRight />
+              </button>
+            </div>
+
+            {/* Pagination Dots */}
+            <div className="custom-pagination flex gap-2 !w-auto"></div>
           </div>
         </div>
       </div>
       
-      <style jsx>{`
-        .swiper-pagination-bullet-custom {
-          width: 12px;
-          height: 12px;
-          background: #d1d5db;
+      {/* Custom Styles for Swiper Dots */}
+      <style jsx global>{`
+        .custom-pagination .swiper-pagination-bullet {
+          width: 10px;
+          height: 10px;
+          background-color: #3f3f46; /* zinc-700 */
           opacity: 1;
-          margin: 0 6px;
+          border-radius: 50%;
           transition: all 0.3s ease;
         }
-        .swiper-pagination-bullet-active-custom {
-          background: #16A34A;
+        .custom-pagination .swiper-pagination-bullet-active {
+          background-color: #10b981; /* emerald-500 */
           transform: scale(1.2);
+          width: 24px;
+          border-radius: 999px;
         }
       `}</style>
     </section>
