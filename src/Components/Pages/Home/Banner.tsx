@@ -32,13 +32,13 @@ const Banner = () => {
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight tracking-tight">
             Your Only Limit is{" "}
             <span className="transparent-text bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-              You.
+              You !
             </span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-zinc-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Track. Train. Triumph. Elevate your daily performance with the ultimate fitness companion designed to keep you focused, fueled & moving forward.
+            Track. Train. Triumph! Elevate your daily performance with the ultimate fitness companion designed to keep you focused, fueled & moving forward.
           </p>
 
           {/* CTA Buttons */}
@@ -46,7 +46,7 @@ const Banner = () => {
             <Link href="/allClasses">
               <button className="group relative bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20 overflow-hidden">
                 <span className="relative z-10 flex items-center gap-2">
-                  Get Started Now
+                  Get Started Now !
                 </span>
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
               </button>
@@ -66,7 +66,7 @@ const Banner = () => {
           <div className="grid grid-cols-3 gap-8 mt-20 pt-8 border-t border-zinc-800/60">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
-                10K+
+                5K+
               </div>
               <div className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Active Users</div>
             </div>

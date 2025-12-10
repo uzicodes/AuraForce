@@ -1,9 +1,29 @@
-import pic1 from "../../../assets/abou1.jpg";
-import pic2 from "../../../assets/abou2.jpg";
-import { FaCheck, FaHeart, FaUsers, FaTrophy, FaPlay } from "react-icons/fa";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { FaCheck, FaHeart, FaUsers, FaTrophy, FaArrowRight } from "react-icons/fa";
+
+// 1. Updated Gallery Images
+const galleryImages = [
+  "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2069&auto=format&fit=crop", // New: Man working out (replaced duplicate)
+  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop", // Dark gym vibes
+  "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1970&auto=format&fit=crop", // YOUR REQUEST: Woman squatting
+  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop", // Strength/Dumbbells
+];
 
 const AboutUs = () => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Cycle images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
+    }, 5000); 
+
+    return () => clearInterval(interval); 
+  }, []);
+
   const stats = [
     { icon: FaUsers, number: "10K+", label: "Happy Members" },
     { icon: FaTrophy, number: "500+", label: "Success Stories" },
@@ -19,75 +39,73 @@ const AboutUs = () => {
   ];
 
   return (
-    <section className="py-12 md:py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-block bg-[#16A34A]/10 text-[#16A34A] px-3 py-1.5 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-semibold mb-3 md:mb-4">
-            Our Story
+    <section className="py-20 bg-zinc-950 overflow-hidden relative">
+      
+      {/* Background Glow */}
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* HEADER SECTION */}
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+            <span>Our Story</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6 px-2">
-            <span className="bg-gradient-to-r from-[#16A34A] to-[#22C55E] bg-clip-text text-transparent">
-              About
-            </span>{" "}
-            Our Fit Family
+          
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+            About <span className="text-zinc-600">Our Fit Family</span>
           </h2>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
-          {/* Content */}
-          <div className="order-2 lg:order-1 space-y-6 md:space-y-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
-              Empowering Your Fitness Journey Since Day One
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          
+          {/* LEFT CONTENT (Text) */}
+          <div className="order-2 lg:order-1 space-y-8">
+            <h3 className="text-3xl font-bold text-white leading-tight">
+              Empowering Your Fitness Journey <br />
+              <span className="text-emerald-500">Since Day One.</span>
             </h3>
 
-            <div className="space-y-4 md:space-y-6">
-              <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+            <div className="space-y-6 text-zinc-400 leading-relaxed text-lg">
+              <p>
                 Welcome to Aura Force, where your fitness journey becomes a story
                 of progress, passion, and personal transformation. We believe in
                 empowering you with the tools and insights you need to reach
                 your goals, one step at a time.
               </p>
 
-              <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p>
                 Our mission is to make fitness an integral and enjoyable part of
                 your daily life. Whether you're a seasoned athlete or just
                 starting out, our intuitive platform offers personalized
-                workouts, real-time progress tracking, and a vibrant community
-                to keep you motivated.
+                workouts and a vibrant community.
               </p>
             </div>
 
             {/* Benefits List */}
-            <div className="space-y-3 md:space-y-4">
+            <div className="space-y-4 pt-4">
               {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="w-5 h-5 md:w-6 md:h-6 bg-[#16A34A] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <FaCheck className="text-white text-xs" />
+                <div key={index} className="flex items-start gap-3 group">
+                  <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500 transition-colors duration-300">
+                    <FaCheck className="text-emerald-500 text-xs group-hover:text-black transition-colors duration-300" />
                   </div>
-                  <span className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <span className="text-zinc-300 group-hover:text-white transition-colors duration-300">
                     {benefit}
                   </span>
                 </div>
               ))}
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-3 md:gap-6 pt-4">
+            {/* Stats Row */}
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800">
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div
-                    key={index}
-                    className="text-center p-3 md:p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700"
-                  >
-                    <div className="w-8 h-8 md:w-12 md:h-12 bg-[#16A34A] rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3">
-                      <IconComponent className="text-white text-sm md:text-lg" />
-                    </div>
-                    <div className="text-lg md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                  <div key={index} className="text-center">
+                    <div className="text-2xl md:text-3xl font-bold text-white mb-1">
                       {stat.number}
                     </div>
-                    <div className="text-xs md:text-sm text-gray-600 dark:text-gray-300">
+                    <div className="text-xs text-zinc-500 uppercase tracking-wider font-medium">
                       {stat.label}
                     </div>
                   </div>
@@ -96,43 +114,51 @@ const AboutUs = () => {
             </div>
           </div>
 
-          {/* Images */}
+          {/* RIGHT CONTENT (Slideshow Image) */}
           <div className="order-1 lg:order-2 relative">
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
-              <div className="space-y-4 md:space-y-6">
-                <div className="relative group overflow-hidden rounded-2xl shadow-xl">
-                  <Image
-                    className="w-full h-48 md:h-64 lg:h-72 object-cover transition-transform duration-500 group-hover:scale-110"
-                    src={pic1}
-                    alt="Fitness training"
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+            {/* Main Image Container */}
+            <div className="relative h-[500px] lg:h-[600px] w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl shadow-emerald-900/20 group bg-zinc-900">
+                
+                {/* Slideshow Implementation */}
+                {galleryImages.map((src, index) => (
+                  <div
+                    key={src}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                      index === currentImageIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                    }`}
+                  >
+                    <Image
+                      src={src}
+                      alt={`Gallery image ${index + 1}`}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                ))}
+
+                 {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent z-20 opacity-60" />
+
+                {/* Floating "Join Today" Card */}
+                <div className="absolute bottom-6 left-6 right-6 z-30 bg-zinc-900/80 backdrop-blur-md p-6 rounded-xl border border-zinc-700 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h4 className="text-white font-bold text-lg">Ready to start?</h4>
+                            <p className="text-zinc-400 text-sm">Join the strongest community today.</p>
+                        </div>
+                        <button className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
+                            <FaArrowRight />
+                        </button>
+                    </div>
                 </div>
-                <div className="bg-[#16A34A] rounded-2xl p-4 md:p-6 text-white">
-                  <h4 className="font-bold text-lg md:text-xl mb-2">
-                    Join Today
-                  </h4>
-                  <p className="text-sm md:text-base text-green-100">
-                    Start your transformation journey with us
-                  </p>
-                </div>
-              </div>
-              <div className="mt-8 md:mt-12 space-y-4 md:space-y-6">
-                <div className="relative group overflow-hidden rounded-2xl shadow-xl">
-                  <Image
-                    className="w-full h-48 md:h-64 lg:h-72 object-cover transition-transform duration-500 group-hover:scale-110"
-                    src={pic2}
-                    alt="Fitness community"
-                    fill
-                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                </div>
-              </div>
             </div>
+
+            {/* Decor Elements behind image */}
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-zinc-800 rounded-xl -z-10" />
+            <div className="absolute -bottom-4 -left-4 w-full h-full border border-zinc-800 rounded-2xl -z-10" />
           </div>
+
         </div>
       </div>
     </section>
