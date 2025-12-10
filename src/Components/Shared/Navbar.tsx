@@ -122,9 +122,9 @@ const Navbar = () => {
           <nav className="flex items-center justify-between py-4">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="relative w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
+              <div className="relative w-12 h-12 bg-cyan rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
                 <Image
-                  src="/logo_bgremoved.png"
+                  src="/for favicon.png"
                   alt="Aura Force Logo"
                   fill
                   className="object-contain"
