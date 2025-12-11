@@ -2,21 +2,44 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { FaEnvelope, FaLock, FaDumbbell } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import Image from "next/image";
 
 const Login = () => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log({ email, password });
     
-    // TODO: Implement authentication
-    toast.success("Login functionality coming soon!");
+    try {
+      // TODO: Implement actual authentication when backend is ready
+      // Simulating login for now
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Logged In Successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message || "Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
@@ -32,7 +55,7 @@ const Login = () => {
           <div className="p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white">
             <div className="flex justify-center mb-2">
               <div className="p-3 bg-white bg-opacity-20 rounded-full backdrop-blur-sm">
-                <FaDumbbell className="w-8 h-8 text-white animate-pulse" />
+
               </div>
             </div>
             <h1 className="text-3xl font-bold text-center">

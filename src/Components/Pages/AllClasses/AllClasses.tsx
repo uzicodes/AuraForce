@@ -5,7 +5,7 @@ import ClassCard from "./ClassCard";
 // 1. STATIC DATA (Replaces Database)
 // I added enough items here to test your pagination (6 per page)
 const staticClasses = [
-  { _id: 1, classname: "Spartan HIIT", trainer: "Marcus Thorne", duration: "45 Min", intensity: "Extreme", image: "https://images.unsplash.com/photo-1517963879466-cd115eb9dbfe?q=80&w=1000&auto=format&fit=crop", description: "High intensity interval training designed to burn fat and build endurance." },
+  { _id: 1, classname: "Spartan HIIT", trainer: "Marcus Thorne", duration: "45 Min", intensity: "Extreme", image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1000&auto=format&fit=crop", description: "High intensity interval training designed to burn fat and build endurance." },
   { _id: 2, classname: "Power Yoga Flow", trainer: "Dr. Kenji Sato", duration: "60 Min", intensity: "Medium", image: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=1000&auto=format&fit=crop", description: "A strength-focused yoga session to improve mobility and core stability." },
   { _id: 3, classname: "Iron Pump", trainer: "Sarah Jenkins", duration: "75 Min", intensity: "High", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", description: "Classic bodybuilding hypertrophy training. Isolate muscles and grow." },
   { _id: 4, classname: "Marathon Prep", trainer: "Elena Rodriguez", duration: "90 Min", intensity: "High", image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1000&auto=format&fit=crop", description: "Endurance running drills mixed with lower body plyometrics." },

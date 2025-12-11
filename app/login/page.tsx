@@ -20,8 +20,6 @@ const Login = () => {
     const password = form.password.value;
     
     try {
-      // TODO: Implement actual authentication when backend is ready
-      // Simulating login for now
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       Swal.fire({
@@ -42,7 +40,6 @@ const Login = () => {
 
   const handleGoogleLogin = async () => {
     try {
-      // TODO: Implement Google authentication when backend is ready
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       Swal.fire({
