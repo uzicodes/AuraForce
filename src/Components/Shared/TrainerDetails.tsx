@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { format, parse } from "date-fns";
-import image from "../../assets/beatrainer.jpg";
 import { FaCertificate, FaCalendarAlt, FaClock, FaMapMarkerAlt, FaUtensils, FaMountain, FaDumbbell } from "react-icons/fa";
 
 const TrainerDetails = ({ trainer }) => {
@@ -215,7 +214,7 @@ const TrainerDetails = ({ trainer }) => {
       <div className="relative">
         <div 
           className="absolute inset-0 bg-cover bg-center z-0"
-          style={{ backgroundImage: `url(${image})` }}
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1554284126-3e2f5b0b6c8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmlybmVzcyUyMHRyYWluZXJ8ZW58MHx8MHx8&w=1000&q=80')` }}
         ></div>
         <div className="absolute inset-0 bg-black opacity-70 z-10"></div>
         
