@@ -44,7 +44,7 @@ const Footer = () => {
                   src="/for favicon.png" 
                   alt="Aura Force Logo" 
                   fill
-                  className="object-contain" // Keeps the aspect ratio correct
+                  className="object-contain" 
                 />
               </div>
               
