@@ -2,68 +2,38 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Swal from "sweetalert2";
 import toast from "react-hot-toast";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaDumbbell } from "react-icons/fa";
 import Image from "next/image";
 
 const Login = () => {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleLogin = async (e) => {
+  
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+    const form = e.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+    console.log({ email, password });
     
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Logged In Successfully!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      router.push("/");
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.message || "Login failed");
-    } finally {
-      setIsLoading(false);
-    }
+    // TODO: Implement authentication
+    toast.success("Login functionality coming soon!");
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Logged In Successfully!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      router.push("/");
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.message || "Google login failed");
-    }
+  const handleGoogleLogin = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    // TODO: Implement Google authentication
+    toast.success("Google login functionality coming soon!");
   };
 
   return (
-    <section className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen pt-32 pb-8">
-      <div className="container flex items-center justify-center px-6 mx-auto">
+    <section className="bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen py-12">
+      <div className="container flex items-center justify-center min-h-[calc(100vh-216px)] px-6 mx-auto">
         <div className="w-full max-w-md overflow-hidden rounded-2xl shadow-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700">
           {/* Logo and Header */}
-          <div className="p-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white">
-            <div className="flex justify-center mb-1">
-              <div className="relative w-12 h-12 bg-white rounded-lg flex items-center justify-center p-1 shadow-sm">
+          <div className="p-6 bg-gradient-to-r from-green-500 to-emerald-600 text-white">
+            <div className="flex justify-center mb-2">
+              <div className="relative w-16 h-16 bg-white rounded-lg flex items-center justify-center p-2 shadow-md">
                 <Image
                   src="/logo_bgremoved.png"
                   alt="Aura Force Logo"
@@ -73,13 +43,13 @@ const Login = () => {
                 />
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-center">
+            <h1 className="text-3xl font-bold text-center">
               Welcome Back!
             </h1>
-            <p className="mt-1 text-center text-green-100 text-sm">Sign in to continue your fitness journey</p>
+            <p className="mt-2 text-center text-green-100">Sign in to continue your fitness journey</p>
           </div>
 
-          <form onSubmit={handleLogin} className="p-5 space-y-4">
+          <form onSubmit={handleLogin} className="p-6 space-y-6">
             <div className="relative">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <FaEnvelope className="w-5 h-5 text-green-500" />
@@ -87,10 +57,9 @@ const Login = () => {
               <input
                 type="email"
                 name="email"
-                className="block w-full py-2.5 pl-10 pr-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 focus:outline-none focus:ring focus:ring-opacity-40 transition-all duration-300"
+                className="block w-full py-3 pl-10 pr-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 focus:outline-none focus:ring focus:ring-opacity-40 transition-all duration-300"
                 placeholder="Email address"
                 required
-                disabled={isLoading}
               />
             </div>
 
@@ -101,21 +70,16 @@ const Login = () => {
               <input
                 type="password"
                 name="password"
-                className="block w-full py-2.5 pl-10 pr-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 focus:outline-none focus:ring focus:ring-opacity-40 transition-all duration-300"
+                className="block w-full py-3 pl-10 pr-3 text-gray-700 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 focus:border-green-500 dark:focus:border-green-500 focus:ring-green-500 focus:outline-none focus:ring focus:ring-opacity-40 transition-all duration-300"
                 placeholder="Password"
                 required
-                disabled={isLoading}
               />
             </div>
 
-            <div className="flex justify-center">
-              <button 
-                type="submit"
-                disabled={isLoading}
-                className="px-8 py-2.5 text-sm font-medium tracking-wide text-white capitalize transition-all duration-300 transform bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+            <div>
+              <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-all duration-300 transform bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg hover:from-green-600 hover:to-emerald-700 focus:outline-none focus:ring focus:ring-green-300 focus:ring-opacity-50 shadow-md hover:shadow-lg">
                 <span className="flex items-center justify-center">
-                  {isLoading ? "Logging in..." : "Login"}
+                  Login
                 </span>
               </button>
             </div>
@@ -126,16 +90,14 @@ const Login = () => {
               <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
             </div>
 
-            <div className="flex justify-center">
-              <button
-                type="button"
-                onClick={handleGoogleLogin}
-                disabled={isLoading}
-                className="flex items-center justify-center px-8 py-2.5 text-gray-700 dark:text-gray-200 transition-colors duration-300 transform border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-200 dark:focus:ring-gray-600 focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+            <a
+              href="#"
+              onClick={handleGoogleLogin}
+              className="flex items-center justify-center w-full px-6 py-3 text-gray-700 dark:text-gray-200 transition-colors duration-300 transform border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-200 dark:focus:ring-gray-600 focus:ring-opacity-50"
+            >
               <svg className="w-5 h-5 mx-2" viewBox="0 0 40 40">
                 <path
-                  d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.33333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
+                  d="M36.3425 16.7358H35V16.6667H20V23.3333H29.4192C28.045 27.2142 24.3525 30 20 30C14.4775 30 10 25.5225 10 20C10 14.4775 14.4775 9.99999 20 9.99999C22.5492 9.99999 24.8683 10.9617 26.6342 12.5325L31.3483 7.81833C28.3717 5.04416 24.39 3.33333 20 3.33333C10.7958 3.3333 3.33335 10.7958 3.33335 20C3.33335 29.2042 10.7958 36.6667 20 36.6667C29.2042 36.6667 36.6667 29.2042 36.6667 20C36.6667 18.8825 36.5517 17.7917 36.3425 16.7358Z"
                   fill="#FFC107"
                 />
                 <path
@@ -153,15 +115,18 @@ const Login = () => {
               </svg>
 
               <span className="mx-2">Sign in with Google</span>
-              </button>
-            </div>
+            </a>
 
-            <div className="text-center">
+            {/* Separated Text and Link to fix underline issue */}
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                {"Don't"} have an account yet?
+              </p>
               <Link
                 href="/register"
-                className="text-sm text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300 font-semibold hover:underline transition-colors duration-300"
+                className="inline-block mt-2 text-sm font-bold text-green-500 hover:text-green-600 dark:text-green-400 dark:hover:text-green-300 hover:underline transition-colors duration-300"
               >
-                {"Don't"} have an account yet? Sign up
+                Sign up
               </Link>
             </div>
           </form>
