@@ -1,10 +1,11 @@
+import Link from "next/link"; // 1. Added Link import
 import { FaCheck, FaCrown, FaTags } from "react-icons/fa";
 
 const Membership = () => {
   const packages = [
     {
       name: "Basic",
-      price: "৳6999",
+      price: "৳4999",
       period: "/month",
       desc: "Essential access for the casual gym-goer.",
       features: ["Access to Gym Equipment", "Locker Room Access", "Free WiFi", "1 Intro PT Session"],
@@ -34,7 +35,7 @@ const Membership = () => {
   return (
     <section className="py-24 bg-zinc-950 relative overflow-hidden">
       
-      {/* Background Decor (Different positioning to vary it from Features) */}
+      {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -91,13 +92,17 @@ const Membership = () => {
                 ))}
               </ul>
 
-              <button className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
-                pkg.highlight 
-                  ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20" 
-                  : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
-              }`}>
+              {/* 2. REPLACED BUTTON WITH LINK */}
+              <Link 
+                href={`/checkout?plan=${pkg.name}`} // Passes the plan name to the URL
+                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center ${
+                  pkg.highlight 
+                    ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20" 
+                    : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
+                }`}
+              >
                 {pkg.button}
-              </button>
+              </Link>
             </div>
           ))}
         </div>
