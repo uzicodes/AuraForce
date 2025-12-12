@@ -13,6 +13,9 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [loading, setLoading] = useState(false);
   const [cardNumber, setCardNumber] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvc, setCvc] = useState("");
 
   // Plan data based on URL parameter
   const planName = searchParams.get("plan") || "Premium";
@@ -50,13 +53,65 @@ const Checkout = () => {
     }
   };
 
+  const handleCardholderNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+    setCardholderName(value);
+  };
+
+  const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
+    let formatted = value;
+    if (value.length >= 2) {
+      formatted = value.slice(0, 2) + "/" + value.slice(2, 4);
+    }
+    if (formatted.length <= 5) {
+      setExpiryDate(formatted);
+    }
+  };
+
+  const handleCvcChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, "");
+    if (value.length <= 3) {
+      setCvc(value);
+    }
+  };
+
   const handlePayment = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate cardholder name
+    if (!cardholderName.trim() || !/^[a-zA-Z\s]+$/.test(cardholderName)) {
+      toast.error("Cardholder name must contain only letters");
+      return;
+    }
     
     // Validate card number is exactly 16 digits
     const digitsOnly = cardNumber.replace(/\s/g, "");
     if (digitsOnly.length !== 16) {
       toast.error("Card number must be exactly 16 digits");
+      return;
+    }
+    
+    // Validate expiry date
+    if (expiryDate.length !== 5) {
+      toast.error("Please enter expiry date in MM/YY format");
+      return;
+    }
+    const [month, year] = expiryDate.split("/");
+    const monthNum = parseInt(month);
+    const yearNum = parseInt("20" + year);
+    if (monthNum < 1 || monthNum > 12) {
+      toast.error("Enter a Valid Month (01-12)");
+      return;
+    }
+    if (yearNum < 2025 || yearNum > 3000) {
+      toast.error("Enter a Valid Year");
+      return;
+    }
+    
+    // Validate CVC is exactly 3 digits
+    if (cvc.length !== 3) {
+      toast.error("Please Check Your CVC & Try Again");
       return;
     }
     
@@ -130,7 +185,14 @@ const Checkout = () => {
               <form onSubmit={handlePayment} className="space-y-4">
                 <div>
                   <label className="block text-xs font-medium text-zinc-400 mb-1 uppercase tracking-wide">Cardholder Name</label>
-                  <input type="text" placeholder="Enter the Full Name " required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" />
+                  <input 
+                    type="text" 
+                    placeholder="Enter the Full Name" 
+                    value={cardholderName}
+                    onChange={handleCardholderNameChange}
+                    required 
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                  />
                 </div>
 
                 <div>
@@ -152,11 +214,27 @@ const Checkout = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-medium text-zinc-400 mb-1 uppercase tracking-wide">Expiry Date</label>
-                    <input type="text" placeholder="MM/YY" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" />
+                    <input 
+                      type="text" 
+                      placeholder="MM/YY" 
+                      value={expiryDate}
+                      onChange={handleExpiryDateChange}
+                      required 
+                      maxLength={5}
+                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                    />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-zinc-400 mb-1 uppercase tracking-wide">CVC</label>
-                    <input type="text" placeholder="123" required className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" />
+                    <input 
+                      type="text" 
+                      placeholder="123" 
+                      value={cvc}
+                      onChange={handleCvcChange}
+                      required 
+                      maxLength={3}
+                      className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                    />
                   </div>
                 </div>
 
