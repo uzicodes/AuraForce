@@ -18,7 +18,7 @@ const user = {
   name: "Alex Johnson",
   role: "Elite Member",
   joinDate: "Member since Nov 2023",
-  location: "New York, USA",
+  location: "Gulshan, Dhaka",
   avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop",
   banner: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
   stats: {
@@ -107,9 +107,6 @@ const Profile = () => {
           <div className="flex gap-3 mb-4">
             <button className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-semibold transition-all shadow-lg shadow-emerald-900/20">
               <FaUserEdit /> Edit Profile
-            </button>
-            <button className="p-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white rounded-full transition-all border border-zinc-700">
-              <FaCog />
             </button>
           </div>
         </div>

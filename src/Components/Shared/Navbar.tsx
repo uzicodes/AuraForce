@@ -1,86 +1,52 @@
-
 'use client';
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaUser, FaSignInAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
 
 const Navbar = () => {
-  const user = null; // TODO: Add authentication later
+  const user = null; 
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const lastScrollY = useRef(0);
 
-  // Check for system dark mode preference
   useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    );
+    const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     setDarkMode(darkModeMediaQuery.matches);
-
-    const handleChange = (e) => setDarkMode(e.matches);
+    const handleChange = (e: MediaQueryListEvent) => setDarkMode(e.matches);
     darkModeMediaQuery.addEventListener("change", handleChange);
-
     return () => darkModeMediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  // Handle scroll events
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Determine if we've scrolled down enough to apply glass effect
-      if (currentScrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-
-      // Hide navbar when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 300) {
-        setHidden(true);
-      } else {
-        setHidden(false);
-      }
-
+      setScrolled(currentScrollY > 20);
+      setHidden(currentScrollY > lastScrollY.current && currentScrollY > 300);
       lastScrollY.current = currentScrollY;
     };
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        isOpen &&
-        !e.target.closest(".mobile-menu") &&
-        !e.target.closest(".menu-button")
-      ) {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (isOpen && !target.closest(".mobile-menu") && !target.closest(".menu-button")) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
   const navLinks = [
@@ -90,33 +56,25 @@ const Navbar = () => {
     { name: "Forums", path: "/posts" },
   ];
 
-  // Determine text color based on theme and scroll state
   const getTextColor = () => {
-    if (darkMode) {
-      return scrolled ? "text-white" : "text-white";
-    } else {
-      return scrolled ? "text-black" : "text-black";
-    }
+    if (darkMode) return "text-white";
+    return scrolled ? "text-black" : "text-black";
   };
 
-  // Determine glassmorphism effect based on theme
   const getGlassEffect = () => {
     if (darkMode) {
-      return scrolled
-        ? "backdrop-blur-md bg-black/30 shadow-lg"
-        : "bg-transparent";
+      return scrolled ? "backdrop-blur-md bg-black/30 shadow-lg" : "bg-transparent";
     } else {
-      return scrolled
-        ? "backdrop-blur-md bg-white/70 shadow-lg"
-        : "bg-transparent";
+      return scrolled ? "backdrop-blur-md bg-white/70 shadow-lg" : "bg-transparent";
     }
   };
 
   return (
     <>
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${getGlassEffect()} ${hidden ? "-translate-y-full" : "translate-y-0"
-          }`}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${getGlassEffect()} ${
+          hidden ? "-translate-y-full" : "translate-y-0"
+        }`}
       >
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between py-4">
@@ -124,7 +82,7 @@ const Navbar = () => {
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative w-12 h-12 bg-cyan rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
                 <Image
-                  src="/for favicon.png"
+                  src="/logo_bgremoved.png"
                   alt="Aura Force Logo"
                   fill
                   className="object-contain"
@@ -152,55 +110,31 @@ const Navbar = () => {
                 ))}
               </ul>
 
+              {/* Green Profile Avatar (Clickable) - Removed Status Dot */}
+              <Link 
+                href="/profile" 
+                className="group relative flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50"
+                title="View Profile"
+              >
+                <FaUser className="text-sm" />
+              </Link>
+
+              {/* Login Button */}
               {user ? (
                 <div className="relative group">
-                  <button className="flex items-center space-x-2 focus:outline-none">
-                    <div className="w-10 h-10 rounded-full border-2 border-[#16A34A] transition-transform duration-300 group-hover:scale-110 bg-green-500 flex items-center justify-center text-white font-bold">
-                      {user.displayName?.charAt(0)?.toUpperCase() || user.email?.charAt(0)?.toUpperCase() || 'U'}
-                    </div>
-                  </button>
-
-                  <div
-                    className={`absolute right-0 mt-2 w-48 ${darkMode ? "bg-gray-800" : "bg-white"
-                      } rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 z-50 overflow-hidden`}
-                  >
-                    <div className="py-2">
-                      <Link
-                        href="/dashboard"
-                        className={`block px-4 py-2 text-sm ${darkMode
-                            ? "text-gray-200 hover:bg-[#16A34A] hover:text-white"
-                            : "text-gray-700 hover:bg-[#16A34A] hover:text-white"
-                          } transition-colors duration-200`}
-                      >
-                        Dashboard
-                      </Link>
-                      <Link
-                        href="/dashboard/myProfile"
-                        className={`block px-4 py-2 text-sm ${darkMode
-                            ? "text-gray-200 hover:bg-[#16A34A] hover:text-white"
-                            : "text-gray-700 hover:bg-[#16A34A] hover:text-white"
-                          } transition-colors duration-200`}
-                      >
-                        Profile
-                      </Link>
-                      <button
-                        onClick={() => {/* TODO: Add logout */ }}
-                        className={`block w-full text-left px-4 py-2 text-sm ${darkMode
-                            ? "text-gray-200 hover:bg-[#16A34A] hover:text-white"
-                            : "text-gray-700 hover:bg-[#16A34A] hover:text-white"
-                          } transition-colors duration-200`}
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  </div>
+                  {/* Auth dropdown */}
                 </div>
               ) : (
                 <Link
                   href="/login"
-                  className="px-6 py-2 bg-[#16A34A] text-white font-medium rounded-lg hover:bg-[#22c55e] transition-colors duration-300 transform hover:scale-105"
+                  className={`flex items-center gap-2 px-5 py-2 font-medium rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
+                    darkMode 
+                      ? "border-zinc-700 text-white hover:bg-zinc-800 hover:border-zinc-800" 
+                      : "border-zinc-300 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300"
+                  }`}
                 >
-                  Login
+                  <FaSignInAlt className="text-sm" />
+                  <span>Login</span>
                 </Link>
               )}
             </div>
@@ -223,12 +157,13 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm ${darkMode ? "bg-gray-900/95 backdrop-blur-md" : "bg-white/95 backdrop-blur-md"
-          } shadow-2xl transform transition-transform duration-300 ease-in-out z-[55] mobile-menu ${isOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm ${
+          darkMode ? "bg-gray-900/95 backdrop-blur-md" : "bg-white/95 backdrop-blur-md"
+        } shadow-2xl transform transition-transform duration-300 ease-in-out z-[55] mobile-menu ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         <div className="flex flex-col h-full pt-20 p-6 overflow-y-auto">
-          {/* Close button - positioned at top right */}
           <div className="absolute top-4 right-4">
             <button
               onClick={() => setIsOpen(false)}
@@ -236,107 +171,65 @@ const Navbar = () => {
               aria-label="Close menu"
             >
               <FaTimes
-                className={`w-6 h-6 ${darkMode ? "text-white" : "text-gray-800"
-                  }`}
+                className={`w-6 h-6 ${darkMode ? "text-white" : "text-gray-800"}`}
               />
             </button>
           </div>
 
-          {/* Navigation Links */}
           <ul className="space-y-6 mb-8">
             {navLinks.map((link, index) => (
               <li
                 key={link.path}
                 className="transform transition-all duration-300 ease-out"
                 style={{
-                  transitionDelay: isOpen ? `${index * 100}ms` : '0ms',
+                  transitionDelay: isOpen ? `${index * 100}ms` : "0ms",
                   opacity: isOpen ? 1 : 0,
-                  transform: isOpen ? 'translateX(0)' : 'translateX(20px)'
+                  transform: isOpen ? "translateX(0)" : "translateX(20px)",
                 }}
               >
                 <Link
                   href={link.path}
-                  className={`block text-xl font-medium ${darkMode ? "text-white" : "text-gray-800"
-                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${darkMode ? "border-gray-700" : "border-gray-200"
-                    }`}
+                  className={`block text-xl font-medium ${
+                    darkMode ? "text-white" : "text-gray-800"
+                  } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
+                    darkMode ? "border-gray-700" : "border-gray-200"
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </Link>
               </li>
             ))}
+            <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
+                <Link
+                  href="/profile"
+                  className={`flex items-center gap-3 text-xl font-medium ${
+                    darkMode ? "text-white" : "text-gray-800"
+                  } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
+                    darkMode ? "border-gray-700" : "border-gray-200"
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">
+                    <FaUser />
+                  </span>
+                  My Profile
+                </Link>
+            </li>
           </ul>
 
-          {/* User Section */}
-          {user ? (
-            <div className="mt-auto space-y-4">
-              <div className="flex items-center space-x-3 mb-6 p-4 rounded-lg bg-gradient-to-r from-[#16A34A]/10 to-[#22c55e]/10">
-                <div className="w-12 h-12 rounded-full border-2 border-[#16A34A] bg-green-500 flex items-center justify-center text-white font-bold text-lg">
-                  {user.displayName?.charAt(0)?.toUpperCase() || user.email?.charAt(0)?.toUpperCase() || 'U'}
-                </div>
-                <div className="flex-1">
-                  <p
-                    className={`font-medium truncate ${darkMode ? "text-white" : "text-gray-800"
-                      }`}
-                  >
-                    {user.displayName || "User"}
-                  </p>
-                  <p
-                    className={`text-sm truncate ${darkMode ? "text-gray-300" : "text-gray-500"
-                      }`}
-                  >
-                    {user.email}
-                  </p>
-                </div>
-              </div>
-
-              <Link
-                href="/dashboard"
-                className={`block w-full py-3 px-4 ${darkMode
-                    ? "bg-gray-800 text-white hover:bg-gray-700"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-                  } text-center font-medium rounded-lg transition-all duration-200 transform hover:scale-105`}
-                onClick={() => setIsOpen(false)}
-              >
-                Dashboard
-              </Link>
-
-              <Link
-                href="/dashboard/myProfile"
-                className={`block w-full py-3 px-4 ${darkMode
-                    ? "bg-gray-800 text-white hover:bg-gray-700"
-                    : "bg-gray-100 text-gray-800 hover:bg-gray-200"
-                  } text-center font-medium rounded-lg transition-all duration-200 transform hover:scale-105`}
-                onClick={() => setIsOpen(false)}
-              >
-                Profile
-              </Link>
-
-              <button
-                onClick={() => {
-                  // TODO: Add logout
-                  setIsOpen(false);
-                }}
-                className="block w-full py-3 px-4 bg-[#16A34A] text-center text-white font-medium rounded-lg hover:bg-[#22c55e] transition-all duration-200 transform hover:scale-105"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="mt-auto">
-              <Link
+          <div className="mt-auto">
+             <Link
                 href="/login"
                 className="block w-full py-3 px-4 bg-[#16A34A] text-center text-white font-medium rounded-lg hover:bg-[#22c55e] transition-all duration-200 transform hover:scale-105"
                 onClick={() => setIsOpen(false)}
               >
                 Login
               </Link>
-            </div>
-          )}
+          </div>
         </div>
       </div>
 
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-[45] transition-opacity duration-300 lg:hidden"
