@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'Tenada';
+  src: url('/fonts/Tenada.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

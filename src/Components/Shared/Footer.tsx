@@ -48,8 +48,8 @@ const Footer = () => {
                 />
               </div>
               
-              <span className="text-2xl font-bold text-white tracking-tight">
-                Aura <span className="text-emerald-500">Force</span>
+              <span className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: 'Tenada, sans-serif' }}>
+                AURA <span className="text-emerald-500">FORCE</span>
               </span>
             </Link>
             <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
@@ -137,7 +137,7 @@ const Footer = () => {
         
         {/* Bottom Bar */}
         <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-zinc-500">
-          <p>© {currentYear} Aura Force. All rights reserved.</p>
+          <p>© {currentYear} <span style={{ fontFamily: 'Tenada, sans-serif' }}>AURA FORCE</span>. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-emerald-500 transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-emerald-500 transition-colors">Terms of Service</a>

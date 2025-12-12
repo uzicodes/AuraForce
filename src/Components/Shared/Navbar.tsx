@@ -82,15 +82,15 @@ const Navbar = () => {
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative w-12 h-12 bg-cyan rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
                 <Image
-                  src="/logo_bgremoved.png"
+                  src="/for favicon.png"
                   alt="Aura Force Logo"
                   fill
                   className="object-contain"
                   priority
                 />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-[#16A34A] to-[#22c55e] bg-clip-text text-transparent">
-                Aura Force
+              <span className="text-2xl font-bold  text-white tracking-tight" style={{ fontFamily: 'Tenada, sans-serif' }}>
+                AURA<span className="text-emerald-500"> FORCE </span> 
               </span>
             </Link>
 
