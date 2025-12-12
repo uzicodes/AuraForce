@@ -4,7 +4,7 @@ const Membership = () => {
   const packages = [
     {
       name: "Basic",
-      price: "$29",
+      price: "৳6999",
       period: "/month",
       desc: "Essential access for the casual gym-goer.",
       features: ["Access to Gym Equipment", "Locker Room Access", "Free WiFi", "1 Intro PT Session"],
@@ -13,7 +13,7 @@ const Membership = () => {
     },
     {
       name: "Standard",
-      price: "$59",
+      price: "৳9999",
       period: "/month",
       desc: "Perfect for dedicated fitness enthusiasts.",
       features: ["All Basic Features", "Group Fitness Classes", "Sauna & Steam Room", "Nutrition Guide", "Monthly Progress Check"],
@@ -22,7 +22,7 @@ const Membership = () => {
     },
     {
       name: "Premium",
-      price: "$99",
+      price: "৳14999",
       period: "/month",
       desc: "The ultimate all-inclusive experience.",
       features: ["All Standard Features", "Unlimited Personal Training", "Massage Therapy Access", "Priority Support", "Exclusive Merch"],
