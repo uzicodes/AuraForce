@@ -148,7 +148,7 @@ const Login = () => {
                 href="/register"
                 className="text-emerald-500 hover:text-emerald-400 font-bold hover:underline transition-colors"
               >
-                Join Now
+                Register Now !
               </Link>
             </p>
           </div>

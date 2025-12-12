@@ -85,12 +85,11 @@ const Register = () => {
                 type="text"
                 name="name"
                 className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
-                placeholder="John Doe"
+                placeholder="Enter your full name here"
                 required
               />
             </div>
           </div>
-
           {/* Email Field */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-zinc-300 ml-1">Email</label>
@@ -125,7 +124,7 @@ const Register = () => {
                 maxLength={11}
                 minLength={11}
                 className="block w-full py-2.5 pl-20 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
-                placeholder="1712345678"
+                placeholder="XXXXXXXXXX"
                 title="Please enter exactly 11 digits"
                 required
               />
