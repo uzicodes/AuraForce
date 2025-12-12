@@ -24,8 +24,8 @@ const PaymentSuccess = () => {
         </p>
 
         <div className="space-y-3">
-          <Link href="/dashboard" className="block w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2">
-            <FaDumbbell /> Go to Dashboard
+          <Link href="/profile" className="block w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2">
+             Go to Profile
           </Link>
           
           <Link href="/" className="block w-full bg-zinc-800 hover:bg-zinc-700 text-white font-medium py-3.5 rounded-xl transition-all">
