@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react"; // 1. Import Suspense
 import Link from "next/link";
 import Image from "next/image";
 import { FaLock, FaCreditCard, FaGooglePay, FaCheckCircle, FaArrowLeft, FaMobileAlt, FaKey } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-const Checkout = () => {
+// 2. Rename your existing component to "CheckoutContent"
+const CheckoutContent = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams(); // This is what causes the build error if not suspended
   
   // State
   const [paymentMethod, setPaymentMethod] = useState("card");
@@ -113,8 +114,8 @@ const Checkout = () => {
           <div className="lg:col-span-2 space-y-4">
             
             {/* Back Button */}
-            <div className="mb-4 mt-8">
-              <Link href="/#membership" className="inline-flex items-center gap-1 text-zinc-400 hover:text-emerald-500 transition-colors text-sm">
+            <div className="mb-4">
+              <Link href="/#membership" className="inline-flex items-center gap-2 text-zinc-400 hover:text-emerald-500 transition-colors text-sm">
                 <FaArrowLeft /> Back to Plans
               </Link>
             </div>
@@ -306,16 +307,12 @@ const Checkout = () => {
 
           {/* RIGHT COLUMN: Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sticky top-24 mt-40">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 sticky top-24 mt-16">
               <h3 className="text-lg font-bold text-white mb-5">Order Summary</h3>
+              
               <div className="flex items-center gap-4 mb-5 pb-5 border-b border-zinc-800">
-                <div className="relative w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center p-2">
-                  <Image
-                    src="/for favicon.png"
-                    alt="Aura Force Logo"
-                    fill
-                    className="object-contain"
-                  />
+                <div className="w-14 h-14 bg-zinc-800 rounded-lg flex items-center justify-center text-2xl">
+                  💪
                 </div>
                 <div>
                   <h4 className="font-bold text-white text-sm">{plan.name}</h4>
@@ -348,6 +345,20 @@ const Checkout = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+// 3. Create the Default Export Component that wraps the content in Suspense
+const Checkout = () => {
+  return (
+    // This fallback shows a centered spinner while the URL params are being read
+    <Suspense fallback={
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 };
 
