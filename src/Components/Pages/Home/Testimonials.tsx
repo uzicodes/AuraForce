@@ -8,8 +8,9 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import Image from "next/image";
+// 1. Updated Import: Added 'Variants'
+import { motion, Variants } from "framer-motion"; 
 
-// 1. Static Data: Real-sounding testimonials
 const testimonials = [
   {
     id: 1,
@@ -45,9 +46,19 @@ const testimonials = [
   },
 ];
 
+// 2. Updated Definition: Added ': Variants' type annotation
+const scaleRevealVariant: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
 const Testimonials = () => {
   return (
-    // MAIN BACKGROUND: Zinc-950 for that modern dark gym look
     <section className="py-24 bg-zinc-950 relative overflow-hidden">
       
       {/* Background Glow Effects */}
@@ -58,22 +69,34 @@ const Testimonials = () => {
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+        {/* Section Header Wrapper */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ staggerChildren: 0.15 }}
+          className="text-center mb-16 max-w-3xl mx-auto"
+        >
+          <motion.div variants={scaleRevealVariant} className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
             <span>Success Stories</span>
-          </div>
+          </motion.div>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+          <motion.h2 variants={scaleRevealVariant} className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
             Voices of the <span className="text-emerald-500">Strong.</span>
-          </h2>
-          <p className="text-lg text-zinc-400 leading-relaxed">
+          </motion.h2>
+          <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed">
             Real results from real athletes. Don't just take our word for it—hear from the community dominating their goals.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Testimonials Slider */}
-        <div className="max-w-7xl mx-auto relative">
+        {/* Testimonials Slider Container Animation */}
+        <motion.div 
+           initial={{ opacity: 0, y: 40 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true, margin: "-50px" }}
+           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+           className="max-w-7xl mx-auto relative"
+        >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             spaceBetween={30}
@@ -99,10 +122,8 @@ const Testimonials = () => {
           >
             {testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id} className="h-auto">
-                {/* CARD DESIGN */}
                 <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 h-full flex flex-col hover:border-emerald-500/50 transition-all duration-300 group">
                   
-                  {/* Quote Icon & Rating */}
                   <div className="flex justify-between items-start mb-6">
                     <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                       <FaQuoteLeft className="text-zinc-500 group-hover:text-emerald-500 transition-colors" />
@@ -114,12 +135,10 @@ const Testimonials = () => {
                     </div>
                   </div>
                   
-                  {/* Testimonial Text */}
                   <p className="text-zinc-300 leading-relaxed mb-8 flex-grow italic text-sm md:text-base">
                     "{testimonial.testimonial}"
                   </p>
                   
-                  {/* Author Info */}
                   <div className="flex items-center gap-4 border-t border-zinc-800 pt-6 mt-auto">
                     <div className="relative w-12 h-12">
                       <Image
@@ -143,10 +162,7 @@ const Testimonials = () => {
             ))}
           </Swiper>
           
-          {/* Custom Navigation & Pagination Wrapper */}
           <div className="flex items-center justify-between mt-8 px-2">
-            
-            {/* Nav Buttons */}
             <div className="flex gap-4">
               <button className="custom-prev w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
                 <FaArrowLeft />
@@ -155,25 +171,22 @@ const Testimonials = () => {
                 <FaArrowRight />
               </button>
             </div>
-
-            {/* Pagination Dots */}
             <div className="custom-pagination flex gap-2 !w-auto"></div>
           </div>
-        </div>
+        </motion.div>
       </div>
       
-      {/* Custom Styles for Swiper Dots */}
       <style jsx global>{`
         .custom-pagination .swiper-pagination-bullet {
           width: 10px;
           height: 10px;
-          background-color: #3f3f46; /* zinc-700 */
+          background-color: #3f3f46; 
           opacity: 1;
           border-radius: 50%;
           transition: all 0.3s ease;
         }
         .custom-pagination .swiper-pagination-bullet-active {
-          background-color: #10b981; /* emerald-500 */
+          background-color: #10b981; 
           transform: scale(1.2);
           width: 24px;
           border-radius: 999px;
