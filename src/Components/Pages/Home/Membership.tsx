@@ -1,5 +1,9 @@
-import Link from "next/link"; // 1. Added Link import
+"use client"; // 1. Required for Framer Motion
+
+import Link from "next/link";
 import { FaCheck, FaCrown, FaTags } from "react-icons/fa";
+import { motion } from "framer-motion"; // 2. Import motion
+import { Reveal } from "@/Components/Shared/Reveal"; // 3. Import Reveal wrapper
 
 const Membership = () => {
   const packages = [
@@ -40,25 +44,38 @@ const Membership = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Header */}
+        {/* Header with Reveal Animation */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
-            <FaTags />
-            <span>Membership Plans</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Choose Your <span className="text-emerald-500">Power Level</span>
-          </h2>
-          <p className="text-lg text-zinc-400 leading-relaxed">
-            Flexible plans designed for everyone. From beginners to pro athletes, we have the perfect package for you.
-          </p>
+          <Reveal>
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+              <FaTags />
+              <span>Membership Plans</span>
+            </div>
+          </Reveal>
+          
+          <Reveal delay={0.1}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+              Choose Your <span className="text-emerald-500">Power Level</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-lg text-zinc-400 leading-relaxed">
+              Flexible plans designed for everyone. From beginners to pro athletes, we have the perfect package for you.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Pricing Grid */}
+        {/* Pricing Grid with Staggered Animation */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
-            <div 
+            // 4. Converted div to motion.div
+            <motion.div 
               key={index}
+              initial={{ opacity: 0, y: 50 }} // Start hidden and lower
+              whileInView={{ opacity: 1, y: 0 }} // Animate to visible
+              viewport={{ once: true, margin: "-50px" }} // Trigger once
+              transition={{ duration: 0.5, delay: index * 0.2 }} // Stagger delay (0s, 0.2s, 0.4s)
               className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 ${
                 pkg.highlight 
                   ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10" 
@@ -92,9 +109,8 @@ const Membership = () => {
                 ))}
               </ul>
 
-              {/* 2. REPLACED BUTTON WITH LINK */}
               <Link 
-                href={`/checkout?plan=${pkg.name}`} // Passes the plan name to the URL
+                href={`/checkout?plan=${pkg.name}`} 
                 className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center ${
                   pkg.highlight 
                     ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20" 
@@ -103,7 +119,7 @@ const Membership = () => {
               >
                 {pkg.button}
               </Link>
-            </div>
+            </motion.div>
           ))}
         </div>
 

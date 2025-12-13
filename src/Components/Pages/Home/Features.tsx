@@ -1,3 +1,7 @@
+"use client"; // 1. Add "use client" directive
+
+import { motion } from "framer-motion"; // 2. Import motion
+import { Reveal } from "@/Components/Shared/Reveal"; // 3. Import your Reveal component
 import pic1 from "../../../assets/bicep-53.png";
 import pic2 from "../../../assets/dumbbells-50.png";
 import pic3 from "../../../assets/exercise-50.png";
@@ -56,26 +60,38 @@ const Features = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* Section Header */}
+        {/* Section Header with Reveal Animation */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
-            <FaDumbbell />
-            <span>What We Offer</span>
-          </div>
+          <Reveal>
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+              <FaDumbbell />
+              <span>What We Offer</span>
+            </div>
+          </Reveal>
           
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Our Amazing <span className="text-emerald-500">Features</span>
-          </h2>
-          <p className="text-lg text-zinc-400 leading-relaxed">
-            Discover powerful tools designed to transform your fitness journey and help you achieve your goals faster than ever before.
-          </p>
+          <Reveal delay={0.1}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+              Our Amazing <span className="text-emerald-500">Features</span>
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.2}>
+            <p className="text-lg text-zinc-400 leading-relaxed">
+              Discover powerful tools designed to transform your fitness journey and help you achieve your goals faster than ever before.
+            </p>
+          </Reveal>
         </div>
 
-        {/* Features Grid */}
+        {/* Features Grid with Staggered Animation */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {features.map((feature, index) => (
-            <div
+            // 4. Change div to motion.div and add animation props
+            <motion.div
               key={index}
+              initial={{ opacity: 0, y: 50 }} // Start hidden and 50px lower
+              whileInView={{ opacity: 1, y: 0 }} // Animate to visible and original position
+              viewport={{ once: true, margin: "-50px" }} // Trigger when 50px in view, only once
+              transition={{ duration: 0.5, delay: index * 0.1 }} // Staggered delay based on index
               className="group relative bg-zinc-900 border border-zinc-800 rounded-3xl p-8 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-300 flex flex-col"
             >
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-transform duration-300 group-hover:scale-110 border ${feature.bg}`}>
@@ -100,7 +116,7 @@ const Features = () => {
                 </button>
               </div>
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
