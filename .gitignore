@@ -30,3 +30,4 @@ out/
 *.sln
 *.sw?
 .env
+/src/generated/prisma
