@@ -1,14 +1,63 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// prisma/schema.prisma
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js" // Changed from "prisma-client" to the standard "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL") // <--- THIS WAS MISSING!
+  directUrl = env("DIRECT_URL")   // Optional: Good for Supabase migrations
+}
+
+// --- YOUR GYM MODELS ---
+
+// 1. The User (Member)
+model User {
+  id            String    @id @default(cuid()) 
+  name          String?
+  email         String    @unique
+  image         String?   
+  role          Role      @default(MEMBER)
+  createdAt     DateTime  @default(now())
+  
+  // Relationships
+  subscription  Subscription?
+  bookings      Booking[]
+}
+
+// 2. The Subscription (Basic, Standard, Premium)
+model Subscription {
+  id        String   @id @default(cuid())
+  plan      Plan     @default(BASIC)
+  startDate DateTime @default(now())
+  endDate   DateTime
+  isActive  Boolean  @default(true)
+  
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+// 3. Class Bookings
+model Booking {
+  id        String   @id @default(cuid())
+  className String
+  trainer   String
+  date      DateTime
+  
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+// Enums
+enum Role {
+  MEMBER
+  ADMIN
+  TRAINER
+}
+
+enum Plan {
+  BASIC
+  STANDARD
+  PREMIUM
 }
