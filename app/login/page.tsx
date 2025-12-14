@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { FaUser, FaLock } from "react-icons/fa"; // Changed Icon to generic User
+import { FaEnvelope, FaLock } from "react-icons/fa"; // Changed Icon back to Envelope
 import Image from "next/image";
 import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
@@ -19,21 +19,13 @@ const Login = () => {
     setLoading(true);
 
     const form = e.currentTarget;
-    const rawInput = (form.elements.namedItem('identifier') as HTMLInputElement).value.trim();
+    // CHANGED: Explicitly getting 'email' value
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
-
-    // SMART LOGIC: Check if input looks like a BD Phone Number (Starts with 01 and is 11 digits)
-    let identifier = rawInput;
-    const isPhone = /^01\d{9}$/.test(rawInput);
-    
-    if (isPhone) {
-      // Convert "017..." to "+88017..."
-      identifier = "+880" + rawInput.substring(1);
-    }
 
     try {
       const result = await signIn.create({
-        identifier: identifier,
+        identifier: email,
         password,
       });
 
@@ -98,24 +90,24 @@ const Login = () => {
             Welcome Back
           </h2>
           <p className="text-xs text-zinc-400 mt-2">
-            Enter your Email or Phone to access account
+            Enter your credentials to access your account
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="px-8 pb-8 space-y-4">
           
-          {/* Identifier Input (Email OR Phone) */}
+          {/* Email Input (Strictly Email) */}
           <div className="space-y-1">
-            <label className="text-xs font-medium text-zinc-300 ml-1">Email or Phone Number</label>
+            <label className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <FaUser className="w-3.5 h-3.5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
+                <FaEnvelope className="w-3.5 h-3.5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
               </div>
               <input
-                type="text"
-                name="identifier" // Renamed from 'email' to 'identifier'
+                type="email"
+                name="email" 
                 className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
-                placeholder="email@example.com OR 017..."
+                placeholder="name@example.com"
                 required
               />
             </div>
