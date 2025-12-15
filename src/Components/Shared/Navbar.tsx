@@ -116,10 +116,23 @@ const Navbar = () => {
                 <>
                   <Link 
                     href="/profile" 
-                    className="group relative flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50"
+                    className={`group relative flex items-center justify-center w-10 h-10 rounded-full ${
+                      user?.hasImage 
+                        ? "bg-transparent overflow-hidden" 
+                        : "bg-emerald-500 hover:bg-emerald-400 text-white"
+                    } transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50`}
                     title="View Profile"
                   >
-                    <FaUser className="text-sm" />
+                    {user?.hasImage ? (
+                      <Image 
+                        src={user.imageUrl} 
+                        alt="Profile" 
+                        fill 
+                        className="object-cover" 
+                      />
+                    ) : (
+                      <FaUser className="text-sm" />
+                    )}
                   </Link>
                   
                   <SignOutButton>
@@ -225,8 +238,21 @@ const Navbar = () => {
                     }`}
                     onClick={() => setIsOpen(false)}
                   >
-                    <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">
-                      <FaUser />
+                    <span className={`w-8 h-8 rounded-full ${
+                      user?.hasImage
+                        ? "bg-transparent overflow-hidden relative"
+                        : "bg-emerald-500 flex items-center justify-center text-white text-xs"
+                    }`}>
+                      {user?.hasImage ? (
+                        <Image 
+                          src={user.imageUrl} 
+                          alt="Profile" 
+                          fill 
+                          className="object-cover" 
+                        />
+                      ) : (
+                        <FaUser />
+                      )}
                     </span>
                     My Profile
                   </Link>
