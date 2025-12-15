@@ -107,19 +107,18 @@ export default function EditForm({ user }: { user: any }) {
               </div>
             </div>
 
-            {/* Phone (Read Only) */}
-            <div className="space-y-1.5 opacity-60">
-              <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
-                Phone <FaLock className="text-[10px]" />
-              </label>
+            {/* Phone */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Phone</label>
               <div className="relative">
                 <input 
                   type="text" 
-                  defaultValue={user.phone || "Not set"} 
-                  readOnly 
-                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-zinc-400 cursor-not-allowed" 
+                  name="phone"
+                  defaultValue={user.phone || ""} 
+                  placeholder="e.g. +880 1XXX XXXXXX"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600" 
                 />
-                <FaPhone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-600 text-sm" />
+                <FaPhone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
               </div>
             </div>
           </div>

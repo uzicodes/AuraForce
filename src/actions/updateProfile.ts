@@ -13,6 +13,7 @@ export async function updateProfile(formData: FormData) {
     data: {
       name: formData.get("name") as string,
       location: formData.get("location") as string,
+      phone: formData.get("phone") as string,
       dob: formData.get("dob") ? new Date(formData.get("dob") as string) : null,
       gender: formData.get("gender") as string,
       weight: formData.get("weight") as string,
