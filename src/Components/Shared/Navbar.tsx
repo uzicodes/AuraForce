@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { FaTimes, FaUser, FaSignInAlt } from "react-icons/fa";
+import { FaTimes, FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
+import { useUser, SignOutButton } from "@clerk/nextjs";
 
 const Navbar = () => {
-  const user = null; 
+  const { isSignedIn, user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -110,21 +111,34 @@ const Navbar = () => {
                 ))}
               </ul>
 
-              {/* Green Profile Avatar (Clickable) - Removed Status Dot */}
-              <Link 
-                href="/profile" 
-                className="group relative flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50"
-                title="View Profile"
-              >
-                <FaUser className="text-sm" />
-              </Link>
+              {/* Green Profile Avatar (Clickable) - Only shown when logged in */}
+              {isSignedIn && (
+                <>
+                  <Link 
+                    href="/profile" 
+                    className="group relative flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 text-white transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50"
+                    title="View Profile"
+                  >
+                    <FaUser className="text-sm" />
+                  </Link>
+                  
+                  <SignOutButton>
+                    <button
+                      className={`flex items-center gap-2 px-5 py-2 font-medium rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
+                        darkMode 
+                          ? "border-zinc-700 text-white hover:bg-zinc-800 hover:border-zinc-800" 
+                          : "border-zinc-300 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300"
+                      }`}
+                    >
+                      <FaSignOutAlt className="text-sm" />
+                      <span>Logout</span>
+                    </button>
+                  </SignOutButton>
+                </>
+              )}
 
-              {/* Login Button */}
-              {user ? (
-                <div className="relative group">
-                  {/* Auth dropdown */}
-                </div>
-              ) : (
+              {/* Login Button - Only shown when NOT logged in */}
+              {!isSignedIn && (
                 <Link
                   href="/login"
                   className={`flex items-center gap-2 px-5 py-2 font-medium rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
@@ -200,32 +214,47 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
-            <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
-                <Link
-                  href="/profile"
-                  className={`flex items-center gap-3 text-xl font-medium ${
-                    darkMode ? "text-white" : "text-gray-800"
-                  } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
-                    darkMode ? "border-gray-700" : "border-gray-200"
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">
-                    <FaUser />
-                  </span>
-                  My Profile
-                </Link>
-            </li>
+            {isSignedIn && (
+              <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
+                  <Link
+                    href="/profile"
+                    className={`flex items-center gap-3 text-xl font-medium ${
+                      darkMode ? "text-white" : "text-gray-800"
+                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
+                      darkMode ? "border-gray-700" : "border-gray-200"
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs">
+                      <FaUser />
+                    </span>
+                    My Profile
+                  </Link>
+              </li>
+            )}
           </ul>
 
-          <div className="mt-auto">
-             <Link
+          <div className="mt-auto space-y-3">
+            {!isSignedIn && (
+              <Link
                 href="/login"
                 className="block w-full py-3 px-4 bg-[#16A34A] text-center text-white font-medium rounded-lg hover:bg-[#22c55e] transition-all duration-200 transform hover:scale-105"
                 onClick={() => setIsOpen(false)}
               >
                 Login
               </Link>
+            )}
+            
+            {isSignedIn && (
+              <SignOutButton>
+                <button
+                  className="block w-full py-3 px-4 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-500 transition-all duration-200 transform hover:scale-105"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Logout
+                </button>
+              </SignOutButton>
+            )}
           </div>
         </div>
       </div>
