@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { FaEnvelope, FaLock } from "react-icons/fa"; // Changed Icon back to Envelope
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import Image from "next/image";
 import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
@@ -19,7 +19,6 @@ const Login = () => {
     setLoading(true);
 
     const form = e.currentTarget;
-    // CHANGED: Explicitly getting 'email' value
     const email = (form.elements.namedItem('email') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
@@ -74,7 +73,6 @@ const Login = () => {
         />
       </div>
 
-      {/* Login Card */}
       <div className="relative z-20 w-full max-w-sm bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden">
         
         <div className="px-8 pt-8 pb-6 text-center">
@@ -96,7 +94,6 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className="px-8 pb-8 space-y-4">
           
-          {/* Email Input (Strictly Email) */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
             <div className="relative group">
@@ -113,7 +110,6 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Password Input */}
           <div className="space-y-1">
             <label className="text-xs font-medium text-zinc-300 ml-1">Password</label>
             <div className="relative group">
@@ -128,9 +124,17 @@ const Login = () => {
                 required
               />
             </div>
+            
+            {/* --- UPDATED LINK IS HERE --- */}
             <div className="text-right">
-              <a href="#" className="text-[10px] text-zinc-400 hover:text-emerald-400 transition-colors">Forgot password?</a>
+              <Link 
+                href="/forgot-password" 
+                className="text-[10px] text-zinc-400 hover:text-emerald-400 transition-colors"
+              >
+                Forgot password?
+              </Link>
             </div>
+            
           </div>
 
           <button disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform active:scale-[0.98] disabled:opacity-50">
