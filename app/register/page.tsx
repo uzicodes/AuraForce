@@ -229,7 +229,7 @@ const Register = () => {
            </form>
         )}
         
-        {/* --- FIXED: CAPTCHA IS NOW OUTSIDE THE CONDITIONAL FORM BLOCK --- */}
+         {/* Clerk Captcha */}                                      
         <div id="clerk-captcha" className="px-8 pb-4"></div>
 
       </div>

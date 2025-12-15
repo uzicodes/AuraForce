@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link"; // <--- Added this import
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
@@ -77,7 +78,7 @@ const Profile = async () => {
   const memberSince = formatDate(dbUser.createdAt);
   
   // Use Clerk avatar if available, otherwise DB image, otherwise placeholder
-  const avatarUrl = clerkUser.imageUrl || dbUser.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
+  const avatarUrl = clerkUser?.imageUrl || dbUser.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
 
   return (
     <section className="min-h-screen bg-zinc-950 pb-20 relative overflow-hidden">
@@ -129,11 +130,14 @@ const Profile = async () => {
             </div>
           </div>
 
-          {/* Action Buttons */}
+          {/* Action Buttons - UPDATED TO LINK */}
           <div className="flex gap-3 mb-4">
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-semibold transition-all shadow-lg shadow-emerald-900/20">
+            <Link 
+              href="/profile/edit" 
+              className="flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full font-semibold transition-all shadow-lg shadow-emerald-900/20"
+            >
               <FaUserEdit /> Edit Profile
-            </button>
+            </Link>
           </div>
         </div>
 
