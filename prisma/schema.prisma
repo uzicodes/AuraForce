@@ -18,13 +18,22 @@ model User {
   email        String    @unique
   image        String?   
   role         Role      @default(MEMBER)
+  phone        String?   
+  dob          DateTime?
+  gender       String?
+  location     String?
+  weight       String?   
+  heightFeet   String?
+  heightInches String?
+
   createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
    
   subscription Subscription?
   bookings     Booking[]
 }
 
-// (Keep the rest of your file exactly the same: Subscription, Booking, Enums)
+
 model Subscription {
   id        String   @id @default(cuid())
   plan      Plan     @default(BASIC)
