@@ -1,68 +1,80 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs/server";
+import { db } from "@/lib/db"; // Connecting to your database
 import { 
   FaUserEdit, 
-  FaCog, 
   FaIdCard, 
   FaCheckCircle, 
   FaCalendarCheck, 
-  FaCalendarAlt,
-  FaUserTie,
-  FaMapMarkerAlt,
   FaLayerGroup,
-  FaClock
+  FaClock,
+  FaMapMarkerAlt,
+  FaCalendarAlt,
+  FaExclamationCircle
 } from "react-icons/fa";
 
-// 1. STATIC USER DATA (Membership Focused)
-const user = {
-  name: "Alex Johnson",
-  role: "Gold Member",
-  memberId: "AF-88392",
-  joinDate: "Member since Nov 2023",
-  location: "Gulshan, Dhaka",
-  avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1000&auto=format&fit=crop",
-  banner: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop",
-  membership: {
-    plan: "Gold Access",
-    status: "Active",
-    renewal: "Dec 12, 2025",
-    sessionsLeft: 8 // e.g., for PT
-  }
+// Helper to format dates (e.g., "Dec 12, 2025")
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(date);
 };
 
-// 2. ACTIVE SUBSCRIPTIONS (Trainers & Classes)
-const activeSubscriptions = [
-  {
-    id: 1,
-    type: "Personal Training",
-    name: "Marcus Thorne",
-    detail: "12 Sessions Package",
-    status: "Active",
-    image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=1000&auto=format&fit=crop",
-    progress: "4/12 Completed"
-  },
-  {
-    id: 2,
-    type: "Class Subscription",
-    name: "Power Yoga Series",
-    detail: "Monthly Access",
-    status: "Active",
-    image: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=1000&auto=format&fit=crop",
-    progress: "Unlimited"
-  }
-];
+// Helper to get Day Name (e.g., "Monday")
+const getDayName = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date);
+};
 
-// 3. WEEKLY TIMETABLE
-const weeklySchedule = [
-  { day: "Monday", time: "07:00 AM", activity: "Yoga Flow", with: "Dr. Kenji" },
-  { day: "Tuesday", time: "05:00 PM", activity: "1-on-1 PT", with: "Marcus Thorne" },
-  { day: "Thursday", time: "06:30 PM", activity: "HIIT Group", with: "Sarah J." },
-  { day: "Saturday", time: "10:00 AM", activity: "Open Gym", with: "Self" },
-];
+// Helper to get Time (e.g., "07:00 AM")
+const getTime = (date: Date) => {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+};
 
-const Profile = () => {
+const Profile = async () => {
+  // 1. Get Logged In User
+  const clerkUser = await currentUser();
+  if (!clerkUser) redirect("/");
+
+  // 2. Fetch User Data + Subscription + Bookings from Supabase
+  const dbUser = await db.user.findUnique({
+    where: {
+      clerkUserId: clerkUser.id,
+    },
+    include: {
+      subscription: true, // Fetch the plan
+      bookings: {         // Fetch upcoming classes
+        where: {
+          date: {
+            gte: new Date(), // Only get future bookings
+          },
+        },
+        orderBy: {
+          date: 'asc', // Soonest first
+        },
+        take: 5, // Show top 5
+      },
+    },
+  });
+
+  // If user registered via Clerk but DB sync hasn't happened yet (rare edge case)
+  if (!dbUser) return <div>Loading profile...</div>;
+
+  // 3. Prepare Display Data
+  const planName = dbUser.subscription?.plan || "NO ACTIVE PLAN";
+  const isActive = dbUser.subscription?.isActive || false;
+  const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
+  const memberSince = formatDate(dbUser.createdAt);
+  
+  // Use Clerk avatar if available, otherwise DB image, otherwise placeholder
+  const avatarUrl = clerkUser.imageUrl || dbUser.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
+
   return (
     <section className="min-h-screen bg-zinc-950 pb-20 relative overflow-hidden">
       
@@ -70,7 +82,7 @@ const Profile = () => {
       <div className="relative h-64 md:h-80 w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950 z-10" />
         <Image 
-          src={user.banner} 
+          src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop" 
           alt="Profile Banner" 
           fill 
           className="object-cover opacity-60"
@@ -87,27 +99,29 @@ const Profile = () => {
           <div className="relative flex-shrink-0">
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-zinc-950 overflow-hidden relative z-10 shadow-lg">
               <Image 
-                src={user.avatar} 
-                alt={user.name} 
+                src={avatarUrl} 
+                alt={dbUser.name || "User"} 
                 fill 
                 className="object-cover"
               />
             </div>
             {/* Active Status Indicator */}
-            <div className="absolute bottom-2 right-2 w-6 h-6 bg-emerald-500 border-4 border-zinc-900 rounded-full z-20" title="Membership Active"></div>
+            {isActive && (
+              <div className="absolute bottom-2 right-2 w-6 h-6 bg-emerald-500 border-4 border-zinc-900 rounded-full z-20" title="Membership Active"></div>
+            )}
           </div>
 
           {/* Info */}
           <div className="flex-1 text-center md:text-left mb-2 md:mb-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">{user.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">{dbUser.name}</h1>
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-4 text-sm text-zinc-400">
               <span className="flex items-center gap-1 bg-zinc-800 px-3 py-1 rounded-full">
-                <FaIdCard className="text-emerald-500" /> ID: {user.memberId}
+                <FaIdCard className="text-emerald-500" /> ID: {dbUser.id.slice(-6).toUpperCase()}
               </span>
               <span className="flex items-center gap-1">
-                <FaMapMarkerAlt className="text-emerald-500" /> {user.location}
+                <FaMapMarkerAlt className="text-emerald-500" /> {dbUser.role} Account
               </span>
-              <span>{user.joinDate}</span>
+              <span>Joined {memberSince}</span>
             </div>
           </div>
 
@@ -127,93 +141,104 @@ const Profile = () => {
             
             {/* Membership Overview Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { label: "Current Plan", value: user.membership.plan, icon: FaLayerGroup },
-                { label: "Account Status", value: user.membership.status, icon: FaCheckCircle },
-                { label: "Renewal Date", value: user.membership.renewal, icon: FaCalendarCheck },
-                { label: "PT Sessions Left", value: user.membership.sessionsLeft, icon: FaUserTie },
-              ].map((stat, index) => (
-                <div key={index} className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
-                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
-                    <stat.icon />
-                  </div>
-                  <div className="text-lg font-bold text-white mb-1 truncate">{stat.value}</div>
-                  <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">{stat.label}</div>
-                </div>
-              ))}
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
+                 <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
+                   <FaLayerGroup />
+                 </div>
+                 <div className="text-lg font-bold text-white mb-1 truncate">{planName}</div>
+                 <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Current Plan</div>
+              </div>
+
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
+                 <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
+                   <FaCheckCircle />
+                 </div>
+                 <div className={`text-lg font-bold mb-1 truncate ${isActive ? "text-white" : "text-red-500"}`}>
+                   {isActive ? "Active" : "Inactive"}
+                 </div>
+                 <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Status</div>
+              </div>
+
+              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
+                 <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
+                   <FaCalendarCheck />
+                 </div>
+                 <div className="text-lg font-bold text-white mb-1 truncate">{renewalDate}</div>
+                 <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Renewal Date</div>
+              </div>
             </div>
 
-            {/* My Subscriptions (Trainers & Classes) */}
+            {/* My Active Subscription Card */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">My Active Subscriptions</h3>
+                <h3 className="text-xl font-bold text-white">My Active Plan</h3>
                 <span className="text-xs text-emerald-500 font-bold cursor-pointer hover:underline">Manage</span>
               </div>
               
-              <div className="space-y-4">
-                {activeSubscriptions.map((sub) => (
-                  <div key={sub.id} className="flex flex-col md:flex-row items-center gap-4 p-4 bg-zinc-950/50 rounded-xl border border-zinc-800 hover:border-zinc-700 transition-colors">
-                    {/* Image */}
-                    <div className="relative w-16 h-16 flex-shrink-0">
-                      <Image 
-                        src={sub.image} 
-                        alt={sub.name} 
-                        fill 
-                        className="object-cover rounded-lg"
-                      />
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="flex-1 text-center md:text-left">
-                      <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
-                        <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded uppercase tracking-wider">{sub.type}</span>
-                        {sub.status === "Active" && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>}
-                      </div>
-                      <h4 className="font-bold text-white text-lg">{sub.name}</h4>
-                      <p className="text-sm text-zinc-400">{sub.detail}</p>
-                    </div>
-
-                    {/* Right Side Info */}
-                    <div className="text-center md:text-right w-full md:w-auto mt-2 md:mt-0 pt-2 md:pt-0 border-t md:border-none border-zinc-800">
-                      <div className="text-sm font-semibold text-white">{sub.progress}</div>
-                      <div className="text-xs text-zinc-500">Usage Status</div>
+              {dbUser.subscription ? (
+                <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-zinc-950/50 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
+                  <div className="relative w-16 h-16 flex-shrink-0">
+                    {/* Placeholder image for plan */}
+                    <div className="w-full h-full bg-emerald-900/20 rounded-lg flex items-center justify-center text-emerald-500 text-2xl font-bold">
+                      {planName[0]}
                     </div>
                   </div>
-                ))}
-              </div>
+                  
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="flex items-center justify-center md:justify-start gap-2 mb-1">
+                      <span className="text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded uppercase tracking-wider">MEMBERSHIP</span>
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    </div>
+                    <h4 className="font-bold text-white text-lg">{planName} Membership</h4>
+                    <p className="text-sm text-zinc-400">Valid until {renewalDate}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-8 text-center bg-zinc-950/30 rounded-xl border border-dashed border-zinc-800">
+                  <p className="text-zinc-400">You don't have an active subscription.</p>
+                  <button className="mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold">Browse Plans</button>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Allocated Timetable */}
+          {/* RIGHT COLUMN: Real-Time Schedule */}
           <div className="lg:col-span-1">
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sticky top-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Weekly Schedule</h3>
+                <h3 className="text-xl font-bold text-white">Upcoming Classes</h3>
                 <FaCalendarAlt className="text-emerald-500" />
               </div>
 
-              <div className="space-y-4 relative">
-                {/* Connecting Line */}
-                <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-zinc-800 z-0"></div>
+              {dbUser.bookings.length > 0 ? (
+                <div className="space-y-4 relative">
+                  {/* Connecting Line */}
+                  <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-zinc-800 z-0"></div>
 
-                {weeklySchedule.map((slot, index) => (
-                  <div key={index} className="relative z-10 flex items-start gap-4">
-                    {/* Bullet Point */}
-                    <div className="w-10 h-10 rounded-full bg-zinc-950 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0 text-emerald-500 text-xs font-bold shadow-lg">
-                      {slot.day.substring(0, 3)}
-                    </div>
-                    
-                    {/* Card */}
-                    <div className="flex-1 bg-zinc-950 p-4 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
-                      <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold mb-1">
-                        <FaClock /> {slot.time}
+                  {dbUser.bookings.map((booking) => (
+                    <div key={booking.id} className="relative z-10 flex items-start gap-4">
+                      {/* Bullet Point */}
+                      <div className="w-10 h-10 rounded-full bg-zinc-950 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0 text-emerald-500 text-[10px] font-bold shadow-lg uppercase">
+                        {getDayName(booking.date).substring(0, 3)}
                       </div>
-                      <h4 className="font-bold text-white text-sm">{slot.activity}</h4>
-                      <p className="text-xs text-zinc-500 mt-1">w/ {slot.with}</p>
+                      
+                      {/* Card */}
+                      <div className="flex-1 bg-zinc-950 p-4 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
+                        <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold mb-1">
+                          <FaClock /> {getTime(booking.date)}
+                        </div>
+                        <h4 className="font-bold text-white text-sm">{booking.className}</h4>
+                        <p className="text-xs text-zinc-500 mt-1">Trainer: {booking.trainer}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-10">
+                   <FaExclamationCircle className="mx-auto text-zinc-600 text-3xl mb-3" />
+                   <p className="text-zinc-400 text-sm">No upcoming bookings found.</p>
+                </div>
+              )}
             </div>
           </div>
 
