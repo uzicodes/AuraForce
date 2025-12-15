@@ -4,6 +4,7 @@ import Banner from "./Banner";
 import Features from "./Features";
 import Newsletter from "./Newsletter";
 import Testimonials from "./Testimonials";
+import NutritionPlan from "./NutritionPlan";
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
         <Features></Features>
         <AboutUs></AboutUs>
         <Newsletter></Newsletter>
+        <NutritionPlan></NutritionPlan> 
         <Testimonials></Testimonials>
       </div>
     );
