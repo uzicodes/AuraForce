@@ -61,7 +61,7 @@ const AllTrainers = () => {
         </div>
         
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-          Not Your Average <span className="text-zinc-600">Cheerleaders.</span>
+          Partners in Your <span className="text-green-600">Progress.</span>
         </h2>
         
         <p className="max-w-xl mx-auto text-zinc-400 text-lg leading-relaxed">
