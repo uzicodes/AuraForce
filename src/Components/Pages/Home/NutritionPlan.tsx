@@ -2,8 +2,21 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion"; 
+import { motion, Variants } from "framer-motion";
 import { FaAppleAlt, FaFire, FaLeaf, FaChartPie } from "react-icons/fa";
+
+// 1. IMPORT SWIPER MODULES & STYLES
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, EffectFade } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-fade';
+
+// --- CAROUSEL IMAGES ---
+const carouselImages = [
+  "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop", // Original
+  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop", // Healthy Bowl
+  "https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=2006&auto=format&fit=crop" // Smoothies/Ingredients
+];
 
 const features = [
   {
@@ -28,13 +41,13 @@ const features = [
   },
 ];
 
-// Animation Variants with proper TypeScript typing
+// Animation Variants (Unchanged)
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2, // Delays each child by 0.2s
+      staggerChildren: 0.2,
     },
   },
 };
@@ -60,7 +73,7 @@ const NutritionSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* HEADER SECTION */}
+        {/* HEADER SECTION (Unchanged) */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -85,7 +98,7 @@ const NutritionSection = () => {
         {/* MAIN CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* LEFT: IMAGE (With Parallax-ish Reveal) */}
+          {/* LEFT: IMAGE CAROUSEL (Updated) */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -94,15 +107,35 @@ const NutritionSection = () => {
             className="relative"
           >
             <div className="relative h-[500px] w-full rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl group">
-              <Image
-                src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop"
-                alt="Healthy Meal Prep"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              {/* Overlay Content */}
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 p-6 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-zinc-700/50">
+              
+              {/* --- 2. SWIPER CAROUSEL COMPONENT --- */}
+              <Swiper
+                modules={[Autoplay, EffectFade]}
+                effect="fade"
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                loop={true}
+                className="h-full w-full"
+              >
+                {carouselImages.map((src, index) => (
+                  <SwiperSlide key={index} className="relative h-full w-full">
+                    <Image
+                      src={src}
+                      alt={`Nutrition Slide ${index + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    {/* Dark gradient overlay for better text contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent" />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              {/* --- END SWIPER --- */}
+
+              {/* Overlay Content (Kept on top of carousel) */}
+              <div className="absolute bottom-6 left-6 right-6 p-6 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-zinc-700/50 z-20">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold text-xl">
                     95%
@@ -116,7 +149,7 @@ const NutritionSection = () => {
             </div>
           </motion.div>
 
-          {/* RIGHT: SCROLLING FEATURES LIST */}
+          {/* RIGHT: SCROLLING FEATURES LIST (Unchanged) */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
