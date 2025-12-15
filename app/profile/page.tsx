@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
-import { db } from "@/lib/db"; // Connecting to your database
+import { db } from "@/lib/db";
+import { checkUser } from "@/lib/checkUser";
 import { 
   FaUserEdit, 
   FaIdCard, 
@@ -15,7 +16,7 @@ import {
   FaExclamationCircle
 } from "react-icons/fa";
 
-// Helper to format dates (e.g., "Dec 12, 2025")
+// Helper to format dates 
 const formatDate = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -24,12 +25,12 @@ const formatDate = (date: Date) => {
   }).format(date);
 };
 
-// Helper to get Day Name (e.g., "Monday")
+// Helper to get Day Name 
 const getDayName = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date);
 };
 
-// Helper to get Time (e.g., "07:00 AM")
+// Helper to get Time 
 const getTime = (date: Date) => {
   return new Intl.DateTimeFormat("en-US", {
     hour: "2-digit",
@@ -38,14 +39,17 @@ const getTime = (date: Date) => {
 };
 
 const Profile = async () => {
-  // 1. Get Logged In User
-  const clerkUser = await currentUser();
-  if (!clerkUser) redirect("/");
+  // 1. Check user and create in DB if doesn't exist
+  const user = await checkUser();
+  if (!user) redirect("/login");
 
-  // 2. Fetch User Data + Subscription + Bookings from Supabase
+  // 2. Get Clerk user for avatar
+  const clerkUser = await currentUser();
+
+  // 3. Fetch User Data + Subscription + Bookings from Database
   const dbUser = await db.user.findUnique({
     where: {
-      clerkUserId: clerkUser.id,
+      clerkUserId: user.clerkUserId,
     },
     include: {
       subscription: true, // Fetch the plan
@@ -63,10 +67,10 @@ const Profile = async () => {
     },
   });
 
-  // If user registered via Clerk but DB sync hasn't happened yet (rare edge case)
-  if (!dbUser) return <div>Loading profile...</div>;
+  // Fallback (should not happen since checkUser creates the user)
+  if (!dbUser) redirect("/login");
 
-  // 3. Prepare Display Data
+  // 4. Prepare Display Data
   const planName = dbUser.subscription?.plan || "NO ACTIVE PLAN";
   const isActive = dbUser.subscription?.isActive || false;
   const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
