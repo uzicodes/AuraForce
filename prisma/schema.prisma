@@ -1,32 +1,30 @@
 // prisma/schema.prisma
 
 generator client {
-  provider = "prisma-client-js" // Changed from "prisma-client" to the standard "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL") // <--- THIS WAS MISSING!
-  directUrl = env("DIRECT_URL")   // Optional: Good for Supabase migrations
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
-
-// --- YOUR GYM MODELS ---
 
 // 1. The User (Member)
 model User {
-  id            String    @id @default(cuid()) 
-  name          String?
-  email         String    @unique
-  image         String?   
-  role          Role      @default(MEMBER)
-  createdAt     DateTime  @default(now())
-  
-  // Relationships
-  subscription  Subscription?
-  bookings      Booking[]
+  id           String    @id @default(cuid()) 
+  clerkUserId  String    @unique // <--- ADD THIS! Vital for Clerk integration
+  name         String?
+  email        String    @unique
+  image        String?   
+  role         Role      @default(MEMBER)
+  createdAt    DateTime  @default(now())
+   
+  subscription Subscription?
+  bookings     Booking[]
 }
 
-// 2. The Subscription (Basic, Standard, Premium)
+// (Keep the rest of your file exactly the same: Subscription, Booking, Enums)
 model Subscription {
   id        String   @id @default(cuid())
   plan      Plan     @default(BASIC)
@@ -38,7 +36,6 @@ model Subscription {
   user      User     @relation(fields: [userId], references: [id])
 }
 
-// 3. Class Bookings
 model Booking {
   id        String   @id @default(cuid())
   className String
@@ -49,7 +46,6 @@ model Booking {
   user      User     @relation(fields: [userId], references: [id])
 }
 
-// Enums
 enum Role {
   MEMBER
   ADMIN
