@@ -26,14 +26,12 @@ const Register = () => {
     const phoneNumber = (form.elements.namedItem('phoneNumber') as HTMLInputElement).value;
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
-    // Email Regex
     const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
     if (!emailPattern.test(email)) {
       toast.error("Please use a valid email address");
       return;
     }
     
-    // Password Regex
     if (!/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*\d).{6,}$/.test(password)) {
       toast.error("Password must have 1 uppercase, 1 special char, 1 number & min 6 chars");
       return;
@@ -46,16 +44,13 @@ const Register = () => {
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(" ") || ""; 
 
-      // --- THE FIX ---
-      // We moved phoneNumber back to unsafeMetadata.
-      // This saves the number but STOPS Clerk from trying to send an SMS.
       await signUp.create({
         emailAddress: email,
         password,
         firstName: firstName,
         lastName: lastName,
         unsafeMetadata: { 
-          phoneNumber: `+880${phoneNumber}`, // Saved here safely
+          phoneNumber: `+880${phoneNumber}`, 
           role: "member" 
         }
       });
@@ -94,7 +89,6 @@ const Register = () => {
         toast.success("Account Created Successfully!");
         router.push("/");
       } else if (completeSignUp.status === "missing_requirements") {
-        // This should not happen now that phone is in metadata
         console.log("Missing:", completeSignUp.missingFields);
         toast.error("Further steps required. Check console.");
       } else {
@@ -122,7 +116,7 @@ const Register = () => {
         />
       </div>
 
-      <div className="relative z-20 w-full max-w-sm bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="relative z-20 w-full max-w-sm bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden pb-6">
         
         <div className="px-8 pt-8 pb-4 text-center">
           <div className="relative w-12 h-12 mx-auto mb-4">
@@ -142,7 +136,7 @@ const Register = () => {
         </div>
 
         {verifying ? (
-           <form onSubmit={handleVerify} className="px-8 pb-8 space-y-4">
+           <form onSubmit={handleVerify} className="px-8 pb-2 space-y-4">
              <div className="space-y-1">
                <label className="text-xs font-medium text-zinc-300 ml-1">Verification Code</label>
                <input
@@ -157,7 +151,7 @@ const Register = () => {
              </button>
            </form>
         ) : (
-           <form onSubmit={handleRegister} className="px-8 pb-8 space-y-3">
+           <form onSubmit={handleRegister} className="px-8 pb-2 space-y-3">
              {/* Name */}
              <div className="space-y-1">
                <label className="text-xs font-medium text-zinc-300 ml-1">Full Name</label>
@@ -218,8 +212,6 @@ const Register = () => {
                </p>
              </div>
 
-             <div id="clerk-captcha"></div>
-
              <div className="pt-2">
                <button disabled={loading} type="submit" className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform active:scale-[0.98] disabled:opacity-50">
                  {loading ? "Creating Account..." : "Create Account"}
@@ -236,6 +228,10 @@ const Register = () => {
              </div>
            </form>
         )}
+        
+        {/* --- FIXED: CAPTCHA IS NOW OUTSIDE THE CONDITIONAL FORM BLOCK --- */}
+        <div id="clerk-captcha" className="px-8 pb-4"></div>
+
       </div>
     </section>
   );
