@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link"; // <--- Added this import
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
 import { checkUser } from "@/lib/checkUser";
+import MyPosts from "@/Components/Pages/Profile/MyPosts";
 import { 
   FaUserEdit, 
   FaIdCard, 
@@ -65,6 +66,11 @@ const Profile = async () => {
         },
         take: 5, // Show top 5
       },
+      posts: {
+        orderBy: {
+          createdAt: 'desc'
+        }
+      }
     },
   });
 
@@ -79,6 +85,19 @@ const Profile = async () => {
   
   // Use Clerk avatar if available, otherwise DB image, otherwise placeholder
   const avatarUrl = clerkUser?.imageUrl || dbUser.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
+
+  const formattedPosts = dbUser.posts.map((post) => ({
+    _id: post.id,
+    title: post.title,
+    author_name: dbUser.name || "Unknown User",
+    author_location: dbUser.location || "Unknown Location",
+    author_img: avatarUrl,
+    short_description: post.content,
+    publish_time: new Date(post.createdAt).toLocaleDateString(),
+    role: dbUser.role === "ADMIN" ? "Admin" : dbUser.role === "TRAINER" ? "Trainer" : "Member",
+    category: post.category,
+    upvotes: post.upvotes,
+  }));
 
   return (
     <section className="min-h-screen bg-zinc-950 pb-20 relative overflow-hidden">
@@ -207,6 +226,14 @@ const Profile = async () => {
                   <button className="mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold">Browse Plans</button>
                 </div>
               )}
+            </div>
+
+            {/* My Published Posts */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mt-8">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-white">My Published Posts</h3>
+              </div>
+              <MyPosts posts={formattedPosts} />
             </div>
           </div>
 

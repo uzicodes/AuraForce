@@ -4,13 +4,15 @@ import Link from "next/link";
 import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { Clock, MapPin, MessageSquare, TrendingUp } from "lucide-react";
+import { Clock, MapPin, MessageSquare, TrendingUp, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { deletePost } from "@/actions/deletePost";
 
 /* eslint-disable react/prop-types */
-const Post = ({ post }: { post: any }) => {
+const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
   const [upvotes, setUpvotes] = useState(post.upvotes);
   const [voteType, setVoteType] = useState<"upvote" | "downvote" | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleVote = (type: "upvote" | "downvote") => {
     if (voteType === type) {
@@ -26,9 +28,44 @@ const Post = ({ post }: { post: any }) => {
     }
   };
 
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation if wrapped in Link
+    if (!confirm("Are you sure you want to delete this post?")) return;
+    
+    setIsDeleting(true);
+    try {
+      await deletePost(post._id);
+      toast.success("Post deleted successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete post");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  if (isDeleting) {
+    return (
+      <div className="w-full h-64 bg-zinc-900 rounded-3xl border border-zinc-800 flex items-center justify-center animate-pulse">
+        <p className="text-zinc-500">Deleting post...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="group relative w-full h-full bg-zinc-900 rounded-3xl shadow-lg border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 flex flex-col overflow-hidden">
       
+      {/* Delete Button for Owner */}
+      {isOwner && (
+        <button 
+          onClick={handleDelete}
+          className="absolute top-4 right-4 z-20 p-2 bg-red-500/10 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all opacity-0 group-hover:opacity-100"
+          title="Delete Post"
+        >
+          <Trash2 size={16} />
+        </button>
+      )}
+
       {/* Author Header */}
       <div className="p-6 pb-4 flex items-start gap-4">
         <div className="relative flex-shrink-0 w-12 h-12">
