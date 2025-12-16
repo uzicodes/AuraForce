@@ -4,8 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
-// 1. IMPORT CLERK PROVIDER
 import { ClerkProvider } from '@clerk/nextjs';
+import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider'; 
 
 import Navbar from '@/Components/Shared/Navbar';
 import Footer from '@/Components/Shared/Footer';
@@ -21,7 +21,6 @@ export default function RootLayout({ children }) {
   const hideFooter = pathname === '/login' || pathname === '/register';
 
   return (
-    // 2. WRAP EVERYTHING HERE (Outside the html tag)
     <ClerkProvider>
       <html lang="en">
         <head>
@@ -34,12 +33,21 @@ export default function RootLayout({ children }) {
         </head>
         <body>
           <QueryClientProvider client={queryClient}>
-            <Navbar />
-            <div className="min-h-[calc(100vh-216px)]">
-              {children}
-            </div>
-            {!hideFooter && <Footer />}
-            <Toaster />
+            
+            {/* --- ADD THE WATCHER HERE --- */}
+            {/* It must be INSIDE ClerkProvider so it knows if the user is logged in */}
+            <AutoLogoutProvider>
+              
+              <Navbar />
+              <div className="min-h-[calc(100vh-216px)]">
+                {children}
+              </div>
+              {!hideFooter && <Footer />}
+              <Toaster />
+
+            </AutoLogoutProvider>
+            {/* ----------------------------- */}
+
           </QueryClientProvider>
         </body>
       </html>
