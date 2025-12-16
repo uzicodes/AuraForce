@@ -2,34 +2,63 @@
 
 import Link from "next/link";
 import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
-import { useState } from "react";
+import { useState, useOptimistic, startTransition } from "react";
 import toast from "react-hot-toast";
 import { Clock, MapPin, MessageSquare, TrendingUp, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { deletePost } from "@/actions/deletePost";
+import { toggleVote } from "@/actions/toggleVote";
 
 /* eslint-disable react/prop-types */
 const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
-  const [upvotes, setUpvotes] = useState(post.upvotes);
-  const [voteType, setVoteType] = useState<"upvote" | "downvote" | null>(null);
+  // Initialize state from props
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleVote = (type: "upvote" | "downvote") => {
-    if (voteType === type) {
-      // Remove vote
-      if (type === "upvote") setUpvotes((prev: number) => prev - 1);
-      setVoteType(null);
-      toast.success(`Removed ${type}`);
-    } else {
-      // Add/Change vote
-      if (type === "upvote") setUpvotes((prev: number) => prev + 1);
-      setVoteType(type);
-      toast.success(`Voted ${type}`);
+  // Optimistic UI for votes
+  const [optimisticState, addOptimisticVote] = useOptimistic(
+    { upvotes: post.upvotes, userVote: post.userVote },
+    (state, newVoteType: "UP" | "DOWN") => {
+      let newUpvotes = state.upvotes;
+      let newUserVote = state.userVote;
+
+      if (state.userVote === newVoteType) {
+        // Toggle off
+        newUserVote = null;
+        newUpvotes = newVoteType === "UP" ? state.upvotes - 1 : state.upvotes + 1;
+      } else {
+        // Switch or Add
+        if (state.userVote === "UP") {
+           // Switching UP -> DOWN
+           newUpvotes = state.upvotes - 2;
+        } else if (state.userVote === "DOWN") {
+           // Switching DOWN -> UP
+           newUpvotes = state.upvotes + 2;
+        } else {
+           // Adding new vote
+           newUpvotes = newVoteType === "UP" ? state.upvotes + 1 : state.upvotes - 1;
+        }
+        newUserVote = newVoteType;
+      }
+
+      return { upvotes: newUpvotes, userVote: newUserVote };
+    }
+  );
+
+  const handleVote = async (type: "UP" | "DOWN") => {
+    startTransition(() => {
+      addOptimisticVote(type);
+    });
+
+    try {
+      await toggleVote(post._id, type);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to vote. Please try again.");
     }
   };
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation if wrapped in Link
+    e.preventDefault(); 
     if (!confirm("Are you sure you want to delete this post?")) return;
     
     setIsDeleting(true);
@@ -119,31 +148,27 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
         {/* Vote Buttons */}
         <div className="flex items-center bg-zinc-900 rounded-lg border border-zinc-800 p-1">
           <button
-            onClick={() => handleVote("upvote")}
+            onClick={() => handleVote("UP")}
             className={`p-1.5 rounded-md transition-colors ${
-              voteType === "upvote" ? "text-emerald-400 bg-emerald-400/10" : "text-zinc-500 hover:text-white"
+              optimisticState.userVote === "UP" ? "text-emerald-400 bg-emerald-400/10" : "text-zinc-500 hover:text-white"
             }`}
           >
             <BiSolidUpvote size={18} />
           </button>
-          <span className={`px-2 text-sm font-bold ${voteType === "upvote" ? "text-emerald-400" : "text-zinc-400"}`}>
-            {upvotes}
+          <span className={`px-2 text-sm font-bold ${optimisticState.userVote === "UP" ? "text-emerald-400" : optimisticState.userVote === "DOWN" ? "text-red-400" : "text-zinc-400"}`}>
+            {optimisticState.upvotes}
           </span>
           <button
-            onClick={() => handleVote("downvote")}
+            onClick={() => handleVote("DOWN")}
             className={`p-1.5 rounded-md transition-colors ${
-              voteType === "downvote" ? "text-red-400 bg-red-400/10" : "text-zinc-500 hover:text-white"
+              optimisticState.userVote === "DOWN" ? "text-red-400 bg-red-400/10" : "text-zinc-500 hover:text-white"
             }`}
           >
             <BiSolidDownvote size={18} />
           </button>
         </div>
 
-        {/* Comment / View Link */}
-        <Link href={`/posts/${post._id}`} className="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors">
-          <MessageSquare size={16} />
-          <span>Discussion</span>
-        </Link>
+        {/* Removed Discussion Link */}
       </div>
     </div>
   );

@@ -5,82 +5,7 @@ import Post from "@/Components/Pages/Forums/Posts";
 import { FaSearch, FaPlus, FaComments, FaTimes } from "react-icons/fa";
 import { createPost } from "@/actions/createPost";
 
-// --- STATIC DATA ---
-const staticPosts = [
-  {
-    _id: "1",
-    title: "Why Progressive Overload is King 👑",
-    author_name: "Coach Marcus",
-    author_location: "New York, USA",
-    author_img: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?q=80&w=1000&auto=format&fit=crop",
-    short_description: "If you aren't adding weight, reps, or intensity, you aren't growing. Here is a breakdown of how to track your lifts effectively.",
-    publish_time: "2h ago",
-    role: "Admin",
-    category: "Training",
-    upvotes: 142,
-  },
-  {
-    _id: "2",
-    title: "Meal Prep Hacks for Busy People 🥗",
-    author_name: "Sarah Jenkins",
-    author_location: "London, UK",
-    author_img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1000&auto=format&fit=crop",
-    short_description: "Spending 5 hours on Sunday cooking? Stop. Here is my 1-hour method to prep lunch for the whole week.",
-    publish_time: "5h ago",
-    role: "Trainer",
-    category: "Nutrition",
-    upvotes: 89,
-  },
-  {
-    _id: "3",
-    title: "Is Creatine Actually Safe?",
-    author_name: "Dr. Kenji Sato",
-    author_location: "Tokyo, Japan",
-    author_img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1000&auto=format&fit=crop",
-    short_description: "Clearing up the myths about kidney damage and hair loss. Scientific breakdown of the most researched supplement.",
-    publish_time: "1d ago",
-    role: "Expert",
-    category: "Nutrition",
-    upvotes: 256,
-  },
-  {
-    _id: "4",
-    title: "My Transformation: 300lbs to 180lbs",
-    author_name: "James Doe",
-    author_location: "Toronto, Canada",
-    author_img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000&auto=format&fit=crop",
-    short_description: "It wasn't easy, but here is exactly what I ate and how I trained to lose over 100lbs in a year.",
-    publish_time: "2d ago",
-    role: "Member",
-    category: "Success Stories",
-    upvotes: 567,
-  },
-  {
-    _id: "5",
-    title: "Best Gym Shoes for Squatting?",
-    author_name: "Emily R.",
-    author_location: "Berlin, Germany",
-    author_img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop",
-    short_description: "Converse vs. Romaleos vs. Barefoot. I tested them all so you don't have to.",
-    publish_time: "3d ago",
-    role: "Member",
-    category: "Gear",
-    upvotes: 45,
-  },
-  {
-    _id: "6",
-    title: "How to Fix Anterior Pelvic Tilt",
-    author_name: "Physio Mike",
-    author_location: "Sydney, Aus",
-    author_img: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=1000&auto=format&fit=crop",
-    short_description: "Does your lower back hurt after squats? You might have APT. Here are 3 daily stretches to fix it.",
-    publish_time: "4d ago",
-    role: "Expert",
-    category: "Injury Prevention",
-    upvotes: 312,
-  },
-];
-
+// --- STATIC DATA REMOVED ---
 const categories = ["All", "Training", "Nutrition", "Gear", "Success Stories", "Injury Prevention"];
 
 export default function ForumsClient({ dbPosts }: { dbPosts: any[] }) {
@@ -89,9 +14,8 @@ export default function ForumsClient({ dbPosts }: { dbPosts: any[] }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Combine static and DB posts
-  // DB posts should come first (newest)
-  const allPosts = [...dbPosts, ...staticPosts];
+  // Use only DB posts
+  const allPosts = dbPosts;
 
   // Filter Logic
   const filteredPosts = allPosts.filter((post) => {

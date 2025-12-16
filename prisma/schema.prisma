@@ -32,6 +32,7 @@ model User {
   subscription Subscription?
   bookings     Booking[]
   posts        Post[]
+  votes        Vote[]
 }
 
 model Post {
@@ -45,7 +46,25 @@ model Post {
 
   authorId    String
   author      User     @relation(fields: [authorId], references: [id])
+  votes       Vote[]
 }
+
+model Vote {
+  id     String   @id @default(cuid())
+  type   VoteType
+  userId String
+  postId String
+  user   User     @relation(fields: [userId], references: [id])
+  post   Post     @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId])
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
 
 model Subscription {
   id        String   @id @default(cuid())
