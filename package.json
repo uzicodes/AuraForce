@@ -19,6 +19,7 @@
     "date-fns": "^3.6.0",
     "firebase": "^10.12.2",
     "framer-motion": "^12.23.26",
+    "ldrs": "^1.1.9",
     "lucide-react": "^0.511.0",
     "next": "^16.0.7",
     "react": "^19.2.1",
