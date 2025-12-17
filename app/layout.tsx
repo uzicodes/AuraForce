@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ClerkProvider } from '@clerk/nextjs';
 import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider'; 
+import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress'; 
 
 import Navbar from '@/Components/Shared/Navbar';
 import Footer from '@/Components/Shared/Footer';
@@ -34,10 +35,11 @@ export default function RootLayout({ children }) {
         <body>
           <QueryClientProvider client={queryClient}>
             
-            {/* --- ADD THE WATCHER HERE --- */}
-            {/* It must be INSIDE ClerkProvider so it knows if the user is logged in */}
             <AutoLogoutProvider>
               
+              {/* Scroll Progress Bar at the very top */}
+              <HomeScrollProgress />
+
               <Navbar />
               <div className="min-h-[calc(100vh-216px)]">
                 {children}
@@ -46,7 +48,6 @@ export default function RootLayout({ children }) {
               <Toaster />
 
             </AutoLogoutProvider>
-            {/* ----------------------------- */}
 
           </QueryClientProvider>
         </body>
