@@ -50,6 +50,7 @@ export default async function ForumsPage() {
     };
   });
 
-  return <ForumsClient dbPosts={dbPosts} />;
+  return <ForumsClient dbPosts={dbPosts} isLoggedIn={!!user} />;
 }
+
 

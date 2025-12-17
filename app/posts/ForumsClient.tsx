@@ -1,21 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "@/Components/Pages/Forums/Posts"; 
 import { FaSearch, FaPlus, FaComments, FaTimes } from "react-icons/fa";
 import { createPost } from "@/actions/createPost";
+import toast from "react-hot-toast";
 
 // --- STATIC DATA REMOVED ---
 const categories = ["All", "Training", "Nutrition", "Gear", "Success Stories", "Injury Prevention"];
 
-export default function ForumsClient({ dbPosts }: { dbPosts: any[] }) {
+export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], isLoggedIn: boolean }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      toast.error("Please login to Post");
+    }
+  }, [isLoggedIn]);
+
   // Use only DB posts
   const allPosts = dbPosts;
+
 
   // Filter Logic
   const filteredPosts = allPosts.filter((post) => {
@@ -62,7 +70,13 @@ export default function ForumsClient({ dbPosts }: { dbPosts: any[] }) {
           </div>
           
           <button 
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => {
+              if (!isLoggedIn) {
+                toast.error("Please login to Post");
+                return;
+              }
+              setIsModalOpen(true);
+            }}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-full font-bold transition-all shadow-lg shadow-emerald-900/20 hover:scale-105"
           >
             <FaPlus className="text-sm" /> 
