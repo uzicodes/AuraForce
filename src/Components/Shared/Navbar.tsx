@@ -6,14 +6,32 @@ import { FaTimes, FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
 import { useUser, SignOutButton } from "@clerk/nextjs";
+import { usePathname } from "next/navigation"; // 1. Import pathname
+import { getNavProfileImage } from "@/actions/getNavData"; // 2. Import our action
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
+  const pathname = usePathname(); // 3. Get current path
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [dbImage, setDbImage] = useState<string | null>(null); // 4. State for DB image
   const lastScrollY = useRef(0);
+
+  // --- NEW: Fetch DB Image on Mount & Navigation ---
+  useEffect(() => {
+    if (isSignedIn) {
+      getNavProfileImage().then((img) => {
+        if (img) setDbImage(img);
+      });
+    }
+  }, [isSignedIn, pathname]); // Re-fetch when user logs in OR changes pages
+  // ------------------------------------------------
+
+  // Determine which image to show (DB > Clerk > None)
+  const displayImage = dbImage || user?.imageUrl;
+  const hasImage = Boolean(displayImage);
 
   useEffect(() => {
     const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -111,21 +129,21 @@ const Navbar = () => {
                 ))}
               </ul>
 
-              {/* Green Profile Avatar (Clickable) - Only shown when logged in */}
+              {/* Profile Avatar */}
               {isSignedIn && (
                 <>
                   <Link 
                     href="/profile" 
                     className={`group relative flex items-center justify-center w-10 h-10 rounded-full ${
-                      user?.hasImage 
+                      hasImage 
                         ? "bg-transparent overflow-hidden" 
                         : "bg-emerald-500 hover:bg-emerald-400 text-white"
                     } transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50`}
                     title="View Profile"
                   >
-                    {user?.hasImage ? (
+                    {hasImage ? (
                       <Image 
-                        src={user.imageUrl} 
+                        src={displayImage!} 
                         alt="Profile" 
                         fill 
                         className="object-cover" 
@@ -150,7 +168,7 @@ const Navbar = () => {
                 </>
               )}
 
-              {/* Login Button - Only shown when NOT logged in */}
+              {/* Login Button */}
               {!isSignedIn && (
                 <Link
                   href="/login"
@@ -239,13 +257,13 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                   >
                     <span className={`w-8 h-8 rounded-full ${
-                      user?.hasImage
+                      hasImage
                         ? "bg-transparent overflow-hidden relative"
                         : "bg-emerald-500 flex items-center justify-center text-white text-xs"
                     }`}>
-                      {user?.hasImage ? (
+                      {hasImage ? (
                         <Image 
-                          src={user.imageUrl} 
+                          src={displayImage!} 
                           alt="Profile" 
                           fill 
                           className="object-cover" 
