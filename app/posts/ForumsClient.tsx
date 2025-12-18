@@ -15,12 +15,6 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      toast.error("Please login to Post");
-    }
-  }, [isLoggedIn]);
-
   // Use only DB posts
   const allPosts = dbPosts;
 
