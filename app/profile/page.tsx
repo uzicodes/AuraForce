@@ -42,7 +42,6 @@ const getTime = (date: Date) => {
   }).format(date);
 };
 
-// New Helper: Calculate Age from DOB
 const calculateAge = (dob: Date) => {
   const diffMs = Date.now() - dob.getTime();
   const ageDt = new Date(diffMs);
@@ -54,7 +53,7 @@ const Profile = async () => {
   const user = await checkUser();
   if (!user) redirect("/login");
 
-  // 2. Get Clerk user for avatar
+  // 2. Get Clerk user
   const clerkUser = await currentUser();
 
   // 3. Fetch User Data
@@ -78,9 +77,11 @@ const Profile = async () => {
   const isActive = dbUser.subscription?.isActive || false;
   const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
-  const avatarUrl = clerkUser?.imageUrl || dbUser.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
+  
+  // ✅ IMAGE PRIORITY FIX: DB Image -> Clerk Image -> Placeholder
+  const avatarUrl = dbUser.image || clerkUser?.imageUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
 
-  // --- PREPARE OPTIONAL STATS ---
+  // --- STATS ---
   const userAge = dbUser.dob ? calculateAge(dbUser.dob) : null;
   const userHeight = (dbUser.heightFeet && dbUser.heightInches) 
     ? `${dbUser.heightFeet}'${dbUser.heightInches}"` 
@@ -138,7 +139,6 @@ const Profile = async () => {
           <div className="flex-1 text-center md:text-left mb-2 md:mb-4">
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">{dbUser.name}</h1>
             
-            {/* Standard Info (ID, Date Joined) */}
             <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 text-sm text-zinc-400 mb-3">
               <span className="flex items-center gap-1 bg-zinc-800/50 px-3 py-1 rounded-full border border-zinc-700/50">
                 <FaIdCard className="text-emerald-500" /> ID: {dbUser.id.slice(-6).toUpperCase()}
@@ -148,43 +148,31 @@ const Profile = async () => {
               </span>
             </div>
 
-            {/* --- NEW SECTION: OPTIONAL PHYSICAL STATS --- */}
-            {/* This row only appears if at least one stat exists */}
+            {/* OPTIONAL STATS */}
             {(dbUser.location || userAge || dbUser.weight || userHeight) && (
               <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-2">
-                
-                {/* Location */}
                 {dbUser.location && (
                   <span className="flex items-center gap-1.5 text-xs font-semibold bg-zinc-800 text-zinc-300 px-3 py-1.5 rounded-lg border border-zinc-700">
                     <FaMapMarkerAlt className="text-emerald-400" /> {dbUser.location}
                   </span>
                 )}
-
-                {/* Age (Calculated from DOB) */}
                 {userAge !== null && (
                   <span className="flex items-center gap-1.5 text-xs font-semibold bg-zinc-800 text-zinc-300 px-3 py-1.5 rounded-lg border border-zinc-700">
                     <FaBirthdayCake className="text-emerald-400" /> {userAge} yrs
                   </span>
                 )}
-
-                {/* Weight */}
                 {dbUser.weight && (
                   <span className="flex items-center gap-1.5 text-xs font-semibold bg-zinc-800 text-zinc-300 px-3 py-1.5 rounded-lg border border-zinc-700">
                     <FaWeight className="text-emerald-400" /> {dbUser.weight} kg
                   </span>
                 )}
-
-                {/* Height */}
                 {userHeight && (
                   <span className="flex items-center gap-1.5 text-xs font-semibold bg-zinc-800 text-zinc-300 px-3 py-1.5 rounded-lg border border-zinc-700">
                     <FaRulerVertical className="text-emerald-400" /> {userHeight}
                   </span>
                 )}
-
               </div>
             )}
-            {/* ------------------------------------------- */}
-
           </div>
 
           {/* Action Buttons */}
@@ -198,12 +186,11 @@ const Profile = async () => {
           </div>
         </div>
 
-        {/* MAIN GRID (Keep logic same as before) */}
+        {/* MAIN GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* LEFT COLUMN */}
           <div className="lg:col-span-2 space-y-8">
-             {/* ... Membership Cards ... */}
              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                {/* Plan Name */}
                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
@@ -213,7 +200,6 @@ const Profile = async () => {
                  <div className="text-lg font-bold text-white mb-1 truncate">{planName}</div>
                  <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Current Plan</div>
                </div>
-               
                {/* Status */}
                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
@@ -224,7 +210,6 @@ const Profile = async () => {
                  </div>
                  <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Status</div>
                </div>
-
                {/* Renewal */}
                <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
                  <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">

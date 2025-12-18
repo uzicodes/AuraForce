@@ -28,3 +28,15 @@ export async function updateProfile(formData: FormData) {
   // Redirect back to profile view
   redirect("/profile");
 }
+
+export async function updateProfileImage(clerkId: string, imageUrl: string) {
+  await db.user.update({
+    where: { clerkUserId: clerkId },
+    data: {
+      image: imageUrl, // Update the image field
+    },
+  });
+
+  revalidatePath("/profile");
+}
+
