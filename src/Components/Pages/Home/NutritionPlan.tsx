@@ -4,18 +4,19 @@ import React from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { FaAppleAlt, FaFire, FaLeaf, FaChartPie } from "react-icons/fa";
-
-// 1. IMPORT SWIPER MODULES & STYLES
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-fade';
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
-// --- CAROUSEL IMAGES ---
+// --- DATA ARRAYS ---
 const carouselImages = [
-  "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop", // Original
-  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop", // Healthy Bowl
-  "https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=2006&auto=format&fit=crop" // Smoothies/Ingredients
+  "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=2006&auto=format&fit=crop"
 ];
 
 const features = [
@@ -41,7 +42,7 @@ const features = [
   },
 ];
 
-// Animation Variants (Unchanged)
+// --- ANIMATION VARIANTS ---
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -64,7 +65,27 @@ const itemVariants: Variants = {
   },
 };
 
-const NutritionSection = () => {
+// --- COMPONENT ---
+const NutritionPlan = () => {
+  const { isSignedIn } = useAuth();
+  const router = useRouter();
+
+  const handleStartPlan = () => {
+    if (!isSignedIn) {
+      toast.error("Please login to access your Nutrition Plan", {
+        icon: "🔒",
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
+      router.push("/login");
+    } else {
+      router.push("/nutrition");
+    }
+  };
+
   return (
     <section className="relative py-24 bg-zinc-950 overflow-hidden">
       
@@ -73,7 +94,7 @@ const NutritionSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* HEADER SECTION (Unchanged) */}
+        {/* HEADER SECTION */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -98,7 +119,7 @@ const NutritionSection = () => {
         {/* MAIN CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           
-          {/* LEFT: IMAGE CAROUSEL (Updated) */}
+          {/* LEFT: IMAGE CAROUSEL */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -107,15 +128,10 @@ const NutritionSection = () => {
             className="relative"
           >
             <div className="relative h-[500px] w-full rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl group">
-              
-              {/* --- 2. SWIPER CAROUSEL COMPONENT --- */}
               <Swiper
                 modules={[Autoplay, EffectFade]}
                 effect="fade"
-                autoplay={{
-                  delay: 3000,
-                  disableOnInteraction: false,
-                }}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
                 loop={true}
                 className="h-full w-full"
               >
@@ -127,20 +143,31 @@ const NutritionSection = () => {
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
-                    {/* Dark gradient overlay for better text contrast */}
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent" />
                   </SwiperSlide>
                 ))}
               </Swiper>
+
+              <div className="absolute bottom-6 left-6 right-6 p-6 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-zinc-700/50 z-20">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold text-xl">
+                    95%
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold">Goal Reached</h4>
+                    <p className="text-xs text-zinc-400">Consistent nutrition yields results.</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* RIGHT: SCROLLING FEATURES LIST (Unchanged) */}
+          {/* RIGHT: SCROLLING FEATURES LIST */}
           <motion.div 
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }} // Triggers when 100px into view
+            viewport={{ once: true, margin: "-100px" }}
             className="space-y-6"
           >
             {features.map((item, index) => (
@@ -164,7 +191,10 @@ const NutritionSection = () => {
             ))}
 
             <motion.div variants={itemVariants} className="pt-6">
-              <button className="px-8 py-3.5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+              <button 
+                onClick={handleStartPlan}
+                className="px-8 py-3.5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+              >
                 Start Your Nutrition Plan
               </button>
             </motion.div>
@@ -176,4 +206,4 @@ const NutritionSection = () => {
   );
 };
 
-export default NutritionSection;
+export default NutritionPlan;
