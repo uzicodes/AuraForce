@@ -98,16 +98,16 @@ const Footer = () => {
             <h3 className="text-white font-bold text-lg mb-6">Services</h3>
             <ul className="space-y-3">
               {[
-                "Personal Training",
-                "Group Classes",
-                "Nutrition Planning",
-                "Fitness Assessment"
+                { name: "Personal Training", path: "/allTrainers" },
+                { name: "Group Classes", path: "/allClasses" },
+                { name: "Nutrition Planning", path: "/#nutrition-plan" },
+                { name: "Fitness Assessment", path: "/#features" }
               ].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-zinc-500 hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 group">
+                <li key={item.name}>
+                  <Link href={item.path} className="text-zinc-500 hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-zinc-800 group-hover:bg-emerald-500 transition-colors" />
-                    <span className="group-hover:translate-x-1 transition-transform">{item}</span>
-                  </a>
+                    <span className="group-hover:translate-x-1 transition-transform">{item.name}</span>
+                  </Link>
                 </li>
               ))}
             </ul>

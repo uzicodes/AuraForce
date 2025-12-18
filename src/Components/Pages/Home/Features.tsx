@@ -52,7 +52,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section id="features" className="py-24 bg-zinc-950 relative overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />

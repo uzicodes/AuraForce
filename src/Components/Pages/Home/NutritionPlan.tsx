@@ -87,7 +87,7 @@ const NutritionPlan = () => {
   };
 
   return (
-    <section className="relative py-24 bg-zinc-950 overflow-hidden">
+    <section id="nutrition-plan" className="relative py-24 bg-zinc-950 overflow-hidden">
       
       {/* Background Gradient Blob */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
@@ -147,18 +147,6 @@ const NutritionPlan = () => {
                   </SwiperSlide>
                 ))}
               </Swiper>
-
-              <div className="absolute bottom-6 left-6 right-6 p-6 bg-zinc-900/80 backdrop-blur-md rounded-2xl border border-zinc-700/50 z-20">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-emerald-500 flex items-center justify-center text-black font-bold text-xl">
-                    95%
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold">Goal Reached</h4>
-                    <p className="text-xs text-zinc-400">Consistent nutrition yields results.</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </motion.div>
 
