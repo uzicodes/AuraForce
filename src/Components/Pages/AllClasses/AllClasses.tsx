@@ -2,22 +2,85 @@ import { useEffect, useRef, useState } from "react";
 import { FaFire, FaSearch } from "react-icons/fa";
 import ClassCard from "./ClassCard";
 
-// 1. STATIC DATA (Replaces Database)
-// I added enough items here to test your pagination (6 per page)
+// 1. STATIC DATA (Updated with Local Images)
 const staticClasses = [
-  { _id: 1, classname: "Spartan HIIT", trainer: "Marcus Thorne", duration: "45 Min", intensity: "Extreme", image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1000&auto=format&fit=crop", description: "High intensity interval training designed to burn fat and build endurance." },
-  { _id: 2, classname: "Power Yoga Flow", trainer: "Dr. Kenji Sato", duration: "60 Min", intensity: "Medium", image: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=1000&auto=format&fit=crop", description: "A strength-focused yoga session to improve mobility and core stability." },
-  { _id: 3, classname: "Iron Pump", trainer: "Sarah Jenkins", duration: "75 Min", intensity: "High", image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", description: "Classic bodybuilding hypertrophy training. Isolate muscles and grow." },
-  { _id: 4, classname: "Marathon Prep", trainer: "Elena Rodriguez", duration: "90 Min", intensity: "High", image: "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1000&auto=format&fit=crop", description: "Endurance running drills mixed with lower body plyometrics." },
-  { _id: 5, classname: "Boxing Basics", trainer: "Mike Tyson", duration: "50 Min", intensity: "High", image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=1000&auto=format&fit=crop", description: "Learn the sweet science. Footwork, jabs, and defensive maneuvers." },
-  { _id: 6, classname: "Core Crusher", trainer: "Sarah Jenkins", duration: "30 Min", intensity: "Medium", image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1000&auto=format&fit=crop", description: "A quick, brutal session focused entirely on abdominal strength." },
-  { _id: 7, classname: "CrossFit Mayhem", trainer: "Marcus Thorne", duration: "60 Min", intensity: "Extreme", image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1000&auto=format&fit=crop", description: "Functional fitness at its peak. Barbells, gymnastics, and cardio." },
-  { _id: 8, classname: "Morning Mobility", trainer: "Dr. Kenji Sato", duration: "40 Min", intensity: "Low", image: "https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=1000&auto=format&fit=crop", description: "Wake up your joints and prepare your body for the day ahead." },
+  { 
+    _id: 1, 
+    classname: "Spartan HIIT", 
+    trainer: "Marcus Thorne", 
+    duration: "45 Min", 
+    intensity: "Extreme", 
+    image: "/images/classes/1.jpg", // Local Image
+    description: "High intensity interval training designed to burn fat and build endurance." 
+  },
+  { 
+    _id: 2, 
+    classname: "Power Yoga Flow", 
+    trainer: "Dr. Kenji Sato", 
+    duration: "60 Min", 
+    intensity: "Medium", 
+    image: "/images/classes/2.jpg", // Local Image
+    description: "A strength-focused yoga session to improve mobility and core stability." 
+  },
+  { 
+    _id: 3, 
+    classname: "Iron Pump", 
+    trainer: "Sarah Jenkins", 
+    duration: "75 Min", 
+    intensity: "High", 
+    image: "/images/classes/3.jpg", // Local Image
+    description: "Classic bodybuilding hypertrophy training. Isolate muscles and grow." 
+  },
+  { 
+    _id: 4, 
+    classname: "Marathon Prep", 
+    trainer: "Elena Rodriguez", 
+    duration: "90 Min", 
+    intensity: "High", 
+    image: "/images/classes/4.jpg", // Local Image
+    description: "Endurance running drills mixed with lower body plyometrics." 
+  },
+  { 
+    _id: 5, 
+    classname: "Boxing Basics", 
+    trainer: "Mike Tyson", 
+    duration: "50 Min", 
+    intensity: "High", 
+    image: "/images/classes/5.jpg", // Local Image
+    description: "Learn the sweet science. Footwork, jabs, and defensive maneuvers." 
+  },
+  { 
+    _id: 6, 
+    classname: "Core Crusher", 
+    trainer: "Sarah Jenkins", 
+    duration: "30 Min", 
+    intensity: "Medium", 
+    image: "/images/classes/6.jpg", // Local Image
+    description: "A quick, brutal session focused entirely on abdominal strength." 
+  },
+  { 
+    _id: 7, 
+    classname: "CrossFit Mayhem", 
+    trainer: "Marcus Thorne", 
+    duration: "60 Min", 
+    intensity: "Extreme", 
+    image: "/images/classes/7.jpg", // Reusing image 1 for demo purposes
+    description: "Functional fitness at its peak. Barbells, gymnastics, and cardio." 
+  },
+  { 
+    _id: 8, 
+    classname: "Morning Mobility", 
+    trainer: "Dr. Kenji Sato", 
+    duration: "40 Min", 
+    intensity: "Low", 
+    image: "/images/classes/8.jpg", // Reusing image 2 for demo purposes
+    description: "Wake up your joints and prepare your body for the day ahead." 
+  },
 ];
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // PAGINATION LOGIC (Client-side)
   const [currentPage, setCurrentPage] = useState(0);
@@ -46,11 +109,9 @@ const AllClasses = () => {
   }, [search]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (inputRef.current && !inputRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
         // Optional: clear search on click outside
-        // setSearch("");
-        // inputRef.current.value = "";
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
