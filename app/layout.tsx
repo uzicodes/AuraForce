@@ -8,13 +8,16 @@ import { ClerkProvider } from '@clerk/nextjs';
 import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider'; 
 import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress'; 
 
+// Import the helper
+import ScrollToTop from '@/Components/Helpers/ScrollToTop';
+
 import Navbar from '@/Components/Shared/Navbar';
 import Footer from '@/Components/Shared/Footer';
 import '../src/index.css';
 import '../src/App.css';
 import '../src/button.css';
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
   const pathname = usePathname();
 
@@ -37,6 +40,9 @@ export default function RootLayout({ children }) {
             
             <AutoLogoutProvider>
               
+              {/* Added ScrollToTop here to reset position on page change */}
+              <ScrollToTop />
+
               {/* Scroll Progress Bar at the very top */}
               <HomeScrollProgress />
 

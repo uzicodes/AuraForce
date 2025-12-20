@@ -1,40 +1,25 @@
-"use client";
+import React from "react";
+import { Loader2 } from "lucide-react";
 
-import { useEffect } from "react";
-import { hatch } from 'ldrs'
-import { Orbitron } from "next/font/google"; 
-
-const orbitron = Orbitron({ subsets: ["latin"], weight: "700" });
-
-export default function Loading() {
-  useEffect(() => {
-    // ldrs requires registration in the browser
-    if (typeof window !== "undefined") {
-      hatch.register();
-    }
-  }, []);
-
+const Loading = () => {
   return (
-    <div className="flex min-h-[60vh] w-full flex-col items-center justify-center gap-6 bg-zinc-950">
+    // FIXED: Use 'fixed inset-0 z-[9999]' to cover the entire screen including the footer
+    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-zinc-950">
       
-      {/* Hatch Loader */}
-      <l-hatch
-        size="50"       
-        stroke="4"
-        speed="3.5"
-        color="#10b981" // Emerald-500
-      ></l-hatch>
-
-      {/* AURA FORCE with Animation */}
-      <div className="flex flex-col items-center gap-1">
-        <h1 className={`${orbitron.className} text-xl tracking-widest text-white animate-pulse`}>
+      {/* Animated Logo/Text */}
+      <div className="flex flex-col items-center gap-4 animate-pulse">
+        <h1 className="text-3xl font-bold tracking-tighter text-white">
           AURA <span className="text-emerald-500">FORCE</span>
         </h1>
-        <p className="text-[10px] uppercase tracking-[0.2em] text-zinc-500">
-          Loading...
-        </p>
+        
+        <div className="flex items-center gap-2 text-emerald-500/80 text-xs tracking-[0.2em] font-medium uppercase">
+           <Loader2 className="w-4 h-4 animate-spin" />
+           <span>Loading...</span>
+        </div>
       </div>
 
     </div>
   );
-}
+};
+
+export default Loading;
