@@ -1,19 +1,17 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image'; // Ensure you have next/image, or switch to <img> if using Vite/CRA
+import Image from 'next/image'; 
 import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
 
-// 1. STATIC DATA (No Database Required)
-// I added the "Pro" copy here so it displays immediately.
+// 1. STATIC DATA (Updated with Local Images)
 const trainers = [
   {
     _id: 1,
     name: "Marcus 'The Anvil' Thorne",
     role: "Head Strength Coach",
     specialty: "Powerlifting & Biomechanics",
-    // Custom, non-AI bio:
     bio: "Marcus doesn't believe in exercise for the sake of sweating. He builds raw power using a science-based approach to barbell mechanics. If you want to lift heavy without breaking your spine, he's your guy.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1000&auto=format&fit=crop", 
+    image: "/images/trainers/1.jpg",
     socials: { instagram: "#", twitter: "#" }
   },
   {
@@ -22,7 +20,7 @@ const trainers = [
     role: "Performance Specialist",
     specialty: "Hybrid Athlete Training",
     bio: "Elena bridges the gap between the marathon runner and the weightlifter. Her programming is intense, high-volume, and designed to make you look good while being able to run a 5k at a moment's notice.",
-    image: "https://images.unsplash.com/photo-1594381898411-846e7d193883?q=80&w=1000&auto=format&fit=crop",
+    image: "/images/trainers/2.jpg", 
     socials: { instagram: "#", linkedin: "#" }
   },
   {
@@ -31,16 +29,16 @@ const trainers = [
     role: "Mobility & Recovery",
     specialty: "Functional Movement",
     bio: "Most people train until they break. Kenji trains you to last. With a background in physiotherapy, his sessions focus on bulletproofing your joints and correcting posture so you can train hard for decades, not just years.",
-    image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1000&auto=format&fit=crop",
+    image: "/images/trainers/3.jpg",
     socials: { twitter: "#", linkedin: "#" }
   },
   {
     _id: 4,
-    name: "Sarah Jenkins",
+    name: "Philips Parker",
     role: "Hypertrophy Coach",
     specialty: "Bodybuilding Prep",
-    bio: "Sarah specializes in the art of sculpting. No cardio bunnies here—this is about time-under-tension, strict nutrition protocols, and building a physique that dominates the stage or the beach.",
-    image: "https://images.unsplash.com/photo-1611672585731-fa10603fb9e0?q=80&w=1000&auto=format&fit=crop",
+    bio: "Philips specializes in the art of sculpting. No cardio bunnies here—this is about time-under-tension, strict nutrition protocols, and building a physique that dominates the stage or the beach.",
+    image: "/images/trainers/4.jpg", 
     socials: { instagram: "#", twitter: "#" }
   }
 ];
@@ -81,11 +79,12 @@ const AllTrainers = () => {
             <div className="relative h-80 w-full overflow-hidden bg-zinc-800">
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-90" />
               
-              {/* Note: Using <img> for simplicity, if using Next.js change to <Image fill ... /> */}
-              <img 
+              {/* Switched to next/image for optimization, keeping style/crop */}
+              <Image 
                 src={trainer.image} 
                 alt={trainer.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
               />
               
               {/* SPECIALTY BADGE */}

@@ -10,7 +10,7 @@ const staticClasses = [
     trainer: "Marcus Thorne", 
     duration: "45 Min", 
     intensity: "Extreme", 
-    image: "/images/classes/1.jpg", // Local Image
+    image: "/images/classes/1.jpg", 
     description: "High intensity interval training designed to burn fat and build endurance." 
   },
   { 
@@ -19,7 +19,7 @@ const staticClasses = [
     trainer: "Dr. Kenji Sato", 
     duration: "60 Min", 
     intensity: "Medium", 
-    image: "/images/classes/2.jpg", // Local Image
+    image: "/images/classes/2.jpg", 
     description: "A strength-focused yoga session to improve mobility and core stability." 
   },
   { 
@@ -28,7 +28,7 @@ const staticClasses = [
     trainer: "Sarah Jenkins", 
     duration: "75 Min", 
     intensity: "High", 
-    image: "/images/classes/3.jpg", // Local Image
+    image: "/images/classes/3.jpg",
     description: "Classic bodybuilding hypertrophy training. Isolate muscles and grow." 
   },
   { 
@@ -37,7 +37,7 @@ const staticClasses = [
     trainer: "Elena Rodriguez", 
     duration: "90 Min", 
     intensity: "High", 
-    image: "/images/classes/4.jpg", // Local Image
+    image: "/images/classes/4.jpg",
     description: "Endurance running drills mixed with lower body plyometrics." 
   },
   { 
@@ -46,7 +46,7 @@ const staticClasses = [
     trainer: "Mike Tyson", 
     duration: "50 Min", 
     intensity: "High", 
-    image: "/images/classes/5.jpg", // Local Image
+    image: "/images/classes/5.jpg", 
     description: "Learn the sweet science. Footwork, jabs, and defensive maneuvers." 
   },
   { 
@@ -55,7 +55,7 @@ const staticClasses = [
     trainer: "Sarah Jenkins", 
     duration: "30 Min", 
     intensity: "Medium", 
-    image: "/images/classes/6.jpg", // Local Image
+    image: "/images/classes/6.jpg", 
     description: "A quick, brutal session focused entirely on abdominal strength." 
   },
   { 
@@ -64,7 +64,7 @@ const staticClasses = [
     trainer: "Marcus Thorne", 
     duration: "60 Min", 
     intensity: "Extreme", 
-    image: "/images/classes/7.jpg", // Reusing image 1 for demo purposes
+    image: "/images/classes/7.jpg", 
     description: "Functional fitness at its peak. Barbells, gymnastics, and cardio." 
   },
   { 
@@ -73,7 +73,7 @@ const staticClasses = [
     trainer: "Dr. Kenji Sato", 
     duration: "40 Min", 
     intensity: "Low", 
-    image: "/images/classes/8.jpg", // Reusing image 2 for demo purposes
+    image: "/images/classes/8.jpg", 
     description: "Wake up your joints and prepare your body for the day ahead." 
   },
 ];
