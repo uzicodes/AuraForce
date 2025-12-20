@@ -23,6 +23,7 @@
     "ldrs": "^1.1.9",
     "lucide-react": "^0.511.0",
     "next": "^16.0.7",
+    "nodemailer": "^7.0.11",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "react-hot-toast": "^2.4.1",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^6.0.0",
+    "@types/nodemailer": "^7.0.4",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "autoprefixer": "^10.4.19",
