@@ -4,18 +4,16 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaCheck, FaHeart, FaUsers, FaTrophy, FaArrowRight } from "react-icons/fa";
 
-// 1. Updated Gallery Images
 const galleryImages = [
-  "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2069&auto=format&fit=crop", // New: Man working out (replaced duplicate)
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop", // Dark gym vibes
-  "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=1970&auto=format&fit=crop", // YOUR REQUEST: Woman squatting
-  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop", // Strength/Dumbbells
+  "/images/features/1.jpg",
+  "/images/about/2.jpg",
+  "/images/about/4.jpg",
+
 ];
 
 const AboutUs = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Cycle images every 5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
@@ -41,12 +39,10 @@ const AboutUs = () => {
   return (
     <section className="py-20 bg-zinc-950 overflow-hidden relative">
       
-      {/* Background Glow */}
       <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* HEADER SECTION */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
             <span>Our Story</span>
@@ -59,7 +55,6 @@ const AboutUs = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           
-          {/* LEFT CONTENT (Text) */}
           <div className="order-2 lg:order-1 space-y-8">
             <h3 className="text-3xl font-bold text-white leading-tight">
               Empowering Your Fitness Journey <br />
@@ -82,7 +77,6 @@ const AboutUs = () => {
               </p>
             </div>
 
-            {/* Benefits List */}
             <div className="space-y-4 pt-4">
               {benefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3 group">
@@ -96,7 +90,6 @@ const AboutUs = () => {
               ))}
             </div>
 
-            {/* Stats Row */}
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800">
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon;
@@ -114,12 +107,9 @@ const AboutUs = () => {
             </div>
           </div>
 
-          {/* RIGHT CONTENT (Slideshow Image) */}
           <div className="order-1 lg:order-2 relative">
-            {/* Main Image Container */}
             <div className="relative h-[500px] lg:h-[600px] w-full rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl shadow-emerald-900/20 group bg-zinc-900">
                 
-                {/* Slideshow Implementation */}
                 {galleryImages.map((src, index) => (
                   <div
                     key={src}
@@ -137,10 +127,8 @@ const AboutUs = () => {
                   </div>
                 ))}
 
-                 {/* Dark Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent z-20 opacity-60" />
 
-                {/* Floating "Join Today" Card */}
                 <div className="absolute bottom-6 left-6 right-6 z-30 bg-zinc-900/80 backdrop-blur-md p-6 rounded-xl border border-zinc-700 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                     <div className="flex items-center justify-between">
                         <div>
@@ -154,7 +142,6 @@ const AboutUs = () => {
                 </div>
             </div>
 
-            {/* Decor Elements behind image */}
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-zinc-800 rounded-xl -z-10" />
             <div className="absolute -bottom-4 -left-4 w-full h-full border border-zinc-800 rounded-2xl -z-10" />
           </div>
