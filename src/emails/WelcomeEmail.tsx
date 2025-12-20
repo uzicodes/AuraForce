@@ -4,9 +4,6 @@ interface WelcomeEmailProps {
   userEmail: string;
 }
 
-// ⚠️ REPLACE THIS WITH YOUR LIVE DOMAIN
-// If you are on localhost, the image won't show in real emails. 
-// It must be a public URL like "https://auraforce.vercel.app"
 const baseUrl = process.env.VERCEL_URL 
   ? `https://${process.env.VERCEL_URL}` 
   : 'https://auraforce.vercel.app'; // Fallback to your Vercel URL
@@ -17,7 +14,6 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
       
       {/* --- LOGO SECTION --- */}
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        {/* Make sure 'for favicon.png' is inside your public folder */}
         <img 
           src={`${baseUrl}/for favicon.png`} 
           alt="AuraForce Logo" 
