@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image"; // 1. Import Image component
 import { FaPlay, FaStar } from "react-icons/fa";
 
 const Banner = () => {
@@ -6,18 +7,21 @@ const Banner = () => {
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
       
       {/* Background Image Container */}
-      <div
-        className="absolute inset-0 bg-cover bg-top bg-no-repeat"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=2070&auto=format&fit=crop')`,
-        }}
-      >
+      <div className="absolute inset-0">
+        <Image 
+          src="/images/banner/banner.jpg" 
+          alt="Fitness Banner"
+          fill // background-size: cover'
+          className="object-cover object-top" // crops from the top
+          priority // Loads image high priority 
+        />
+        
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/80 to-zinc-950/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/80 to-zinc-950/40 z-10"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           
           {/* Badge */}

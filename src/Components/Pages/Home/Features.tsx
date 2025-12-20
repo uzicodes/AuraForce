@@ -18,42 +18,42 @@ const features = [
     icon: <FaDumbbell />,
     title: "Hypertrophy & Strength",
     description: "Scientific-based progressive overload plans designed to maximize muscle growth and raw power.",
-    image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?q=80&w=2070&auto=format&fit=crop",
+    image: "/images/features/1.jpg",
     accent: "group-hover:text-emerald-400"
   },
   {
     icon: <FaFireAlt />,
     title: "High-Intensity (HIIT)",
     description: "Burn fat and boost endurance with our explosive circuit training modules and timers.",
-    image: "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?q=80&w=2025&auto=format&fit=crop",
+    image: "/images/features/2.jpg", 
     accent: "group-hover:text-orange-500"
   },
   {
     icon: <FaRunning />,
     title: "Cardio Endurance",
     description: "Track your distance, pace, and VO2 max with precision. specialized plans for marathon prep.",
-    image: "https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=2069&auto=format&fit=crop",
+    image: "/images/features/3.jpg", 
     accent: "group-hover:text-blue-500"
   },
   {
     icon: <FaHeartbeat />,
     title: "Mobility & Recovery",
     description: "Prevent injury with guided stretching routines, yoga flows, and active recovery sessions.",
-    image: "https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=1926&auto=format&fit=crop",
+    image: "/images/features/4.jpg", 
     accent: "group-hover:text-purple-500"
   },
   {
     icon: <FaStopwatch />,
     title: "Competition Prep",
     description: "Detailed macro tracking and posing guides for bodybuilders preparing for the stage.",
-    image: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?q=80&w=1974&auto=format&fit=crop",
+    image: "/images/features/5.jpg", 
     accent: "group-hover:text-red-500"
   },
   {
     icon: <FaBrain />,
     title: "Mindset & Focus",
     description: "Meditation and mental toughness drills to keep your head in the game during heavy lifts.",
-    image: "https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?q=80&w=2069&auto=format&fit=crop",
+    image: "/images/features/6.jpg", 
     accent: "group-hover:text-teal-500"
   }
 ];
@@ -104,7 +104,7 @@ const Features = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group relative h-[400px] w-full rounded-3xl overflow-hidden cursor-pointer"
             >
-              {/* 1. Background Image with Zoom Effect */}
+              {/* Background Image with Zoom Effect */}
               <Image
                 src={feature.image}
                 alt={feature.title}
@@ -112,14 +112,14 @@ const Features = () => {
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* 2. Gradient Overlays */}
+              {/* Gradient Overlays */}
               {/* Base dark overlay */}
               <div className="absolute inset-0 bg-zinc-950/70 transition-opacity duration-300 group-hover:bg-zinc-950/60" />
               
               {/* Gradient from bottom to make text readable */}
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
 
-              {/* 3. Content Container */}
+              {/* Content Container */}
               <div className="absolute inset-0 p-8 flex flex-col justify-end">
                 
                 {/* Icon Wrapper */}
@@ -141,13 +141,13 @@ const Features = () => {
                 <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
                   <span className="text-sm font-bold text-white uppercase tracking-wider">Explore</span>
                   <div className={`p-2 rounded-full bg-white/10 text-white ${feature.accent}`}>
-                     <FaArrowRight />
+                      <FaArrowRight />
                   </div>
                 </div>
 
               </div>
 
-              {/* 4. Border Glow Effect */}
+              {/* Border Glow Effect */}
               <div className="absolute inset-0 border-2 border-white/0 rounded-3xl transition-colors duration-300 group-hover:border-emerald-500/30 pointer-events-none" />
               
             </motion.div>
