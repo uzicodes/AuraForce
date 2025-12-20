@@ -78,7 +78,7 @@ const Profile = async () => {
   const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
   
-  // ✅ IMAGE PRIORITY FIX: DB Image -> Clerk Image -> Placeholder
+  // ✅ FIX: Prioritize DB Image -> Clerk Image -> Placeholder
   const avatarUrl = dbUser.image || clerkUser?.imageUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000";
 
   // --- STATS ---
