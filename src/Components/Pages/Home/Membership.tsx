@@ -1,11 +1,35 @@
-"use client"; // 1. Required for Framer Motion
+"use client";
 
-import Link from "next/link";
 import { FaCheck, FaCrown, FaTags } from "react-icons/fa";
-import { motion } from "framer-motion"; // 2. Import motion
-import { Reveal } from "@/Components/Shared/Reveal"; // 3. Import Reveal wrapper
+import { motion } from "framer-motion";
+import { Reveal } from "@/Components/Shared/Reveal";
+import { useUser } from "@clerk/nextjs";     
+import { useRouter } from "next/navigation"; 
+import toast from "react-hot-toast";         
 
 const Membership = () => {
+  const { isSignedIn } = useUser(); // current login status
+  const router = useRouter();       // Initialize the router
+
+  // logic when a button is clicked
+  const handleSubscribe = (planName: string) => {
+    if (isSignedIn) {
+      //LOGGED IN? Go to checkout
+      router.push(`/checkout?plan=${planName}`);
+    } else {
+      //  NOT LOGGED IN? Show error toast!!!
+      toast.error("Please log in to continue with payment. If you don't have an account, please register.", {
+        duration: 4000,
+        style: {
+          background: '#18181b', 
+          color: '#fff',         
+          border: '1px solid #27272a'
+        },
+      });
+      router.push('/login'); 
+    }
+  };
+
   const packages = [
     {
       name: "Basic",
@@ -69,13 +93,12 @@ const Membership = () => {
         {/* Pricing Grid with Staggered Animation */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
-            // 4. Converted div to motion.div
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 50 }} // Start hidden and lower
-              whileInView={{ opacity: 1, y: 0 }} // Animate to visible
-              viewport={{ once: true, margin: "-50px" }} // Trigger once
-              transition={{ duration: 0.5, delay: index * 0.2 }} // Stagger delay (0s, 0.2s, 0.4s)
+              initial={{ opacity: 0, y: 50 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true, margin: "-50px" }} 
+              transition={{ duration: 0.5, delay: index * 0.2 }} 
               className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 ${
                 pkg.highlight 
                   ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10" 
@@ -109,16 +132,17 @@ const Membership = () => {
                 ))}
               </ul>
 
-              <Link 
-                href={`/checkout?plan=${pkg.name}`} 
-                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center ${
+              {/* REPLACED <Link> WITH <button> */}
+              <button 
+                onClick={() => handleSubscribe(pkg.name)}
+                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${
                   pkg.highlight 
                     ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20" 
                     : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
                 }`}
               >
                 {pkg.button}
-              </Link>
+              </button>
             </motion.div>
           ))}
         </div>
