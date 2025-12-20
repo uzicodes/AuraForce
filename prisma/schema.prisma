@@ -77,6 +77,15 @@ model Subscription {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+
+// Newsletter Subscribers
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+
 model Booking {
   id        String   @id @default(cuid())
   className String
