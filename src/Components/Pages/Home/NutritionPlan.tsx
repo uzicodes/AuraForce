@@ -13,10 +13,11 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 // --- DATA ARRAYS ---
+// Updated with your local images
 const carouselImages = [
-  "https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=2070&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1494390248081-4e521a5940db?q=80&w=2006&auto=format&fit=crop"
+  "/images/nutrition/1.jpg",
+  "/images/nutrition/2.jpg",
+  "/images/nutrition/3.jpg"
 ];
 
 const features = [

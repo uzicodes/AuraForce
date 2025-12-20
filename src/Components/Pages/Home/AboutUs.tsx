@@ -5,9 +5,10 @@ import Image from "next/image";
 import { FaCheck, FaHeart, FaUsers, FaTrophy, FaArrowRight } from "react-icons/fa";
 
 const galleryImages = [
-  "/images/features/1.jpg",
+  "/images/about/3.jpg",
   "/images/about/2.jpg",
   "/images/about/4.jpg",
+  "/images/about/1.jpg",
 
 ];
 
