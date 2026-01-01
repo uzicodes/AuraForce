@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FaCheck, FaHeart, FaUsers, FaTrophy, FaArrowRight } from "react-icons/fa";
 
 const galleryImages = [
@@ -136,9 +137,11 @@ const AboutUs = () => {
                             <h4 className="text-white font-bold text-lg">Ready to start?</h4>
                             <p className="text-zinc-400 text-sm">Join the strongest community today.</p>
                         </div>
-                        <button className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
-                            <FaArrowRight />
-                        </button>
+                        <Link href="/allClasses">
+                          <button className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
+                              <FaArrowRight />
+                          </button>
+                        </Link>
                     </div>
                 </div>
             </div>

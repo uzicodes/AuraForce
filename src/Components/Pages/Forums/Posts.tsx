@@ -9,7 +9,7 @@ import Image from "next/image";
 import { deletePost } from "@/actions/deletePost";
 import { toggleVote } from "@/actions/toggleVote";
 
-/* eslint-disable react/prop-types */
+
 const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
   // Initialize state from props
   const [isDeleting, setIsDeleting] = useState(false);
@@ -26,15 +26,12 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
         newUserVote = null;
         newUpvotes = newVoteType === "UP" ? state.upvotes - 1 : state.upvotes + 1;
       } else {
-        // Switch or Add
+
         if (state.userVote === "UP") {
-           // Switching UP -> DOWN
            newUpvotes = state.upvotes - 2;
         } else if (state.userVote === "DOWN") {
-           // Switching DOWN -> UP
            newUpvotes = state.upvotes + 2;
         } else {
-           // Adding new vote
            newUpvotes = newVoteType === "UP" ? state.upvotes + 1 : state.upvotes - 1;
         }
         newUserVote = newVoteType;
