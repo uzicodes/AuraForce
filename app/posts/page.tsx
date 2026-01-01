@@ -38,12 +38,12 @@ export default async function ForumsPage() {
     return {
       _id: post.id,
       title: post.title,
-      author_name: post.author.name || "Unknown User",
-      author_location: post.author.location || "Unknown Location",
-      author_img: post.author.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000",
+      author_name: post.author?.name || "Unknown User",
+      author_location: post.author?.location || "Unknown Location",
+      author_img: post.author?.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000",
       short_description: post.content,
       publish_time: new Date(post.createdAt).toLocaleDateString(),
-      role: post.author.role === "ADMIN" ? "Admin" : post.author.role === "TRAINER" ? "Trainer" : "Member",
+      role: post.author?.role === "ADMIN" ? "Admin" : post.author?.role === "TRAINER" ? "Trainer" : "Member",
       category: post.category,
       upvotes: post.upvotes,
       userVote: userVote, // Pass the vote status
