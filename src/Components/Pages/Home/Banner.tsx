@@ -1,6 +1,36 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image"; // 1. Import Image component
+import Image from "next/image"; 
 import { FaPlay, FaStar } from "react-icons/fa";
+import { useEffect, useRef } from "react";
+import { useInView, useMotionValue, useSpring } from "framer-motion";
+
+const Counter = ({ value, suffix = "", prefix = "" }: { value: number, suffix?: string, prefix?: string }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, {
+    damping: 30,
+    stiffness: 200,
+  });
+  const isInView = useInView(ref, { once: true, margin: "-10px" });
+
+  useEffect(() => {
+    if (isInView) {
+      motionValue.set(value);
+    }
+  }, [isInView, value, motionValue]);
+
+  useEffect(() => {
+    return springValue.on("change", (latest) => {
+      if (ref.current) {
+        ref.current.textContent = `${prefix}${Math.floor(latest)}${suffix}`;
+      }
+    });
+  }, [springValue, prefix, suffix]);
+
+  return <span ref={ref} />;
+};
 
 const Banner = () => {
   return (
@@ -11,8 +41,8 @@ const Banner = () => {
         <Image 
           src="/images/banner/banner.jpg" 
           alt="Fitness Banner"
-          fill // background-size: cover'
-          className="object-cover object-top" // crops from the top
+          fill 
+          className="object-cover object-top" 
           priority // Loads image high priority 
         />
         
@@ -70,19 +100,19 @@ const Banner = () => {
           <div className="grid grid-cols-3 gap-8 mt-20 pt-8 border-t border-zinc-800/60">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
-                5K+
+                <Counter value={5} suffix="K+" />
               </div>
               <div className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Active Users</div>
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
-                50+
+                <Counter value={50} suffix="+" />
               </div>
               <div className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Workout Plans</div>
             </div>
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
-                24/7
+                <Counter value={24} suffix="/7" />
               </div>
               <div className="text-zinc-400 text-sm font-medium uppercase tracking-wider">Support</div>
             </div>
