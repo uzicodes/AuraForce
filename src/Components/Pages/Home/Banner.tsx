@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaPlay, FaStar } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
 
@@ -52,15 +52,7 @@ const Banner = () => {
 
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-
-          {/* Badge */}
-          <div className="hidden sm:inline-flex items-center gap-2 bg-zinc-900/50 backdrop-blur-md border border-emerald-500/30 rounded-full px-4 py-2 mb-8 shadow-lg shadow-emerald-900/10">
-            <FaStar className="text-emerald-500 text-sm" />
-            <span className="text-zinc-200 text-sm font-medium tracking-wide">
-              Trusted by 10,000+ Fitness Enthusiasts
-            </span>
-          </div>
+        <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-0">
 
           {/* Main heading */}
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight tracking-tight">
