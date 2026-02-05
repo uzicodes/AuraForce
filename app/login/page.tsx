@@ -12,7 +12,7 @@ const Login = () => {
   const router = useRouter();
   const { isLoaded, signIn, setActive } = useSignIn();
   const [loading, setLoading] = useState(false);
-  
+
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLoaded) return;
@@ -59,12 +59,12 @@ const Login = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-zinc-950 overflow-hidden">
-      
+    <section className="relative min-h-screen flex items-center justify-center pt-20 pb-12 px-4 sm:px-6 lg:px-8 bg-zinc-950 overflow-hidden">
+
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-zinc-950/90 z-10" /> 
-        <Image 
+        <div className="absolute inset-0 bg-zinc-950/90 z-10" />
+        <Image
           src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
           alt="Gym Background"
           fill
@@ -74,7 +74,7 @@ const Login = () => {
       </div>
 
       <div className="relative z-20 w-full max-w-sm bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden">
-        
+
         <div className="px-8 pt-8 pb-6 text-center">
           <div className="relative w-12 h-12 mx-auto mb-4">
             <Image
@@ -93,7 +93,7 @@ const Login = () => {
         </div>
 
         <form onSubmit={handleLogin} className="px-8 pb-8 space-y-4">
-          
+
           <div className="space-y-1">
             <label className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
             <div className="relative group">
@@ -102,7 +102,7 @@ const Login = () => {
               </div>
               <input
                 type="email"
-                name="email" 
+                name="email"
                 className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
                 placeholder="name@example.com"
                 required
@@ -124,17 +124,17 @@ const Login = () => {
                 required
               />
             </div>
-            
+
             {/* --- UPDATED LINK IS HERE --- */}
             <div className="text-right">
-              <Link 
-                href="/forgot-password" 
+              <Link
+                href="/forgot-password"
                 className="text-[10px] text-zinc-400 hover:text-emerald-400 transition-colors"
               >
                 Forgot password?
               </Link>
             </div>
-            
+
           </div>
 
           <button disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform active:scale-[0.98] disabled:opacity-50">
