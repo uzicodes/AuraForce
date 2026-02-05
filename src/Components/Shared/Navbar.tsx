@@ -95,7 +95,7 @@ const Navbar = () => {
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-1.5 group pl-1">
-            <div className="relative w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden flex items-center justify-center animate-breathe">
               <Image
                 src="/for favicon.png"
                 alt="Aura Force Logo"
@@ -104,7 +104,7 @@ const Navbar = () => {
                 priority
               />
             </div>
-            <span className="text-base font-bold text-white tracking-tight hidden sm:block" style={{ fontFamily: 'Tenada, sans-serif' }}>
+            <span className="text-base font-bold text-white tracking-tight hidden sm:block mt-1" style={{ fontFamily: 'Tenada, sans-serif' }}>
               AURA<span className="text-emerald-400">FORCE</span>
             </span>
           </Link>

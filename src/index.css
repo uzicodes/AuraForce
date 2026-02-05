@@ -8,3 +8,20 @@
     font-weight: normal;
     font-style: normal;
 }
+
+/* Breathing/Pulsing animation like a heartbeat */
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+.animate-breathe {
+    animation: breathe 3s ease-in-out infinite;
+}
