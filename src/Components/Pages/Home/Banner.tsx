@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; 
+import Image from "next/image";
 import { FaPlay, FaStar } from "react-icons/fa";
 import { useEffect, useRef } from "react";
 import { useInView, useMotionValue, useSpring } from "framer-motion";
@@ -35,17 +35,17 @@ const Counter = ({ value, suffix = "", prefix = "" }: { value: number, suffix?: 
 const Banner = () => {
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
-      
+
       {/* Background Image Container */}
       <div className="absolute inset-0">
-        <Image 
-          src="/images/banner/banner.jpg" 
+        <Image
+          src="/images/banner/banner.jpg"
           alt="Fitness Banner"
-          fill 
-          className="object-cover object-top" 
+          fill
+          className="object-cover object-top"
           priority // Loads image high priority 
         />
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/80 to-zinc-950/40 z-10"></div>
       </div>
@@ -53,9 +53,9 @@ const Banner = () => {
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          
+
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-zinc-900/50 backdrop-blur-md border border-emerald-500/30 rounded-full px-4 py-2 mb-8 shadow-lg shadow-emerald-900/10">
+          <div className="hidden sm:inline-flex items-center gap-2 bg-zinc-900/50 backdrop-blur-md border border-emerald-500/30 rounded-full px-4 py-2 mb-8 shadow-lg shadow-emerald-900/10">
             <FaStar className="text-emerald-500 text-sm" />
             <span className="text-zinc-200 text-sm font-medium tracking-wide">
               Trusted by 10,000+ Fitness Enthusiasts
@@ -85,7 +85,7 @@ const Banner = () => {
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
               </button>
             </Link>
-            
+
             <Link href="https://youtu.be/Sm8O9Lcnr7o?si=-xBc7pWkuUAgAnU1" target="_blank">
               <button className="group flex items-center gap-3 bg-zinc-800/40 backdrop-blur-sm hover:bg-zinc-800/60 text-white px-6 py-4 rounded-full font-semibold transition-all duration-300 border border-zinc-700 hover:border-emerald-500/50">
                 <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-black transition-colors duration-300">

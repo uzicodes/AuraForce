@@ -110,9 +110,38 @@ const Navbar = () => {
           </Link>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-6 bg-white/20 mx-1"></div>
+          <div className="w-px h-6 bg-white/20 mx-1"></div>
 
-          {/* Desktop Navigation Links */}
+          {/* Mobile Navigation Links - visible on mobile, hidden on lg */}
+          <ul className="flex lg:hidden items-center gap-1">
+            <li>
+              <Link
+                href="/"
+                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+              >
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/allClasses"
+                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+              >
+                Classes
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/allTrainers"
+                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+              >
+                Trainers
+              </Link>
+            </li>
+          </ul>
+
+          {/* Desktop Navigation Links - hidden on mobile, visible on lg */}
+          <div className="hidden lg:block w-px h-6 bg-white/20 mx-1"></div>
           <ul className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <li key={link.path}>
@@ -136,8 +165,8 @@ const Navbar = () => {
                 <Link
                   href="/profile"
                   className={`relative flex items-center justify-center w-8 h-8 rounded-full ${hasImage
-                      ? "overflow-hidden ring-2 ring-emerald-500/50"
-                      : "bg-emerald-500/80 hover:bg-emerald-400 text-white"
+                    ? "overflow-hidden ring-2 ring-emerald-500/50"
+                    : "bg-emerald-500/80 hover:bg-emerald-400 text-white"
                     } transition-all duration-300 hover:scale-110 hover:ring-emerald-400`}
                   title="View Profile"
                 >
@@ -241,8 +270,8 @@ const Navbar = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   <span className={`w-8 h-8 rounded-full ${hasImage
-                      ? "bg-transparent overflow-hidden relative"
-                      : "bg-emerald-500 flex items-center justify-center text-white text-xs"
+                    ? "bg-transparent overflow-hidden relative"
+                    : "bg-emerald-500 flex items-center justify-center text-white text-xs"
                     }`}>
                     {hasImage ? (
                       <Image
