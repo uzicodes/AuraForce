@@ -80,133 +80,121 @@ const Navbar = () => {
     return scrolled ? "text-black" : "text-black";
   };
 
-  const getGlassEffect = () => {
-    if (darkMode) {
-      return scrolled ? "backdrop-blur-md bg-black/30 shadow-lg" : "bg-transparent";
-    } else {
-      return scrolled ? "backdrop-blur-md bg-white/70 shadow-lg" : "bg-transparent";
-    }
-  };
-
   return (
     <>
+      {/* Floating Glassmorphism Navbar */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${getGlassEffect()} ${
-          hidden ? "-translate-y-full" : "translate-y-0"
-        }`}
+        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${hidden ? "-translate-y-[150%]" : "translate-y-0"
+          }`}
       >
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center justify-between py-4">
-            {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="relative w-12 h-12 bg-cyan rounded-lg flex items-center justify-center p-1 shadow-sm transform transition-transform duration-300 group-hover:scale-110">
-                <Image
-                  src="/for favicon.png"
-                  alt="Aura Force Logo"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
-              <span className="text-2xl font-bold  text-white tracking-tight" style={{ fontFamily: 'Tenada, sans-serif' }}>
-                AURA<span className="text-emerald-500"> FORCE </span> 
-              </span>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              <ul className="flex space-x-8">
-                {navLinks.map((link) => (
-                  <li key={link.path}>
-                    <Link
-                      href={link.path}
-                      className={`relative font-medium ${getTextColor()} hover:text-[#16A34A] transition-colors duration-300 py-2 group`}
-                    >
-                      {link.name}
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#16A34A] transition-all duration-300 group-hover:w-full"></span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              {/* Profile Avatar */}
-              {isSignedIn && (
-                <>
-                  <Link 
-                    href="/profile" 
-                    className={`group relative flex items-center justify-center w-10 h-10 rounded-full ${
-                      hasImage 
-                        ? "bg-transparent overflow-hidden" 
-                        : "bg-emerald-500 hover:bg-emerald-400 text-white"
-                    } transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:scale-110 hover:shadow-emerald-500/50`}
-                    title="View Profile"
-                  >
-                    {hasImage ? (
-                      <Image 
-                        src={displayImage!} 
-                        alt="Profile" 
-                        fill 
-                        className="object-cover" 
-                      />
-                    ) : (
-                      <FaUser className="text-sm" />
-                    )}
-                  </Link>
-                  
-                  <SignOutButton>
-                    <button
-                      className={`flex items-center gap-2 px-5 py-2 font-medium rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
-                        darkMode 
-                          ? "border-zinc-700 text-white hover:bg-zinc-800 hover:border-zinc-800" 
-                          : "border-zinc-300 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300"
-                      }`}
-                    >
-                      <FaSignOutAlt className="text-sm" />
-                      <span>Logout</span>
-                    </button>
-                  </SignOutButton>
-                </>
-              )}
-
-              {/* Login Button */}
-              {!isSignedIn && (
-                <Link
-                  href="/login"
-                  className={`flex items-center gap-2 px-5 py-2 font-medium rounded-lg border-2 transition-all duration-300 transform hover:scale-105 ${
-                    darkMode 
-                      ? "border-zinc-700 text-white hover:bg-zinc-800 hover:border-zinc-800" 
-                      : "border-zinc-300 text-zinc-800 hover:bg-zinc-100 hover:border-zinc-300"
-                  }`}
-                >
-                  <FaSignInAlt className="text-sm" />
-                  <span>Login</span>
-                </Link>
-              )}
+        <nav
+          className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 backdrop-blur-xl bg-black/40 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+          style={{
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+          }}
+        >
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-1.5 group pl-1">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform transition-transform duration-300 group-hover:scale-110">
+              <Image
+                src="/for favicon.png"
+                alt="Aura Force Logo"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
+            <span className="text-base font-bold text-white tracking-tight hidden sm:block" style={{ fontFamily: 'Tenada, sans-serif' }}>
+              AURA<span className="text-emerald-400">FORCE</span>
+            </span>
+          </Link>
 
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden menu-button focus:outline-none z-[60]"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? (
-                <FaTimes className={`w-6 h-6 ${getTextColor()}`} />
-              ) : (
-                <HiMenuAlt3 className={`w-6 h-6 ${getTextColor()}`} />
-              )}
-            </button>
-          </nav>
-        </div>
+          {/* Divider */}
+          <div className="hidden lg:block w-px h-6 bg-white/20 mx-1"></div>
+
+          {/* Desktop Navigation Links */}
+          <ul className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <li key={link.path}>
+                <Link
+                  href={link.path}
+                  className="relative px-3 py-1.5 text-sm font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+
+          {/* Divider */}
+          <div className="hidden lg:block w-px h-6 bg-white/20 mx-1"></div>
+
+          {/* Profile & Auth Buttons */}
+          <div className="hidden lg:flex items-center gap-2">
+            {isSignedIn && (
+              <>
+                <Link
+                  href="/profile"
+                  className={`relative flex items-center justify-center w-8 h-8 rounded-full ${hasImage
+                      ? "overflow-hidden ring-2 ring-emerald-500/50"
+                      : "bg-emerald-500/80 hover:bg-emerald-400 text-white"
+                    } transition-all duration-300 hover:scale-110 hover:ring-emerald-400`}
+                  title="View Profile"
+                >
+                  {hasImage ? (
+                    <Image
+                      src={displayImage!}
+                      alt="Profile"
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <FaUser className="text-xs" />
+                  )}
+                </Link>
+
+                <SignOutButton>
+                  <button
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white/80 rounded-full border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300"
+                  >
+                    <FaSignOutAlt className="text-xs" />
+                    <span>Logout</span>
+                  </button>
+                </SignOutButton>
+              </>
+            )}
+
+            {!isSignedIn && (
+              <Link
+                href="/login"
+                className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium text-white bg-emerald-500/80 rounded-full hover:bg-emerald-400 transition-all duration-300"
+              >
+                <FaSignInAlt className="text-xs" />
+                <span>Login</span>
+              </Link>
+            )}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="lg:hidden menu-button focus:outline-none p-2 rounded-full hover:bg-white/10 transition-colors"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <FaTimes className="w-5 h-5 text-white" />
+            ) : (
+              <HiMenuAlt3 className="w-5 h-5 text-white" />
+            )}
+          </button>
+        </nav>
       </header>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm ${
-          darkMode ? "bg-gray-900/95 backdrop-blur-md" : "bg-white/95 backdrop-blur-md"
-        } shadow-2xl transform transition-transform duration-300 ease-in-out z-[55] mobile-menu ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm ${darkMode ? "bg-gray-900/95 backdrop-blur-md" : "bg-white/95 backdrop-blur-md"
+          } shadow-2xl transform transition-transform duration-300 ease-in-out z-[55] mobile-menu ${isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full pt-20 p-6 overflow-y-auto">
           <div className="absolute top-4 right-4">
@@ -234,11 +222,9 @@ const Navbar = () => {
               >
                 <Link
                   href={link.path}
-                  className={`block text-xl font-medium ${
-                    darkMode ? "text-white" : "text-gray-800"
-                  } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
-                    darkMode ? "border-gray-700" : "border-gray-200"
-                  }`}
+                  className={`block text-xl font-medium ${darkMode ? "text-white" : "text-gray-800"
+                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${darkMode ? "border-gray-700" : "border-gray-200"
+                    }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
@@ -247,33 +233,30 @@ const Navbar = () => {
             ))}
             {isSignedIn && (
               <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
-                  <Link
-                    href="/profile"
-                    className={`flex items-center gap-3 text-xl font-medium ${
-                      darkMode ? "text-white" : "text-gray-800"
-                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${
-                      darkMode ? "border-gray-700" : "border-gray-200"
+                <Link
+                  href="/profile"
+                  className={`flex items-center gap-3 text-xl font-medium ${darkMode ? "text-white" : "text-gray-800"
+                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${darkMode ? "border-gray-700" : "border-gray-200"
                     }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <span className={`w-8 h-8 rounded-full ${
-                      hasImage
-                        ? "bg-transparent overflow-hidden relative"
-                        : "bg-emerald-500 flex items-center justify-center text-white text-xs"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className={`w-8 h-8 rounded-full ${hasImage
+                      ? "bg-transparent overflow-hidden relative"
+                      : "bg-emerald-500 flex items-center justify-center text-white text-xs"
                     }`}>
-                      {hasImage ? (
-                        <Image 
-                          src={displayImage!} 
-                          alt="Profile" 
-                          fill 
-                          className="object-cover" 
-                        />
-                      ) : (
-                        <FaUser />
-                      )}
-                    </span>
-                    My Profile
-                  </Link>
+                    {hasImage ? (
+                      <Image
+                        src={displayImage!}
+                        alt="Profile"
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <FaUser />
+                    )}
+                  </span>
+                  My Profile
+                </Link>
               </li>
             )}
           </ul>
@@ -288,7 +271,7 @@ const Navbar = () => {
                 Login
               </Link>
             )}
-            
+
             {isSignedIn && (
               <SignOutButton>
                 <button
