@@ -109,8 +109,6 @@ const Navbar = () => {
             </span>
           </Link>
 
-          {/* Divider */}
-          <div className="w-px h-6 bg-white/20 mx-1"></div>
 
           {/* Mobile Navigation Links - visible on mobile,*/}
           <ul className="flex lg:hidden items-center gap-1">
@@ -154,8 +152,6 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Divider */}
-          <div className="hidden lg:block w-px h-6 bg-white/20 mx-1"></div>
 
           {/* Profile & Auth Buttons */}
           <div className="hidden lg:flex items-center gap-2">

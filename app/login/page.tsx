@@ -78,7 +78,7 @@ const Login = () => {
         <div className="px-8 pt-8 pb-6 text-center">
           <div className="relative w-12 h-12 mx-auto mb-4">
             <Image
-              src="/logo_bgremoved.png"
+              src="/for favicon.png"
               alt="Aura Force Logo"
               fill
               className="object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]"

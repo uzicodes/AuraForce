@@ -121,7 +121,7 @@ const Register = () => {
         <div className="px-6 pt-6 pb-3 text-center">
           <div className="relative w-10 h-10 mx-auto mb-3">
             <Image
-              src="/logo_bgremoved.png"
+              src="/for favicon.png"
               alt="Aura Force Logo"
               fill
               className="object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]"
