@@ -6,20 +6,20 @@ import { FaTimes, FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
 import { useUser, SignOutButton } from "@clerk/nextjs";
-import { usePathname } from "next/navigation"; // 1. Import pathname
-import { getNavProfileImage } from "@/actions/getNavData"; // 2. Import our action
+import { usePathname } from "next/navigation";
+import { getNavProfileImage } from "@/actions/getNavData";
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
-  const pathname = usePathname(); // 3. Get current path
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [dbImage, setDbImage] = useState<string | null>(null); // 4. State for DB image
+  const [dbImage, setDbImage] = useState<string | null>(null);
   const lastScrollY = useRef(0);
 
-  // --- NEW: Fetch DB Image on Mount & Navigation ---
+  // Fetch DB Image on Mount & Navigation ---
   useEffect(() => {
     if (isSignedIn) {
       getNavProfileImage().then((img) => {
@@ -75,6 +75,14 @@ const Navbar = () => {
     { name: "Forums", path: "/posts" },
   ];
 
+  // Pages that should show active indicator
+  const activeIndicatorPaths = ["/allTrainers", "/allClasses", "/posts"];
+
+  // Check if a path should show active indicator
+  const isActivePath = (path: string) => {
+    return activeIndicatorPaths.includes(path) && pathname === path;
+  };
+
   const getTextColor = () => {
     if (darkMode) return "text-white";
     return scrolled ? "text-black" : "text-black";
@@ -123,7 +131,10 @@ const Navbar = () => {
             <li>
               <Link
                 href="/allClasses"
-                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                className={`relative px-2.5 py-1.5 text-xs font-medium rounded-full transition-all duration-300 ${isActivePath("/allClasses")
+                  ? "text-white bg-white/20"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
               >
                 Classes
               </Link>
@@ -131,7 +142,10 @@ const Navbar = () => {
             <li>
               <Link
                 href="/allTrainers"
-                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                className={`relative px-2.5 py-1.5 text-xs font-medium rounded-full transition-all duration-300 ${isActivePath("/allTrainers")
+                  ? "text-white bg-white/20"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
               >
                 Trainers
               </Link>
@@ -144,7 +158,10 @@ const Navbar = () => {
               <li key={link.path}>
                 <Link
                   href={link.path}
-                  className="relative px-3 py-1.5 text-sm font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
+                  className={`relative px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${isActivePath(link.path)
+                    ? "text-white bg-white/20"
+                    : "text-white/80 hover:text-white hover:bg-white/10"
+                    }`}
                 >
                   {link.name}
                 </Link>
@@ -246,8 +263,11 @@ const Navbar = () => {
               >
                 <Link
                   href={link.path}
-                  className={`block text-xl font-medium ${darkMode ? "text-white" : "text-gray-800"
-                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${darkMode ? "border-gray-700" : "border-gray-200"
+                  className={`flex items-center gap-3 text-xl font-medium transition-colors duration-200 py-2 border-b ${isActivePath(link.path)
+                    ? "text-gray-400 border-gray-400/50"
+                    : darkMode
+                      ? "text-white border-gray-700 hover:text-[#16A34A]"
+                      : "text-gray-800 border-gray-200 hover:text-[#16A34A]"
                     }`}
                   onClick={() => setIsOpen(false)}
                 >
