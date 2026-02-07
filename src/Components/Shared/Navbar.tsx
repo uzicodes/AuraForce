@@ -29,9 +29,9 @@ const Navbar = () => {
   }, [isSignedIn, pathname]); // Re-fetch when user logs in OR changes pages
   // ------------------------------------------------
 
-  // Determine which image to show (DB > Clerk > None)
-  const displayImage = dbImage || user?.imageUrl;
-  const hasImage = Boolean(displayImage);
+  // Determine which image to show (DB > Dummy)
+  const displayImage = dbImage || "/dp.png";
+  const hasImage = true;
 
   useEffect(() => {
     const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -173,36 +173,18 @@ const Navbar = () => {
           {/* Profile & Auth Buttons */}
           <div className="hidden lg:flex items-center gap-2">
             {isSignedIn && (
-              <>
-                <Link
-                  href="/profile"
-                  className={`relative flex items-center justify-center w-8 h-8 rounded-full ${hasImage
-                    ? "overflow-hidden ring-2 ring-emerald-500/50"
-                    : "bg-emerald-500/80 hover:bg-emerald-400 text-white"
-                    } transition-all duration-300 hover:scale-110 hover:ring-emerald-400`}
-                  title="View Profile"
-                >
-                  {hasImage ? (
-                    <Image
-                      src={displayImage!}
-                      alt="Profile"
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <FaUser className="text-xs" />
-                  )}
-                </Link>
-
-                <SignOutButton>
-                  <button
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-white/80 rounded-full border border-white/20 hover:bg-white/10 hover:text-white transition-all duration-300"
-                  >
-                    <FaSignOutAlt className="text-xs" />
-                    <span>Logout</span>
-                  </button>
-                </SignOutButton>
-              </>
+              <Link
+                href="/profile"
+                className="relative flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400"
+                title="View Profile"
+              >
+                <Image
+                  src={displayImage}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
+              </Link>
             )}
 
             {!isSignedIn && (

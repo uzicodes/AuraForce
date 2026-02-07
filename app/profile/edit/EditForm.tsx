@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { updateProfile } from "@/actions/updateProfile";
-import { 
-  FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaWeight, 
+import {
+  FaUser, FaEnvelope, FaPhone, FaCalendarAlt, FaWeight,
   FaRulerVertical, FaMapMarkerAlt, FaVenusMars, FaSave, FaLock
 } from "react-icons/fa";
 
@@ -33,16 +33,16 @@ export default function EditForm({ user }: { user: any }) {
 
   return (
     <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
-      
+
       {/* Header Banner */}
       <div className="relative h-40 bg-zinc-800">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-900/20 to-zinc-900/50" />
         <div className="absolute -bottom-12 left-8">
           <div className="relative w-24 h-24 rounded-full border-4 border-zinc-900 overflow-hidden bg-zinc-800 shadow-xl">
-            <Image 
-              src={user.image || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=1000"} 
-              alt="Profile" 
-              fill 
+            <Image
+              src={user.image || "/dp.png"}
+              alt="Profile"
+              fill
               className="object-cover"
             />
           </div>
@@ -55,22 +55,22 @@ export default function EditForm({ user }: { user: any }) {
 
         {/* The Server Action is passed to 'action' */}
         <form action={updateProfile} onSubmit={() => setLoading(true)} className="space-y-8">
-          
+
           {/* HIDDEN FIELD: To tell the server WHICH user to update */}
           <input type="hidden" name="clerkId" value={user.clerkUserId} />
 
           {/* SECTION 1: Personal Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
+
             {/* Name - NOW USES REAL DATA */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Full Name</label>
               <div className="relative">
-                <input 
-                  type="text" 
-                  name="name" 
-                  defaultValue={user.name || ""} 
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600" 
+                <input
+                  type="text"
+                  name="name"
+                  defaultValue={user.name || ""}
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600"
                 />
                 <FaUser className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
               </div>
@@ -80,12 +80,12 @@ export default function EditForm({ user }: { user: any }) {
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Location</label>
               <div className="relative">
-                <input 
-                  type="text" 
-                  name="location" 
+                <input
+                  type="text"
+                  name="location"
                   defaultValue={user.location || ""}
                   placeholder="e.g. Dhaka, Bangladesh"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600" 
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600"
                 />
                 <FaMapMarkerAlt className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
               </div>
@@ -97,11 +97,11 @@ export default function EditForm({ user }: { user: any }) {
                 Email <FaLock className="text-[10px]" />
               </label>
               <div className="relative">
-                <input 
-                  type="email" 
-                  defaultValue={user.email} 
-                  readOnly 
-                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-zinc-400 cursor-not-allowed" 
+                <input
+                  type="email"
+                  defaultValue={user.email}
+                  readOnly
+                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-zinc-400 cursor-not-allowed"
                 />
                 <FaEnvelope className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-600 text-sm" />
               </div>
@@ -111,12 +111,12 @@ export default function EditForm({ user }: { user: any }) {
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Phone</label>
               <div className="relative">
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="phone"
-                  defaultValue={user.phone || ""} 
+                  defaultValue={user.phone || ""}
                   placeholder="e.g. +880 1XXX XXXXXX"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600" 
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600"
                 />
                 <FaPhone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
               </div>
@@ -130,19 +130,19 @@ export default function EditForm({ user }: { user: any }) {
             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
               <FaWeight className="text-emerald-500" /> Physical Stats
             </h3>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
+
               {/* Date of Birth */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Date of Birth</label>
                 <div className="relative">
-                  <input 
-                    type="date" 
-                    name="dob" 
+                  <input
+                    type="date"
+                    name="dob"
                     value={dob}
                     onChange={(e) => setDob(e.target.value)}
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all [color-scheme:dark]" 
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all [color-scheme:dark]"
                   />
                   <FaCalendarAlt className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm pointer-events-none" />
                 </div>
@@ -152,12 +152,12 @@ export default function EditForm({ user }: { user: any }) {
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Age</label>
                 <div className="relative">
-                  <input 
-                    type="text" 
-                    value={age ? `${age} years` : ""} 
-                    readOnly 
+                  <input
+                    type="text"
+                    value={age ? `${age} years` : ""}
+                    readOnly
                     placeholder="Select DOB"
-                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-bold cursor-not-allowed" 
+                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-emerald-400 font-bold cursor-not-allowed"
                   />
                 </div>
               </div>
@@ -166,8 +166,8 @@ export default function EditForm({ user }: { user: any }) {
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Gender</label>
                 <div className="relative">
-                  <select 
-                    name="gender" 
+                  <select
+                    name="gender"
                     defaultValue={user.gender || "Male"}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none"
                   >
@@ -183,13 +183,13 @@ export default function EditForm({ user }: { user: any }) {
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Weight (kg)</label>
                 <div className="relative">
-                  <input 
-                    type="number" 
-                    name="weight" 
+                  <input
+                    type="number"
+                    name="weight"
                     defaultValue={user.weight || ""}
                     placeholder="00"
                     step="0.1"
-                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
                   />
                   <FaWeight className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
                 </div>
@@ -200,23 +200,23 @@ export default function EditForm({ user }: { user: any }) {
                 <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Height</label>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative">
-                    <input 
-                      type="number" 
-                      name="heightFeet" 
+                    <input
+                      type="number"
+                      name="heightFeet"
                       defaultValue={user.heightFeet || ""}
                       placeholder="Feet"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
                     />
                     <FaRulerVertical className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-bold">FT</span>
                   </div>
                   <div className="relative">
-                    <input 
-                      type="number" 
-                      name="heightInches" 
+                    <input
+                      type="number"
+                      name="heightInches"
                       defaultValue={user.heightInches || ""}
                       placeholder="Inches"
-                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" 
+                      className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
                     />
                     <FaRulerVertical className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-sm" />
                     <span className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-bold">IN</span>
@@ -229,8 +229,8 @@ export default function EditForm({ user }: { user: any }) {
 
           {/* Action Buttons */}
           <div className="flex gap-4 pt-4 border-t border-zinc-800">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               disabled={loading}
               className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
@@ -242,7 +242,7 @@ export default function EditForm({ user }: { user: any }) {
                 </>
               )}
             </button>
-            <Link 
+            <Link
               href="/profile"
               className="px-8 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold py-3.5 rounded-xl transition-all flex items-center"
             >
