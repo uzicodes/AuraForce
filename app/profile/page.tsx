@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs/server";
 import { SignOutButton } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { checkUser } from "@/lib/checkUser";
@@ -54,6 +55,9 @@ const Profile = async () => {
   const user = await checkUser();
   if (!user) redirect("/login");
 
+  // 2. Get Clerk user
+  const clerkUser = await currentUser();
+
 
   // 3. Fetch User Data
   const dbUser = await db.user.findUnique({
@@ -77,8 +81,8 @@ const Profile = async () => {
   const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
 
-  // ✅ FIX: Prioritize DB Image -> Placeholder (Skip Clerk Image for uniformity)
-  const avatarUrl = dbUser.image || "/dp.png";
+  // ✅ FIX: Prioritize DB Image -> Clerk Image -> Placeholder
+  const avatarUrl = dbUser.image || clerkUser?.imageUrl || "/dp.png";
 
   // --- STATS ---
   const userAge = dbUser.dob ? calculateAge(dbUser.dob) : null;

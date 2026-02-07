@@ -40,6 +40,8 @@ export default async function ForumsPage() {
       title: post.title,
       author_name: post.author?.name || "Unknown User",
       author_location: post.author?.location || "Unknown Location",
+      // NOTE: post.author.image comes from DB, which is synced from Clerk (Google or Generated Avatar) on login.
+      // If user has custom image, it's also in DB. So this covers all cases correctly.
       author_img: post.author?.image || "/dp.png",
       short_description: post.content,
       publish_time: new Date(post.createdAt).toLocaleDateString(),

@@ -29,9 +29,9 @@ const Navbar = () => {
   }, [isSignedIn, pathname]); // Re-fetch when user logs in OR changes pages
   // ------------------------------------------------
 
-  // Determine which image to show (DB > Dummy)
-  const displayImage = dbImage || "/dp.png";
-  const hasImage = true;
+  // Determine which image to show (DB > Clerk > None)
+  const displayImage = dbImage || user?.imageUrl;
+  const hasImage = Boolean(displayImage);
 
   useEffect(() => {
     const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -178,12 +178,16 @@ const Navbar = () => {
                 className="relative flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400"
                 title="View Profile"
               >
-                <Image
-                  src={displayImage}
-                  alt="Profile"
-                  fill
-                  className="object-cover"
-                />
+                {hasImage ? (
+                  <Image
+                    src={displayImage!}
+                    alt="Profile"
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <FaUser className="text-xs" />
+                )}
               </Link>
             )}
 
