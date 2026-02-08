@@ -13,11 +13,8 @@ const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [hidden, setHidden] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [dbImage, setDbImage] = useState<string | null>(null);
-  const lastScrollY = useRef(0);
 
   // Fetch DB Image on Mount & Navigation ---
   useEffect(() => {
@@ -41,16 +38,7 @@ const Navbar = () => {
     return () => darkModeMediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrolled(currentScrollY > 20);
-      setHidden(currentScrollY > lastScrollY.current && currentScrollY > 300);
-      lastScrollY.current = currentScrollY;
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Removed scroll-based hiding logic. Navbar will always stay visible.
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -69,7 +57,6 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { name: "Home", path: "/" },
     { name: "All Trainers", path: "/allTrainers" },
     { name: "All Classes", path: "/allClasses" },
     { name: "Forums", path: "/posts" },
@@ -85,15 +72,14 @@ const Navbar = () => {
 
   const getTextColor = () => {
     if (darkMode) return "text-white";
-    return scrolled ? "text-black" : "text-black";
+    return "text-black";
   };
 
   return (
     <>
       {/* Floating Glassmorphism Navbar */}
       <header
-        className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${hidden ? "-translate-y-[150%]" : "translate-y-0"
-          }`}
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 translate-y-0"
       >
         <nav
           className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 backdrop-blur-xl bg-black/40 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
@@ -122,14 +108,6 @@ const Navbar = () => {
           <ul className="flex lg:hidden items-center gap-1">
             <li>
               <Link
-                href="/"
-                className="px-2.5 py-1.5 text-xs font-medium text-white/80 hover:text-white rounded-full hover:bg-white/10 transition-all duration-300"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/allClasses"
                 className={`relative px-2.5 py-1.5 text-xs font-medium rounded-full transition-all duration-300 ${isActivePath("/allClasses")
                   ? "text-white bg-white/20"
@@ -148,6 +126,17 @@ const Navbar = () => {
                   }`}
               >
                 Trainers
+              </Link>
+            </li>
+                        <li>
+              <Link
+                href="/posts"
+                className={`relative px-2.5 py-1.5 text-xs font-medium rounded-full transition-all duration-300 ${isActivePath("/posts")
+                  ? "text-white bg-white/20"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+              >
+                Forums
               </Link>
             </li>
           </ul>
