@@ -150,27 +150,27 @@ const Register = () => {
         </div>
 
         {verifying ? (
-          <form onSubmit={handleVerify} className="px-6 pb-2 space-y-3">
+          <form onSubmit={handleVerify} className="px-6 pb-2 space-y-2">
             <div className="space-y-1">
               <label className="text-[11px] font-medium text-zinc-300 ml-1">Verification Code</label>
               <input
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="block w-full py-2 px-3 text-center text-base tracking-[0.5em] font-mono text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all"
+                className="block w-full py-1.5 px-3 text-center text-base tracking-[0.5em] font-mono text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all"
                 placeholder="000000"
               />
             </div>
-            <button disabled={loading} className="w-full py-2 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all">
+            <button disabled={loading} className="w-full py-1.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all">
               {loading ? "Verifying..." : "Verify & Login"}
             </button>
           </form>
         ) : (
-          <form onSubmit={handleRegister} className="px-5 pb-2 space-y-1.5">
+          <form onSubmit={handleRegister} className="px-5 pb-4 space-y-2.5">
             {/* Google Sign Up Button - Quick Option First */}
             <a
               href="#"
               onClick={handleGoogleSignUp}
-              className="flex items-center justify-center w-full py-2 text-sm font-medium text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 hover:text-white transition-all duration-200"
+              className="flex items-center justify-center w-full py-1.5 text-sm font-medium text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 hover:text-white transition-all duration-200"
             >
               <svg className="w-4 h-4 mr-2" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -194,7 +194,7 @@ const Register = () => {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaUser className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="text" name="name" className="block w-full py-2 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="Enter your full name" required />
+                <input type="text" name="name" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="Enter your full name" required />
               </div>
             </div>
 
@@ -205,7 +205,7 @@ const Register = () => {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaEnvelope className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="email" name="email" className="block w-full py-2 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="name@example.com" required />
+                <input type="email" name="email" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="name@example.com" required />
               </div>
             </div>
 
@@ -225,7 +225,7 @@ const Register = () => {
                   pattern="[0-9]{11}"
                   maxLength={11}
                   minLength={11}
-                  className="block w-full py-2 pl-[4.5rem] pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
+                  className="block w-full py-1.5 pl-[4.5rem] pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600"
                   placeholder="XXXXXXXXXX"
                   title="Please enter exactly 11 digits"
                   required
@@ -240,7 +240,7 @@ const Register = () => {
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaLock className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="password" name="password" className="block w-full py-2 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="••••••••" required />
+                <input type="password" name="password" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="••••••••" required />
               </div>
               <p className="text-[9px] text-zinc-500 ml-1 mt-0.5">
                 1 uppercase, 1 special char, 1 number (min 6)
@@ -248,7 +248,7 @@ const Register = () => {
             </div>
 
             <div className="pt-1">
-              <button disabled={loading} type="submit" className="w-full py-2 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform active:scale-[0.98] disabled:opacity-50">
+              <button disabled={loading} type="submit" className="w-full py-1.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] hover:shadow-[0_0_20px_rgba(16,185,129,0.5)] transform active:scale-[0.98] disabled:opacity-50">
                 {loading ? "Creating Account..." : "Create Account"}
               </button>
             </div>

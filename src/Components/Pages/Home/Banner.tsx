@@ -58,7 +58,7 @@ const Banner = () => {
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 mt-8 leading-tight tracking-tight">
             Your Only Limit is{" "}
             <span className="transparent-text bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-              You !
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">You</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">!</span>
             </span>
           </h1>
 
@@ -72,7 +72,7 @@ const Banner = () => {
             <Link href="/allClasses">
               <button className="group relative bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20 overflow-hidden">
                 <span className="relative z-10 flex items-center gap-2">
-                  Get Started Now !
+                  Get Started !
                 </span>
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
               </button>
@@ -80,7 +80,7 @@ const Banner = () => {
 
             <Link href="https://youtu.be/Sm8O9Lcnr7o?si=-xBc7pWkuUAgAnU1" target="_blank">
               <button className="group flex items-center gap-3 bg-zinc-800/40 backdrop-blur-sm hover:bg-zinc-800/60 text-white px-6 py-4 rounded-full font-semibold transition-all duration-300 border border-zinc-700 hover:border-emerald-500/50">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-black transition-colors duration-300">
+                <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-black transition-colors duration-300">
                   <FaPlay className="text-sm ml-1" />
                 </div>
                 Watch Demo
