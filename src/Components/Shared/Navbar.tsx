@@ -102,6 +102,8 @@ const Navbar = () => {
               AURA<span className="text-emerald-400">FORCE</span>
             </span>
           </Link>
+          {/* gap between logo text & first nav link */}
+          <div className="w-2.5" />
 
 
           {/* Mobile Navigation Links - visible on mobile,*/}
