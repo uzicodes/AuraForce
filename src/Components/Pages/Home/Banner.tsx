@@ -34,7 +34,7 @@ const Counter = ({ value, suffix = "", prefix = "" }: { value: number, suffix?: 
 
 const Banner = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
       {/* Background Image Container */}
       <div className="absolute inset-0">

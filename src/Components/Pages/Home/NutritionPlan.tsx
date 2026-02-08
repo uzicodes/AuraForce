@@ -88,7 +88,7 @@ const NutritionPlan = () => {
   };
 
   return (
-    <section id="nutrition-plan" className="relative py-24 bg-zinc-950 overflow-hidden">
+    <section id="nutrition-plan" className="relative py-24 overflow-hidden">
       
       {/* Background Gradient Blob */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />

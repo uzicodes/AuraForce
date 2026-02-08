@@ -60,7 +60,7 @@ const features = [
 
 const Features = () => {
   return (
-    <section id="features" className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section id="features" className="py-24 relative overflow-hidden">
 
       {/* Background Decor - Gritty Texture Overlay */}
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />

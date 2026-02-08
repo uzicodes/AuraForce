@@ -59,7 +59,7 @@ const scaleRevealVariant: Variants = {
 
 const Testimonials = () => {
   return (
-    <section className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden">
       
       {/* Background Glow Effects */}
       <div className="absolute inset-0 pointer-events-none">

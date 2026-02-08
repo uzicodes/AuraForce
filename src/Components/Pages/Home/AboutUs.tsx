@@ -39,9 +39,7 @@ const AboutUs = () => {
   ];
 
   return (
-    <section className="py-20 min-h-screen bg-zinc-950 text-zinc-100 overflow-hidden relative">
-      {/* Green Glow Background from AllTrainers */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
+    <section className="py-20 min-h-screen text-zinc-100 overflow-hidden relative">
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -51,7 +49,7 @@ const AboutUs = () => {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            About <span className="text-zinc-600">Our Fit Family</span>
+            About <span className="text-emerald-500">Our Fit Family</span>
           </h2>
         </div>
 
