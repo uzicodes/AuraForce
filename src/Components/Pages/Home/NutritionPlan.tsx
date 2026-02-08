@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { FaAppleAlt, FaFire, FaLeaf, FaChartPie } from "react-icons/fa";
+import { Zap } from "lucide-react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
@@ -102,9 +103,10 @@ const NutritionPlan = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl md:text-5xl font-bold text-white mb-6"
+            className="text-3xl md:text-6xl font-bold text-white mb-6"
           >
-            Fuel Your Body. <span className="text-emerald-500">Ignite Your Aura.</span>
+           
+          Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span><Zap className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

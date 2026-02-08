@@ -6,6 +6,7 @@ import { Reveal } from "@/Components/Shared/Reveal";
 import { useUser } from "@clerk/nextjs";     
 import { useRouter } from "next/navigation"; 
 import toast from "react-hot-toast";         
+import { Flame } from "lucide-react";
 
 const Membership = () => {
   const { isSignedIn } = useUser(); // current login status
@@ -71,15 +72,19 @@ const Membership = () => {
         {/* Header with Reveal Animation */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <Reveal>
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-black-500/20 mb-6">
               <FaTags />
               <span>Membership Plans</span>
             </div>
           </Reveal>
           
           <Reveal delay={0.1}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-              Choose Your <span className="text-emerald-500">Power Level</span>
+            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center">
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose </span> <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
+               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
+              <span className="ml-4 text-orange-400/80 w-14 h-14">
+                <Flame className="w-14 h-14" />
+              </span>
             </h2>
           </Reveal>
 

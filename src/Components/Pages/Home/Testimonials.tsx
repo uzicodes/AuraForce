@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { MessageSquareDashed } from "lucide-react";
 import Image from "next/image";
 // 1. Updated Import: Added 'Variants'
 import { motion, Variants } from "framer-motion"; 
@@ -81,8 +82,9 @@ const Testimonials = () => {
             <span>Success Stories</span>
           </motion.div>
           
-          <motion.h2 variants={scaleRevealVariant} className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-            Voices of the <span className="text-emerald-500">Strong.</span>
+          <motion.h2 variants={scaleRevealVariant} className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+            Voices of the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Stong</span>
+            <MessageSquareDashed className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
           <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed">
             Real results from real athletes. Don't just take our word for it—hear from the community dominating their goals.

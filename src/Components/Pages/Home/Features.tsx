@@ -82,7 +82,7 @@ const Features = () => {
 
           <Reveal delay={0.1}>
             <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-              Forge Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-emerald-300">Legacy.</span>
+              Forge Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Legacy</span>
             </h2>
           </Reveal>
 
