@@ -1,40 +1,103 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useClerk, useAuth } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
-export const useAutoLogout = (timeoutMinutes = 30) => {
+export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => {
   const { signOut } = useClerk();
   const { isSignedIn } = useAuth();
   const router = useRouter();
 
-  // Convert minutes to milliseconds (30 mins = 1,800,000 ms)
+  // Constants
   const TIMEOUT_MS = timeoutMinutes * 60 * 1000;
+  const ABSOLUTE_TIMEOUT_MS = absoluteExpiryHours * 60 * 60 * 1000;
+  
+  const STORAGE_KEY_LAST_ACTIVE = 'auraforce_last_active';
+  const STORAGE_KEY_SESSION_START = 'auraforce_session_start';
 
   const handleLogout = useCallback(async () => {
     try {
+      // Clear tracking data
+      localStorage.removeItem(STORAGE_KEY_LAST_ACTIVE);
+      localStorage.removeItem(STORAGE_KEY_SESSION_START);
+      
       await signOut();
-      router.push('/login'); // Redirect to login after logout
+      router.push('/login'); 
     } catch (error) {
       console.error('Logout error:', error);
     }
   }, [signOut, router]);
 
   useEffect(() => {
-    // Only run this logic if the user is actually signed in
+    // run this if the user is actually signed in
     if (!isSignedIn) return;
 
-    let timeoutId: NodeJS.Timeout;
+    const now = Date.now();
 
-    const resetTimer = () => {
-      // Clear existing timer
-      if (timeoutId) clearTimeout(timeoutId);
-      // Set new timer
-      timeoutId = setTimeout(handleLogout, TIMEOUT_MS);
+
+    
+    // Check Inactivity (Persistence check for tab close/reopen)
+    const storedLastActive = localStorage.getItem(STORAGE_KEY_LAST_ACTIVE);
+    if (storedLastActive) {
+      const lastActiveTime = parseInt(storedLastActive, 10);
+      // If time since last active > inactivity limit
+      if (now - lastActiveTime >= TIMEOUT_MS) {
+        // eslint-disable-next-line no-console
+        console.log("Session expired due to inactivity, Please login again.");
+        handleLogout();
+        return;
+      }
+    }
+
+    // Check Absolute Limit (24h)
+    let sessionStart = localStorage.getItem(STORAGE_KEY_SESSION_START);
+    if (!sessionStart) {
+      // Initialize validation start time if missing
+      sessionStart = now.toString();
+      localStorage.setItem(STORAGE_KEY_SESSION_START, sessionStart);
+    }
+    
+    const sessionStartTime = parseInt(sessionStart, 10);
+    const msSinceStart = now - sessionStartTime;
+
+    // If total session length exceeded
+    if (msSinceStart >= ABSOLUTE_TIMEOUT_MS) {
+      // eslint-disable-next-line no-console
+      console.log("Session expired, Please login again.");
+      handleLogout();
+      return;
+    }
+
+
+
+    // Absolute Timer (Independent of activity)
+
+    const timeRemainingAbsolute = ABSOLUTE_TIMEOUT_MS - msSinceStart;
+    const absoluteTimer = setTimeout(() => {
+      handleLogout();
+    }, timeRemainingAbsolute);
+
+    // Inactivity Timer (Resets on activity)
+    let inactivityTimer: NodeJS.Timeout;
+    
+    // localStorage writes (avoid performance hit)
+    let lastStorageWrite = now;
+
+    const onUserActivity = () => {
+      //Reset the logout timer
+      if (inactivityTimer) clearTimeout(inactivityTimer);
+      inactivityTimer = setTimeout(handleLogout, TIMEOUT_MS);
+
+      // Update 'lastActive' in storage (max once every 5 seconds)
+      const currentNow = Date.now();
+      if (currentNow - lastStorageWrite > 5000) {
+        localStorage.setItem(STORAGE_KEY_LAST_ACTIVE, currentNow.toString());
+        lastStorageWrite = currentNow;
+      }
     };
 
-    // Events to listen for (user activity)
+    // Events that count as activity
     const events = [
       'mousedown',
       'mousemove',
@@ -44,22 +107,21 @@ export const useAutoLogout = (timeoutMinutes = 30) => {
       'click'
     ];
 
-    // 1. Set initial timer
-    resetTimer();
+    // Initialize the inactivity timer first time
+    onUserActivity();
 
-    // 2. Add event listeners
+    // Attach listeners
     events.forEach((event) => {
-      window.addEventListener(event, resetTimer);
+      window.addEventListener(event, onUserActivity);
     });
 
-    // 3. Cleanup: Remove listeners & timer on unmount
+    // Cleanup function
     return () => {
-      if (timeoutId) clearTimeout(timeoutId);
+      if (absoluteTimer) clearTimeout(absoluteTimer);
+      if (inactivityTimer) clearTimeout(inactivityTimer);
       events.forEach((event) => {
-        window.removeEventListener(event, resetTimer);
+        window.removeEventListener(event, onUserActivity);
       });
     };
-  }, [isSignedIn, handleLogout, TIMEOUT_MS]);
-
-  return; // This hook doesn't need to return anything
+  }, [isSignedIn, handleLogout, TIMEOUT_MS, ABSOLUTE_TIMEOUT_MS]);
 };
