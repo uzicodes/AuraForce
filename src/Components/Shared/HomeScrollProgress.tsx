@@ -8,17 +8,17 @@ export default function HomeScrollProgress() {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
 
-  // 1. Hook into the scroll position
+  // Hook into scroll position
   const { scrollYProgress } = useScroll();
 
-  // 2. Make the movement smooth (spring physics)
+  // Make the movement smooth (spring physics)
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001
   });
 
-  // 3. Only show this on the Homepage ("/")
+  // Only show on Homepage ("/")
   useEffect(() => {
     if (pathname === "/") {
       setIsVisible(true);
@@ -31,7 +31,7 @@ export default function HomeScrollProgress() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 h-1.5 bg-emerald-400 origin-left z-[100]"
+      className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 origin-left z-[100]"
       style={{ scaleX }}
     />
   );
