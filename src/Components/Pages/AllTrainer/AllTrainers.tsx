@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
 
-// 1. STATIC DATA (Updated with Local Images)
+// STATIC DATA (Updated with Local Images)
 const trainers = [
   {
     _id: 1,
-    name: "Marcus 'The Anvil' Thorne",
+    name: "Marcus Anvil",
     role: "Head Strength Coach",
     specialty: "Powerlifting & Biomechanics",
     bio: "Marcus doesn't believe in exercise for the sake of sweating. He builds raw power using a science-based approach to barbell mechanics. If you want to lift heavy without breaking your spine, he's your guy.",
@@ -43,12 +43,47 @@ const trainers = [
     bio: "Philips specializes in the art of sculpting. No cardio bunnies here—this is about time-under-tension, strict nutrition protocols, and building a physique that dominates the stage or the beach.",
     image: "/images/trainers/4.jpg",
     socials: { instagram: "#", twitter: "#" }
+  },
+  {
+    _id: 5,
+    name: "Zara Chen",
+    role: "HIIT Specialist",
+    specialty: "HIIT & Conditioning",
+    bio: "Zara brings the fire to every session. Her high-intensity interval training protocols are designed to torch fat, spike your metabolism, and leave you gasping for air—in the best way possible.",
+    image: "/images/trainers/5.jpg",
+    socials: { instagram: "#", linkedin: "#" }
+  },
+  {
+    _id: 6,
+    name: "David Okonkwo",
+    role: "Sports Performance Coach",
+    specialty: "Athletic Performance",
+    bio: "A former collegiate sprinter turned elite coach, David trains athletes for explosive power and game-day readiness. His plyometric drills and speed work have produced champions across multiple sports.",
+    image: "/images/trainers/6.jpg",
+    socials: { instagram: "#", twitter: "#" }
+  },
+  {
+    _id: 7,
+    name: "Maya Johansson",
+    role: "Mind-Body Specialist",
+    specialty: "Yoga & Mindfulness",
+    bio: "Maya believes true strength comes from within. Her sessions blend dynamic yoga flows with breathwork and meditation, helping you build flexibility, reduce stress, and find balance in the chaos.",
+    image: "/images/trainers/7_1.jpg",
+    socials: { instagram: "#", linkedin: "#" }
+  },
+  {
+    _id: 8,
+    name: "Tyrone Williams",
+    role: "CrossFit Coach",
+    specialty: "CrossFit & Functional Fitness",
+    bio: "Tyrone thrives on variety. His CrossFit-inspired workouts combine Olympic lifting, gymnastics, and metabolic conditioning to build athletes who are ready for anything life throws at them.",
+    image: "/images/trainers/8.jpg",
+    socials: { twitter: "#", linkedin: "#" }
   }
 ];
 
 const AllTrainers = () => {
   return (
-    // MAIN BACKGROUND: Dark Zinc-950 for premium look
     <div className="min-h-screen bg-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
       {/* Background Decor: Subtle Green Glow */}
