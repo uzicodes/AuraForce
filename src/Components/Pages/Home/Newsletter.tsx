@@ -77,7 +77,7 @@ const Newsletter = () => {
                 <Mail className="w-8 h-8 text-emerald-500" />
               </div>
 
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-4 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
                 Don't Miss the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Gains !</span>
               </h2>
               

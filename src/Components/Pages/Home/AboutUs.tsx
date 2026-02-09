@@ -48,7 +48,7 @@ const AboutUs = () => {
             <span>Our Story</span>
           </div>
           
-          <h2 className="text-6xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap">
             Our  
              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400 ml-2">Fit Family</span>
           </h2>

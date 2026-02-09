@@ -79,7 +79,7 @@ const Membership = () => {
           </Reveal>
           
           <Reveal delay={0.1}>
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap">
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose </span> <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
                <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
               <span className="ml-4 text-orange-400/80 w-14 h-14">
