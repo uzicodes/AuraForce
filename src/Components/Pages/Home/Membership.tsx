@@ -6,7 +6,7 @@ import { Reveal } from "@/Components/Shared/Reveal";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Flame } from "lucide-react";
+
 
 const Membership = () => {
   const { isSignedIn } = useUser(); // current login status
@@ -82,9 +82,6 @@ const Membership = () => {
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap font-heading">
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose </span> <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
-              <span className="ml-4 text-orange-400/80 w-14 h-14">
-                <Flame className="w-14 h-14" />
-              </span>
             </h2>
           </Reveal>
 

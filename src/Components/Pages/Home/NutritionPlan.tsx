@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { FaAppleAlt, FaFire, FaLeaf, FaChartPie } from "react-icons/fa";
-import { Zap } from "lucide-react";
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import 'swiper/css';
@@ -98,6 +98,16 @@ const NutritionPlan = () => {
 
         {/* HEADER SECTION */}
         <div className="text-center max-w-3xl mx-auto mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>The Ideal Diet</span>
+          </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -106,7 +116,7 @@ const NutritionPlan = () => {
             className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 font-heading"
           >
 
-            Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span><Zap className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
+            Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -115,7 +125,7 @@ const NutritionPlan = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-zinc-400 text-lg font-satoshi"
           >
-            Training is only half the battle. Our precision nutrition planning helps you eat for performance without sacrificing flavor.
+            Training is only half the battle. Achieve your fitness goals without compromising on flavor.
           </motion.p>
         </div>
 

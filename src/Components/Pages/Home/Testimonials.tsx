@@ -87,7 +87,7 @@ const Testimonials = () => {
             <MessageSquareDashed className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
           <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed font-satoshi">
-            Real results from real athletes. Don't just take our word for it—hear from the community dominating their goals.
+            Real results from real athletes! Don't just take our word, hear from the community what they say.
           </motion.p>
         </motion.div>
 
