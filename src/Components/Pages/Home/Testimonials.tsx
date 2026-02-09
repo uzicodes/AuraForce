@@ -10,7 +10,7 @@ import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { MessageSquareDashed } from "lucide-react";
 import Image from "next/image";
 // 1. Updated Import: Added 'Variants'
-import { motion, Variants } from "framer-motion"; 
+import { motion, Variants } from "framer-motion";
 
 const testimonials = [
   {
@@ -50,9 +50,9 @@ const testimonials = [
 // 2. Updated Definition: Added ': Variants' type annotation
 const scaleRevealVariant: Variants = {
   hidden: { opacity: 0, scale: 0.95, y: 20 },
-  visible: { 
-    opacity: 1, 
-    scale: 1, 
+  visible: {
+    opacity: 1,
+    scale: 1,
     y: 0,
     transition: { duration: 0.5, ease: "easeOut" }
   }
@@ -61,17 +61,17 @@ const scaleRevealVariant: Variants = {
 const Testimonials = () => {
   return (
     <section className="py-24 relative overflow-hidden">
-      
+
       {/* Background Glow Effects */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px]"></div>
         <div className="absolute bottom-20 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px]"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header Wrapper */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -81,23 +81,23 @@ const Testimonials = () => {
           <motion.div variants={scaleRevealVariant} className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
             <span>Success Stories</span>
           </motion.div>
-          
+
           <motion.h2 variants={scaleRevealVariant} className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
             Voices of the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Stong</span>
             <MessageSquareDashed className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
-          <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed">
+          <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed font-satoshi">
             Real results from real athletes. Don't just take our word for it—hear from the community dominating their goals.
           </motion.p>
         </motion.div>
 
         {/* Testimonials Slider Container Animation */}
-        <motion.div 
-           initial={{ opacity: 0, y: 40 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true, margin: "-50px" }}
-           transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-           className="max-w-7xl mx-auto relative"
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="max-w-7xl mx-auto relative"
         >
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
@@ -125,7 +125,7 @@ const Testimonials = () => {
             {testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id} className="h-auto">
                 <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 h-full flex flex-col hover:border-emerald-500/50 transition-all duration-300 group">
-                  
+
                   <div className="flex justify-between items-start mb-6">
                     <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                       <FaQuoteLeft className="text-zinc-500 group-hover:text-emerald-500 transition-colors" />
@@ -136,11 +136,11 @@ const Testimonials = () => {
                       ))}
                     </div>
                   </div>
-                  
-                  <p className="text-zinc-300 leading-relaxed mb-8 flex-grow italic text-sm md:text-base">
+
+                  <p className="text-zinc-300 leading-relaxed mb-8 flex-grow italic text-sm md:text-base font-satoshi">
                     "{testimonial.testimonial}"
                   </p>
-                  
+
                   <div className="flex items-center gap-4 border-t border-zinc-800 pt-6 mt-auto">
                     <div className="relative w-12 h-12">
                       <Image
@@ -163,7 +163,7 @@ const Testimonials = () => {
               </SwiperSlide>
             ))}
           </Swiper>
-          
+
           <div className="flex items-center justify-between mt-8 px-2">
             <div className="flex gap-4">
               <button className="custom-prev w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
@@ -177,7 +177,7 @@ const Testimonials = () => {
           </div>
         </motion.div>
       </div>
-      
+
       <style jsx global>{`
         .custom-pagination .swiper-pagination-bullet {
           width: 10px;

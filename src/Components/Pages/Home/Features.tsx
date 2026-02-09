@@ -87,7 +87,7 @@ const Features = () => {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl mx-auto font-satoshi">
               We provide more than just equipment. We provide the blueprint to engineer the best version of yourself.
             </p>
           </Reveal>
@@ -167,7 +167,7 @@ const Features = () => {
                     <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
                       {feature.title}
                     </h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out">
+                    <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">
                       {feature.description}
                     </p>
                   </div>

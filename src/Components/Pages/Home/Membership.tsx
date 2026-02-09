@@ -3,9 +3,9 @@
 import { FaCheck, FaCrown, FaTags } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Reveal } from "@/Components/Shared/Reveal";
-import { useUser } from "@clerk/nextjs";     
-import { useRouter } from "next/navigation"; 
-import toast from "react-hot-toast";         
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { Flame } from "lucide-react";
 
 const Membership = () => {
@@ -22,12 +22,12 @@ const Membership = () => {
       toast.error("Please log in to continue with payment. If you don't have an account, please register.", {
         duration: 4000,
         style: {
-          background: '#18181b', 
-          color: '#fff',         
+          background: '#18181b',
+          color: '#fff',
           border: '1px solid #27272a'
         },
       });
-      router.push('/login'); 
+      router.push('/login');
     }
   };
 
@@ -63,12 +63,12 @@ const Membership = () => {
 
   return (
     <section id="membership" className="py-24 relative overflow-hidden">
-      
+
       {/* Background Decor */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Header with Reveal Animation */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <Reveal>
@@ -77,11 +77,11 @@ const Membership = () => {
               <span>Membership Plans</span>
             </div>
           </Reveal>
-          
+
           <Reveal delay={0.1}>
             <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap">
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose </span> <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
-               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
               <span className="ml-4 text-orange-400/80 w-14 h-14">
                 <Flame className="w-14 h-14" />
               </span>
@@ -89,7 +89,7 @@ const Membership = () => {
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="text-lg text-zinc-400 leading-relaxed">
+            <p className="text-lg text-zinc-400 leading-relaxed font-satoshi">
               Flexible plans designed for everyone. From beginners to pro athletes, we have the perfect package for you.
             </p>
           </Reveal>
@@ -98,17 +98,16 @@ const Membership = () => {
         {/* Pricing Grid with Staggered Animation */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
-            <motion.div 
+            <motion.div
               key={index}
-              initial={{ opacity: 0, y: 50 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              viewport={{ once: true, margin: "-50px" }} 
-              transition={{ duration: 0.5, delay: index * 0.2 }} 
-              className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 ${
-                pkg.highlight 
-                  ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10" 
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 ${pkg.highlight
+                  ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10"
                   : "bg-zinc-950 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900/50"
-              }`}
+                }`}
             >
               {pkg.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
@@ -118,7 +117,7 @@ const Membership = () => {
 
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-white mb-2">{pkg.name}</h3>
-                <p className="text-zinc-400 text-sm">{pkg.desc}</p>
+                <p className="text-zinc-400 text-sm font-satoshi">{pkg.desc}</p>
               </div>
 
               <div className="mb-8">
@@ -128,7 +127,7 @@ const Membership = () => {
 
               <ul className="space-y-4 mb-8 flex-grow">
                 {pkg.features.map((feat, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-zinc-300">
+                  <li key={i} className="flex items-center gap-3 text-sm text-zinc-300 font-satoshi">
                     <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${pkg.highlight ? "bg-emerald-500 text-black" : "bg-zinc-800 text-zinc-400"}`}>
                       <FaCheck className="text-[10px]" />
                     </span>
@@ -138,13 +137,12 @@ const Membership = () => {
               </ul>
 
               {/* REPLACED <Link> WITH <button> */}
-              <button 
+              <button
                 onClick={() => handleSubscribe(pkg.name)}
-                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${
-                  pkg.highlight 
-                    ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20" 
+                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
+                    ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
                     : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
-                }`}
+                  }`}
               >
                 {pkg.button}
               </button>

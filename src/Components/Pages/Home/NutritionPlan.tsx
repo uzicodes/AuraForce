@@ -57,13 +57,13 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 50 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.6, 
-      ease: "easeOut" 
-    } 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut"
+    }
   },
 };
 
@@ -90,30 +90,30 @@ const NutritionPlan = () => {
 
   return (
     <section id="nutrition-plan" className="relative py-24 overflow-hidden">
-      
+
       {/* Background Gradient Blob */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* HEADER SECTION */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6"
           >
-           
-          Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span><Zap className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
+
+            Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span><Zap className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-zinc-400 text-lg"
+            className="text-zinc-400 text-lg font-satoshi"
           >
             Training is only half the battle. Our precision nutrition planning helps you eat for performance without sacrificing flavor.
           </motion.p>
@@ -121,9 +121,9 @@ const NutritionPlan = () => {
 
         {/* MAIN CONTENT GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
+
           {/* LEFT: IMAGE CAROUSEL */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -154,7 +154,7 @@ const NutritionPlan = () => {
           </motion.div>
 
           {/* RIGHT: SCROLLING FEATURES LIST */}
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -162,8 +162,8 @@ const NutritionPlan = () => {
             className="space-y-6"
           >
             {features.map((item, index) => (
-              <motion.div 
-                key={index} 
+              <motion.div
+                key={index}
                 variants={itemVariants}
                 className="flex gap-5 p-5 rounded-2xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800 transition-colors group"
               >
@@ -174,7 +174,7 @@ const NutritionPlan = () => {
                   <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed">
+                  <p className="text-zinc-400 text-sm leading-relaxed font-satoshi">
                     {item.desc}
                   </p>
                 </div>
@@ -182,7 +182,7 @@ const NutritionPlan = () => {
             ))}
 
             <motion.div variants={itemVariants} className="pt-6">
-              <button 
+              <button
                 onClick={handleStartPlan}
                 className="px-8 py-3.5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]"
               >

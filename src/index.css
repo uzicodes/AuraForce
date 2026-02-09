@@ -1,3 +1,5 @@
+@import url('https://fonts.cdnfonts.com/css/satoshi');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +9,11 @@
     src: url('/fonts/Tenada.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+}
+
+/* Satoshi font utility class */
+.font-satoshi {
+    font-family: 'Satoshi', sans-serif;
 }
 
 /* Breathing/Pulsing animation like a heartbeat */

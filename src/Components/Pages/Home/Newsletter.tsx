@@ -33,7 +33,7 @@ const Newsletter = () => {
       setStatus("success");
       // Only clear email if the user is a guest. 
       // Logged-in users usually prefer seeing their email persists.
-      if (!isSignedIn) setEmail(""); 
+      if (!isSignedIn) setEmail("");
       toast.success("Successfully subscribed!");
     } else {
       setStatus("idle");
@@ -43,15 +43,15 @@ const Newsletter = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
-      
+
       {/* Background Ambient Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* The Card Container */}
         <div className="max-w-4xl mx-auto bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-3xl p-8 md:p-12 lg:p-16 text-center relative overflow-hidden group">
-          
+
           {/* Decor: Subtle Shine Effect on hover */}
           <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
@@ -62,8 +62,8 @@ const Newsletter = () => {
                 <CheckCircle className="w-10 h-10 text-emerald-500" />
               </div>
               <h3 className="text-3xl font-bold text-white mb-2">Welcome to the Inner Circle!</h3>
-              <p className="text-zinc-400">Keep an eye on your inbox. Your first workout guide is on its way.</p>
-              <button 
+              <p className="text-zinc-400 font-satoshi">Keep an eye on your inbox. Your first workout guide is on its way.</p>
+              <button
                 onClick={() => setStatus("idle")}
                 className="mt-8 text-sm text-zinc-500 hover:text-white underline underline-offset-4 transition-colors"
               >
@@ -80,8 +80,8 @@ const Newsletter = () => {
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
                 Don't Miss the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Gains !</span>
               </h2>
-              
-              <p className="text-lg text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed">
+
+              <p className="text-lg text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed font-satoshi">
                 Join 10,000+ athletes receiving weekly workout tips, nutrition hacks, and exclusive gear discounts. No spam, just power.
               </p>
 
@@ -95,7 +95,7 @@ const Newsletter = () => {
                     required
                     className="w-full pl-6 pr-36 py-4 bg-zinc-950 border border-zinc-700 rounded-full text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all shadow-xl"
                   />
-                  
+
                   {/* Submit Button */}
                   <button
                     type="submit"
@@ -115,8 +115,8 @@ const Newsletter = () => {
                     )}
                   </button>
                 </div>
-                
-                <p className="mt-4 text-xs text-zinc-600 text-center">
+
+                <p className="mt-4 text-xs text-zinc-600 text-center font-satoshi">
                   By subscribing, you agree to our Terms & Privacy Policy.
                 </p>
               </form>
