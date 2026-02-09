@@ -61,11 +61,11 @@ const AllTrainers = () => {
           <span>The Coaching Staff</span>
         </div>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-heading">
           Partners in Your <span className="text-green-600">Progress.</span>
         </h2>
 
-        <p className="max-w-xl mx-auto text-zinc-400 text-lg leading-relaxed">
+        <p className="max-w-xl mx-auto text-zinc-400 text-lg leading-relaxed font-satoshi">
           We’ve replaced the generic "fitness enthusiasts" with biomechanics experts,
           pro athletes, and rehabilitation specialists. Choose wisely.
         </p>
@@ -127,7 +127,7 @@ const AllTrainers = () => {
             {/* TEXT CONTENT */}
             <div className="p-5 pt-2 flex-grow flex flex-col">
               <div className="mb-4">
-                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-heading">
                   {trainer.name}
                 </h3>
                 <p className="text-xs text-zinc-500 font-mono uppercase tracking-wide">
@@ -135,7 +135,7 @@ const AllTrainers = () => {
                 </p>
               </div>
 
-              <p className="text-zinc-400 text-xs leading-relaxed mb-6 line-clamp-4">
+              <p className="text-zinc-400 text-xs leading-relaxed mb-6 line-clamp-4 font-satoshi">
                 {trainer.bio}
               </p>
 

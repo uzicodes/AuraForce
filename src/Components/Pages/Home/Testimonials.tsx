@@ -82,7 +82,7 @@ const Testimonials = () => {
             <span>Success Stories</span>
           </motion.div>
 
-          <motion.h2 variants={scaleRevealVariant} className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+          <motion.h2 variants={scaleRevealVariant} className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-heading">
             Voices of the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Stong</span>
             <MessageSquareDashed className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
@@ -151,7 +151,7 @@ const Testimonials = () => {
                       />
                     </div>
                     <div>
-                      <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors">
+                      <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors font-heading">
                         {testimonial.name}
                       </h4>
                       <p className="text-xs text-zinc-500 font-mono uppercase tracking-wide">

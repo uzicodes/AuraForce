@@ -81,7 +81,7 @@ const Features = () => {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-heading">
               Forge Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Legacy</span>
             </h2>
           </Reveal>
@@ -164,7 +164,7 @@ const Features = () => {
 
                   {/* Text Content - Slides up slightly on hover */}
                   <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors font-heading">
                       {feature.title}
                     </h3>
                     <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">

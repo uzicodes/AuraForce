@@ -11,9 +11,22 @@
     font-style: normal;
 }
 
-/* Satoshi font utility class */
+@font-face {
+    font-family: 'Parket';
+    src: url('/fonts/Parket.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Satoshi font utility class for body text */
 .font-satoshi {
     font-family: 'Satoshi', sans-serif;
+}
+
+/* Firlest font utility class for headings */
+.font-heading {
+    font-family: 'Parket', sans-serif;
+    letter-spacing: 0.05em;
 }
 
 /* Breathing/Pulsing animation like a heartbeat */

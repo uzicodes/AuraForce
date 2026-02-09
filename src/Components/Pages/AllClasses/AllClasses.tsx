@@ -143,10 +143,10 @@ const AllClasses = () => {
           <span>Sweat & Glory</span>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">
           Our Popular <span className="text-green-600">Classes</span>
         </h1>
-        <p className="text-zinc-400 max-w-2xl mx-auto">
+        <p className="text-zinc-400 max-w-2xl mx-auto font-satoshi">
           From high-intensity interval training to restorative yoga, we have a program designed to push your limits. Choose your class and ignite your potential !
         </p>
       </div>
@@ -199,8 +199,8 @@ const AllClasses = () => {
                 key={page}
                 onClick={() => setCurrentPage(page)}
                 className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-all ${currentPage === page
-                    ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]"
-                    : "bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-zinc-800"
+                  ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]"
+                  : "bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-zinc-800"
                   }`}
               >
                 {page + 1}

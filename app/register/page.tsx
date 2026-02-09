@@ -141,10 +141,10 @@ const Register = () => {
               className="object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]"
             />
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-xl font-bold text-white tracking-tight font-heading">
             {verifying ? "Verify Email" : "Create Account"}
           </h2>
-          <p className="text-[11px] text-zinc-400 mt-1">
+          <p className="text-[11px] text-zinc-400 mt-1 font-satoshi">
             {verifying ? "Enter the code sent to your email" : "Join the AuraForce community today"}
           </p>
         </div>

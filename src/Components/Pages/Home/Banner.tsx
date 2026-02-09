@@ -55,7 +55,7 @@ const Banner = () => {
         <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-0">
 
           {/* Main heading */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 mt-8 leading-tight tracking-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 mt-8 leading-tight tracking-tight font-heading">
             Your Only Limit is{" "}
             <span className="transparent-text bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">You</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">!</span>

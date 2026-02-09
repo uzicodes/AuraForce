@@ -103,7 +103,7 @@ const NutritionPlan = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 font-heading"
           >
 
             Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span><Zap className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
@@ -171,7 +171,7 @@ const NutritionPlan = () => {
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
+                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors font-heading">
                     {item.title}
                   </h3>
                   <p className="text-zinc-400 text-sm leading-relaxed font-satoshi">

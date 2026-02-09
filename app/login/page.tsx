@@ -84,10 +84,10 @@ const Login = () => {
               className="object-contain drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]"
             />
           </div>
-          <h2 className=" text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400 text-2xl font-bold mb-2">
+          <h2 className=" text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400 text-2xl font-bold mb-2 font-heading">
             WELCOME BACK
           </h2>
-          <p className="text-xs text-zinc-400 mt-2">
+          <p className="text-xs text-zinc-400 mt-2 font-satoshi">
             Enter your credentials to access your account
           </p>
         </div>

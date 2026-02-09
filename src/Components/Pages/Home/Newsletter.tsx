@@ -61,7 +61,7 @@ const Newsletter = () => {
               <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-10 h-10 text-emerald-500" />
               </div>
-              <h3 className="text-3xl font-bold text-white mb-2">Welcome to the Inner Circle!</h3>
+              <h3 className="text-3xl font-bold text-white mb-2 font-heading">Welcome to the Inner Circle!</h3>
               <p className="text-zinc-400 font-satoshi">Keep an eye on your inbox. Your first workout guide is on its way.</p>
               <button
                 onClick={() => setStatus("idle")}
@@ -77,7 +77,7 @@ const Newsletter = () => {
                 <Mail className="w-8 h-8 text-emerald-500" />
               </div>
 
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight font-heading">
                 Don't Miss the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Gains !</span>
               </h2>
 

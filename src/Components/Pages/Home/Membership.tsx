@@ -79,7 +79,7 @@ const Membership = () => {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap font-heading">
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose </span> <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
               <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
               <span className="ml-4 text-orange-400/80 w-14 h-14">
@@ -105,8 +105,8 @@ const Membership = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: index * 0.2 }}
               className={`relative flex flex-col p-8 rounded-3xl border transition-all duration-300 ${pkg.highlight
-                  ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10"
-                  : "bg-zinc-950 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900/50"
+                ? "bg-zinc-900 border-emerald-500 shadow-2xl shadow-emerald-900/20 scale-105 z-10"
+                : "bg-zinc-950 border-zinc-800 hover:border-zinc-700 hover:bg-zinc-900/50"
                 }`}
             >
               {pkg.highlight && (
@@ -116,7 +116,7 @@ const Membership = () => {
               )}
 
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-white mb-2">{pkg.name}</h3>
+                <h3 className="text-xl font-bold text-white mb-2 font-heading">{pkg.name}</h3>
                 <p className="text-zinc-400 text-sm font-satoshi">{pkg.desc}</p>
               </div>
 
@@ -140,8 +140,8 @@ const Membership = () => {
               <button
                 onClick={() => handleSubscribe(pkg.name)}
                 className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
-                    ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
-                    : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
+                  ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
+                  : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
                   }`}
               >
                 {pkg.button}

@@ -48,7 +48,7 @@ const AboutUs = () => {
             <span>Our Story</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap font-heading">
             Our
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400 ml-2">Fit Family</span>
           </h2>
@@ -57,7 +57,7 @@ const AboutUs = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           <div className="order-2 lg:order-1 space-y-8">
-            <h3 className="text-3xl font-bold text-white leading-tight">
+            <h3 className="text-3xl font-bold text-white leading-tight font-heading">
               Empowering Your Fitness Journey <br />
               <span className="text-emerald-500">Since Day One.</span>
             </h3>
