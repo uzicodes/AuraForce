@@ -68,7 +68,7 @@ const trainers = [
     role: "Mind-Body Specialist",
     specialty: "Yoga & Mindfulness",
     bio: "Maya believes true strength comes from within. Her sessions blend dynamic yoga flows with breathwork and meditation, helping you build flexibility, reduce stress, and find balance in the chaos.",
-    image: "/images/trainers/7_1.jpg",
+    image: "/images/trainers/7.jpg",
     socials: { instagram: "#", linkedin: "#" }
   },
   {
@@ -111,32 +111,17 @@ const AllTrainers = () => {
         {trainers.map((trainer, index) => (
           <motion.div
             key={trainer._id}
-            initial={{
-              opacity: 0,
-              rotateY: index % 2 === 0 ? -30 : 30,
-              scale: 0.8,
-              filter: "blur(10px)"
-            }}
-            whileInView={{
-              opacity: 1,
-              rotateY: 0,
-              scale: 1,
-              filter: "blur(0px)"
-            }}
-            viewport={{ once: false, margin: "-50px" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.8,
-              delay: index * 0.15,
+              duration: 0.4,
               type: "spring",
-              stiffness: 80,
-              damping: 20
+              stiffness: 100
             }}
             whileHover={{
-              y: -15,
-              rotateY: 5,
-              transition: { duration: 0.3 }
+              y: -10,
+              transition: { duration: 0.2 }
             }}
-            style={{ transformStyle: "preserve-3d", perspective: 1000 }}
             className="group relative bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-900/20 flex flex-col"
           >
             {/* IMAGE AREA */}
