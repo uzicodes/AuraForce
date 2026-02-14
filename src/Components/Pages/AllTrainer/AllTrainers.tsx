@@ -46,10 +46,10 @@ const trainers = [
   },
   {
     _id: 5,
-    name: "Zara Chen",
+    name: "Jack Chen",
     role: "HIIT Specialist",
     specialty: "HIIT & Conditioning",
-    bio: "Zara brings the fire to every session. Her high-intensity interval training protocols are designed to torch fat, spike your metabolism, and leave you gasping for air—in the best way possible.",
+    bio: "Jack brings the fire to every session. Her high-intensity interval training protocols are designed to torch fat, spike your metabolism, and leave you gasping for air—in the best way possible.",
     image: "/images/trainers/5.jpg",
     socials: { instagram: "#", linkedin: "#" }
   },
@@ -168,7 +168,7 @@ const AllTrainers = () => {
                 </div>
 
                 <button className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider">
-                  Profile <FaArrowRight />
+                  Book  <FaArrowRight />
                 </button>
               </div>
             </div>

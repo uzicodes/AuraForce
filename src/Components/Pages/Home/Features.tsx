@@ -172,13 +172,7 @@ const Features = () => {
                     </p>
                   </div>
 
-                  {/* Learn More Button - Appears on hover */}
-                  <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                    <span className="text-sm font-bold text-white uppercase tracking-wider">Explore</span>
-                    <div className={`p-2 rounded-full bg-white/10 text-white ${feature.accent}`}>
-                      <FaArrowRight />
-                    </div>
-                  </div>
+
 
                 </div>
 

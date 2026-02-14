@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { FaFire, FaSearch } from "react-icons/fa";
 import ClassCard from "./ClassCard";
 
-// 1. STATIC DATA (Updated with Local Images)
+// STATIC DATA 
 const staticClasses = [
   {
     _id: 1,
     classname: "Spartan HIIT",
-    trainer: "Marcus Thorne",
+    trainer: "Jack Chen",
     duration: "45 Min",
     intensity: "Extreme",
     image: "/images/classes/1.jpg",
@@ -16,7 +16,7 @@ const staticClasses = [
   {
     _id: 2,
     classname: "Power Yoga Flow",
-    trainer: "Dr. Kenji Sato",
+    trainer: "Maya Johansson",
     duration: "60 Min",
     intensity: "Medium",
     image: "/images/classes/2.jpg",
@@ -25,7 +25,7 @@ const staticClasses = [
   {
     _id: 3,
     classname: "Iron Pump",
-    trainer: "Sarah Jenkins",
+    trainer: "Marcus Anvil",
     duration: "75 Min",
     intensity: "High",
     image: "/images/classes/3.jpg",
@@ -43,7 +43,7 @@ const staticClasses = [
   {
     _id: 5,
     classname: "Boxing Basics",
-    trainer: "Mike Tyson",
+    trainer: "Tyrone Williams",
     duration: "50 Min",
     intensity: "High",
     image: "/images/classes/5.jpg",
@@ -52,7 +52,7 @@ const staticClasses = [
   {
     _id: 6,
     classname: "Core Crusher",
-    trainer: "Sarah Jenkins",
+    trainer: "David Okonkwo",
     duration: "30 Min",
     intensity: "Medium",
     image: "/images/classes/6.jpg",
@@ -76,15 +76,20 @@ const staticClasses = [
     image: "/images/classes/8.jpg",
     description: "Wake up your joints and prepare your body for the day ahead."
   },
+  {
+    _id: 9,
+    classname: "Pilates Precision",
+    trainer: "Dr. Kenji Sato",
+    duration: "55 Min",
+    intensity: "Medium",
+    image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070&auto=format&fit=crop",
+    description: "Build core strength, flexibility, and lean muscle with controlled low-impact movements."
+  },
 ];
 
 const AllClasses = () => {
   const [search, setSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // PAGINATION LOGIC (Client-side)
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 6;
 
   // 1. Filter data based on search
   const filteredClasses = staticClasses.filter((item) =>
@@ -92,21 +97,6 @@ const AllClasses = () => {
       ? item
       : item.classname.toLowerCase().includes(search.toLowerCase())
   );
-
-  // 2. Calculate pagination based on FILTERED results
-  const pageCount = Math.ceil(filteredClasses.length / itemsPerPage);
-  const pages = [...Array(pageCount).keys()];
-
-  // 3. Slice data for current page
-  const displayClasses = filteredClasses.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
-
-  // Reset to page 0 if search changes
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [search]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -120,14 +110,7 @@ const AllClasses = () => {
     };
   }, []);
 
-  // Pagination Handlers
-  const handlePrevPage = () => {
-    if (currentPage > 0) setCurrentPage(currentPage - 1);
-  };
 
-  const handleNextPage = () => {
-    if (currentPage < pages.length - 1) setCurrentPage(currentPage + 1);
-  };
 
   return (
     // MAIN CONTAINER: Zinc-950 for Dark Theme consistency
@@ -169,8 +152,8 @@ const AllClasses = () => {
 
       {/* GRID LAYOUT */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 relative z-10">
-        {displayClasses.length > 0 ? (
-          displayClasses.map((singleClass, index) => (
+        {filteredClasses.length > 0 ? (
+          filteredClasses.map((singleClass, index) => (
             <div key={singleClass._id} className="h-full">
               <ClassCard singleClass={singleClass} index={index} />
             </div>
@@ -182,41 +165,7 @@ const AllClasses = () => {
         )}
       </div>
 
-      {/* PAGINATION */}
-      {pageCount > 1 && (
-        <div className="flex justify-center items-center gap-4 relative z-10">
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 0}
-            className="px-4 py-2 rounded-lg border border-zinc-700 text-zinc-400 hover:bg-zinc-800 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-          >
-            Previous
-          </button>
 
-          <div className="flex gap-2">
-            {pages.map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold transition-all ${currentPage === page
-                  ? "bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.4)]"
-                  : "bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-zinc-800"
-                  }`}
-              >
-                {page + 1}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === pages.length - 1}
-            className="px-4 py-2 rounded-lg border border-zinc-700 text-zinc-400 hover:bg-zinc-800 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-          >
-            Next
-          </button>
-        </div>
-      )}
     </div>
   );
 };
