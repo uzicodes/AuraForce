@@ -1,106 +1,103 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { FaFire, FaSearch } from "react-icons/fa";
 import ClassCard from "./ClassCard";
 
-// STATIC DATA 
-const staticClasses = [
+// STATIC DATA (Only Images, Intensity, Descriptions)
+const staticDetails = [
   {
-    _id: 1,
-    classname: "Spartan HIIT",
-    trainer: "Jack Chen",
-    duration: "45 Min",
+    id: 1,
     intensity: "Extreme",
     image: "/images/classes/1.jpg",
     description: "High intensity interval training designed to burn fat and build endurance."
   },
   {
-    _id: 2,
-    classname: "Power Yoga Flow",
-    trainer: "Maya Johansson",
-    duration: "60 Min",
+    id: 2,
     intensity: "Medium",
     image: "/images/classes/2.jpg",
     description: "A strength-focused yoga session to improve mobility and core stability."
   },
   {
-    _id: 3,
-    classname: "Iron Pump",
-    trainer: "Marcus Anvil",
-    duration: "75 Min",
+    id: 3,
     intensity: "High",
     image: "/images/classes/3.jpg",
     description: "Classic bodybuilding hypertrophy training. Isolate muscles and grow."
   },
   {
-    _id: 4,
-    classname: "Marathon Prep",
-    trainer: "Elena Rodriguez",
-    duration: "90 Min",
+    id: 4,
     intensity: "High",
     image: "/images/classes/4.jpg",
     description: "Endurance running drills mixed with lower body plyometrics."
   },
   {
-    _id: 5,
-    classname: "Boxing Basics",
-    trainer: "Tyrone Williams",
-    duration: "50 Min",
+    id: 5,
     intensity: "High",
     image: "/images/classes/5.jpg",
     description: "Learn the sweet science. Footwork, jabs, and defensive maneuvers."
   },
   {
-    _id: 6,
-    classname: "Core Crusher",
-    trainer: "David Okonkwo",
-    duration: "30 Min",
+    id: 6,
     intensity: "Medium",
     image: "/images/classes/6.jpg",
     description: "A quick, brutal session focused entirely on abdominal strength."
   },
   {
-    _id: 7,
-    classname: "CrossFit Mayhem",
-    trainer: "Marcus Thorne",
-    duration: "60 Min",
+    id: 7,
     intensity: "Extreme",
     image: "/images/classes/7.jpg",
     description: "Functional fitness at its peak. Barbells, gymnastics, and cardio."
   },
   {
-    _id: 8,
-    classname: "Morning Mobility",
-    trainer: "Dr. Kenji Sato",
-    duration: "40 Min",
+    id: 8,
     intensity: "Low",
     image: "/images/classes/8.jpg",
     description: "Wake up your joints and prepare your body for the day ahead."
   },
   {
-    _id: 9,
-    classname: "Pilates Precision",
-    trainer: "Dr. Kenji Sato",
-    duration: "55 Min",
+    id: 9,
     intensity: "Medium",
     image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070&auto=format&fit=crop",
     description: "Build core strength, flexibility, and lean muscle with controlled low-impact movements."
-  },
+  }
 ];
 
-const AllClasses = () => {
+// Define the type for the data coming from your database
+interface DbClass {
+  id: number;
+  classname: string | null;
+  trainer: string | null;
+  duration: string | null;
+}
+
+// Accept dbClasses as a prop from the page
+const AllClasses = ({ dbClasses }: { dbClasses: DbClass[] }) => {
   const [search, setSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Filter data based on search
-  const filteredClasses = staticClasses.filter((item) =>
-    search.toLowerCase() === ""
-      ? item
-      : item.classname.toLowerCase().includes(search.toLowerCase())
-  );
+  // MERGE LOGIC: Combine database data with static images/descriptions
+  const mergedClasses = dbClasses.map((dbClass) => {
+    const staticData = staticDetails.find((s) => s.id === dbClass.id);
+    return {
+      _id: dbClass.id, // Using _id to match ClassCard 
+      ...dbClass,
+      ...staticData
+    };
+  });
+
+  // Filter data based on search against the merged data
+  const filteredClasses = mergedClasses.filter((item) => {
+    if (search.toLowerCase() === "") {
+      return item;
+    }
+    // Safely check if classname exists before calling toLowerCase
+    return item.classname && item.classname.toLowerCase().includes(search.toLowerCase());
+  });
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+        // Optional logic for clicking outside
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -109,10 +106,8 @@ const AllClasses = () => {
     };
   }, []);
 
-
-
   return (
-    // MAIN CONTAINERency
+    // MAIN CONTAINER
     <div className="min-h-screen bg-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
       {/* Background Decor */}
@@ -153,7 +148,7 @@ const AllClasses = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-16 relative z-10">
         {filteredClasses.length > 0 ? (
           filteredClasses.map((singleClass, index) => (
-            <div key={singleClass._id} className="h-full">
+            <div key={singleClass.id} className="h-full">
               <ClassCard singleClass={singleClass} index={index} />
             </div>
           ))
@@ -163,7 +158,6 @@ const AllClasses = () => {
           </div>
         )}
       </div>
-
 
     </div>
   );
