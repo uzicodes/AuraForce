@@ -13,7 +13,6 @@ import {
   FaCheckCircle,
   FaCalendarCheck,
   FaLayerGroup,
-  FaClock,
   FaMapMarkerAlt,
   FaCalendarAlt,
   FaExclamationCircle,
@@ -33,16 +32,9 @@ const formatDate = (date: Date) => {
   }).format(date);
 };
 
-const getDayName = (date: Date) => {
-  return new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(date);
-};
-
-const getTime = (date: Date) => {
-  return new Intl.DateTimeFormat("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
-};
+// Temporarily removing getDayName and getTime since bookings are removed for now
+// const getDayName = (date: Date) => { ... }
+// const getTime = (date: Date) => { ... }
 
 const calculateAge = (dob: Date) => {
   const diffMs = Date.now() - dob.getTime();
@@ -58,17 +50,13 @@ const Profile = async () => {
   // 2. Get Clerk user
   const clerkUser = await currentUser();
 
-
   // 3. Fetch User Data
   const dbUser = await db.user.findUnique({
     where: { clerkUserId: user.clerkUserId },
     include: {
       subscription: true,
-      bookings: {
-        where: { date: { gte: new Date() } },
-        orderBy: { date: 'asc' },
-        take: 5,
-      },
+      // Temporarily removed bookings to fix the P2021 error
+      // Will be replaced with classBookings and trainerBookings later
       posts: { orderBy: { createdAt: 'desc' } }
     },
   });
@@ -271,34 +259,16 @@ const Profile = async () => {
           <div className="lg:col-span-1">
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sticky top-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Upcoming Classes</h3>
+                <h3 className="text-xl font-bold text-white">Upcoming Bookings</h3>
                 <FaCalendarAlt className="text-emerald-500" />
               </div>
 
-              {dbUser.bookings.length > 0 ? (
-                <div className="space-y-4 relative">
-                  <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-zinc-800 z-0"></div>
-                  {dbUser.bookings.map((booking) => (
-                    <div key={booking.id} className="relative z-10 flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-zinc-950 border-2 border-emerald-500/50 flex items-center justify-center flex-shrink-0 text-emerald-500 text-[10px] font-bold shadow-lg uppercase">
-                        {getDayName(booking.date).substring(0, 3)}
-                      </div>
-                      <div className="flex-1 bg-zinc-950 p-4 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
-                        <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold mb-1">
-                          <FaClock /> {getTime(booking.date)}
-                        </div>
-                        <h4 className="font-bold text-white text-sm">{booking.className}</h4>
-                        <p className="text-xs text-zinc-500 mt-1">Trainer: {booking.trainer}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-10">
-                  <FaExclamationCircle className="mx-auto text-zinc-600 text-3xl mb-3" />
-                  <p className="text-zinc-400 text-sm">No upcoming bookings found.</p>
-                </div>
-              )}
+              {/* Placeholder until tables are ready */}
+              <div className="text-center py-10">
+                <FaExclamationCircle className="mx-auto text-zinc-600 text-3xl mb-3" />
+                <p className="text-zinc-400 text-sm">Booking system is currently being updated.</p>
+              </div>
+
             </div>
           </div>
 
