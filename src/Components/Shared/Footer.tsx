@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image"; // Imported Image component
+import Image from "next/image";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
@@ -24,7 +24,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-zinc-950 text-zinc-300 pt-20 pb-10 relative overflow-hidden border-t border-zinc-900">
+    <footer className="bg-zinc-950 text-zinc-300 pt-8 pb-4 relative overflow-hidden border-t border-zinc-900">
 
       {/* Background Glow Effects */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
@@ -33,13 +33,12 @@ const Footer = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
 
-          {/* 1. Brand Section */}
-          <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-3 group">
-              {/* UPDATED: Custom Logo Image */}
-              <div className="relative w-12 h-12 transition-transform duration-300 group-hover:scale-110">
+          {/* Brand Section */}
+          <div className="space-y-3">
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="relative w-8 h-8 transition-transform duration-300 group-hover:scale-110">
                 <Image
                   src="/for favicon.png"
                   alt="Aura Force Logo"
@@ -48,7 +47,7 @@ const Footer = () => {
                 />
               </div>
 
-              <span className="text-2xl font-bold text-white tracking-tight" style={{ fontFamily: 'Tenada, sans-serif' }}>
+              <span className="text-xl font-bold text-white tracking-tight" style={{ fontFamily: 'Tenada, sans-serif' }}>
                 AURA <span className="text-emerald-500">FORCE</span>
               </span>
             </Link>
@@ -70,10 +69,10 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* 2. Quick Links */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6 font-heading">Quick Links</h3>
-            <ul className="space-y-3">
+            <h3 className="text-white font-bold text-base mb-2 font-heading">Quick Links</h3>
+            <ul className="space-y-1">
               {[
                 { name: "Home", path: "/" },
                 { name: "All Trainers", path: "/allTrainers" },
@@ -93,10 +92,10 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 3. Services */}
+          {/* Services */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6 font-heading">Services</h3>
-            <ul className="space-y-3">
+            <h3 className="text-white font-bold text-base mb-2 font-heading">Services</h3>
+            <ul className="space-y-1">
               {[
                 { name: "Personal Training", path: "/allTrainers" },
                 { name: "Group Classes", path: "/allClasses" },
@@ -113,17 +112,17 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* 4. Newsletter */}
+          {/* Newsletter */}
           <div>
-            <h3 className="text-white font-bold text-lg mb-6 font-heading">Stay Updated</h3>
-            <p className="text-zinc-500 text-sm mb-4 font-satoshi">
+            <h3 className="text-white font-bold text-base mb-2 font-heading">Stay Updated</h3>
+            <p className="text-zinc-500 text-xs mb-2 font-satoshi">
               Get the latest workout tips and exclusive offers sent to your inbox.
             </p>
             <form className="relative group">
               <input
                 type="email"
                 placeholder="Email address"
-                className="w-full pl-4 pr-12 py-3 bg-zinc-900/50 border border-zinc-800 rounded-xl text-zinc-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600 text-sm"
+                className="w-full pl-3 pr-10 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-lg text-zinc-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600 text-xs"
               />
               <button
                 type="submit"
@@ -136,7 +135,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs md:text-sm text-zinc-500">
+        <div className="border-t border-zinc-900 pt-4 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-zinc-600">
           <p>© {currentYear} <span style={{ fontFamily: 'Tenada, sans-serif' }}>AURA FORCE</span>. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-emerald-500 transition-colors">Privacy Policy</a>

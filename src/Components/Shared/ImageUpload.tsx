@@ -26,13 +26,13 @@ export default function ImageUpload({ clerkId }: ImageUploadProps) {
         }}
         onClientUploadComplete={async (res) => {
           if (res && res[0]) {
-            // 1. Get the new URL
+            // new URL
             const imageUrl = res[0].url;
-            
-            // 2. Save to Database
+
+            // Save to Database
             await updateProfileImage(clerkId, imageUrl);
-            
-            // 3. Show success
+
+            // Show success
             toast.success("Profile picture updated!");
             router.refresh();
           }

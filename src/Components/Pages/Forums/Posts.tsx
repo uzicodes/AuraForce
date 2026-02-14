@@ -11,7 +11,6 @@ import { toggleVote } from "@/actions/toggleVote";
 
 
 const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
-  // Initialize state from props
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Optimistic UI for votes
@@ -28,11 +27,11 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
       } else {
 
         if (state.userVote === "UP") {
-           newUpvotes = state.upvotes - 2;
+          newUpvotes = state.upvotes - 2;
         } else if (state.userVote === "DOWN") {
-           newUpvotes = state.upvotes + 2;
+          newUpvotes = state.upvotes + 2;
         } else {
-           newUpvotes = newVoteType === "UP" ? state.upvotes + 1 : state.upvotes - 1;
+          newUpvotes = newVoteType === "UP" ? state.upvotes + 1 : state.upvotes - 1;
         }
         newUserVote = newVoteType;
       }
@@ -55,9 +54,9 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
   };
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     if (!confirm("Are you sure you want to delete this post?")) return;
-    
+
     setIsDeleting(true);
     try {
       await deletePost(post._id);
@@ -80,10 +79,10 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
 
   return (
     <div className="group relative w-full h-full bg-zinc-900 rounded-3xl shadow-lg border border-zinc-800 hover:border-emerald-500/50 transition-all duration-300 flex flex-col overflow-hidden">
-      
+
       {/* Delete Button for Owner */}
       {isOwner && (
-        <button 
+        <button
           onClick={handleDelete}
           className="absolute top-4 right-4 z-20 p-2 bg-red-500/10 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all opacity-0 group-hover:opacity-100"
           title="Delete Post"
@@ -141,14 +140,13 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
 
       {/* Footer / Actions */}
       <div className="px-6 py-4 bg-zinc-950/50 border-t border-zinc-800 flex items-center justify-between mt-auto">
-        
+
         {/* Vote Buttons */}
         <div className="flex items-center bg-zinc-900 rounded-lg border border-zinc-800 p-1">
           <button
             onClick={() => handleVote("UP")}
-            className={`p-1.5 rounded-md transition-colors ${
-              optimisticState.userVote === "UP" ? "text-emerald-400 bg-emerald-400/10" : "text-zinc-500 hover:text-white"
-            }`}
+            className={`p-1.5 rounded-md transition-colors ${optimisticState.userVote === "UP" ? "text-emerald-400 bg-emerald-400/10" : "text-zinc-500 hover:text-white"
+              }`}
           >
             <BiSolidUpvote size={18} />
           </button>
@@ -157,15 +155,12 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
           </span>
           <button
             onClick={() => handleVote("DOWN")}
-            className={`p-1.5 rounded-md transition-colors ${
-              optimisticState.userVote === "DOWN" ? "text-red-400 bg-red-400/10" : "text-zinc-500 hover:text-white"
-            }`}
+            className={`p-1.5 rounded-md transition-colors ${optimisticState.userVote === "DOWN" ? "text-red-400 bg-red-400/10" : "text-zinc-500 hover:text-white"
+              }`}
           >
             <BiSolidDownvote size={18} />
           </button>
         </div>
-
-        {/* Removed Discussion Link */}
       </div>
     </div>
   );

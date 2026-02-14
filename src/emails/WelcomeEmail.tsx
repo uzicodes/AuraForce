@@ -4,20 +4,20 @@ interface WelcomeEmailProps {
   userEmail: string;
 }
 
-const baseUrl = process.env.VERCEL_URL 
-  ? `https://${process.env.VERCEL_URL}` 
-  : 'https://auraforce.vercel.app'; // Fallback to your Vercel URL
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'https://auraforce.vercel.app';
 
 export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
   <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#09090b', padding: '40px 20px', color: '#ffffff' }}>
     <div style={{ maxWidth: '600px', margin: '0 auto', backgroundColor: '#18181b', padding: '40px', borderRadius: '16px', border: '1px solid #27272a' }}>
-      
+
       {/* --- LOGO SECTION --- */}
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <img 
-          src={`${baseUrl}/for favicon.png`} 
-          alt="AuraForce Logo" 
-          width="60" 
+        <img
+          src={`${baseUrl}/for favicon.png`}
+          alt="AuraForce Logo"
+          width="60"
           height="60"
           style={{ display: 'inline-block', objectFit: 'contain' }}
         />
@@ -25,7 +25,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
           AURA<span style={{ color: '#10b981' }}>FORCE</span>
         </h1>
       </div>
-      
+
       {/* Intro Text */}
       <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#d4d4d8', textAlign: 'center', marginBottom: '30px' }}>
         Welcome to the team! You have successfully joined <strong>10,000+ athletes</strong> receiving our weekly insights. We aren't just a gym—we are a movement.
@@ -33,7 +33,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
 
       <div style={{ width: '100%', height: '1px', backgroundColor: '#27272a', marginBottom: '30px' }}></div>
 
-      {/* --- INFO SECTION (The 3 Pillars) --- */}
+      {/* --- INFO SECTION --- */}
       <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#ffffff', marginBottom: '20px' }}>
         What to expect from us:
       </h2>
@@ -64,14 +64,14 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
 
       {/* Call to Action Button */}
       <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <a 
+        <a
           href={baseUrl}
-          style={{ 
-            backgroundColor: '#10b981', 
-            color: '#000000', 
-            padding: '12px 30px', 
-            borderRadius: '50px', 
-            textDecoration: 'none', 
+          style={{
+            backgroundColor: '#10b981',
+            color: '#000000',
+            padding: '12px 30px',
+            borderRadius: '50px',
+            textDecoration: 'none',
             fontWeight: 'bold',
             fontSize: '15px',
             display: 'inline-block'
@@ -88,7 +88,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
         <br />
         © {new Date().getFullYear()} AuraForce Inc. All rights reserved.
       </p>
-      
+
     </div>
   </div>
 );

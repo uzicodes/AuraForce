@@ -62,7 +62,7 @@ const Features = () => {
   return (
     <section id="features" className="py-24 relative overflow-hidden">
 
-      {/* Background Decor - Gritty Texture Overlay */}
+      {/* Background Decor */}
       <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none" />
 
       {/* Glowing Orbs */}
@@ -96,14 +96,14 @@ const Features = () => {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
-            // Create unique animations for each card position
+            // animations for each card position
             const animations = [
-              { x: -100, rotate: -5 },   // Card 1: from left with slight rotation
-              { y: -80, scale: 0.8 },    // Card 2: from top with scale
-              { x: 100, rotate: 5 },     // Card 3: from right with rotation
-              { y: 80, scale: 0.9 },     // Card 4: from bottom with scale
-              { x: -80, y: 40 },         // Card 5: diagonal from left-bottom
-              { x: 80, y: 40 },          // Card 6: diagonal from right-bottom
+              { x: -100, rotate: -5 },
+              { y: -80, scale: 0.8 },
+              { x: 100, rotate: 5 },
+              { y: 80, scale: 0.9 },
+              { x: -80, y: 40 },
+              { x: 80, y: 40 },
             ];
 
             const animation = animations[index % 6];
@@ -147,11 +147,8 @@ const Features = () => {
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
 
-                {/* Gradient Overlays */}
-                {/* Base dark overlay */}
                 <div className="absolute inset-0 bg-zinc-950/70 transition-opacity duration-300 group-hover:bg-zinc-950/60" />
 
-                {/* Gradient from bottom to make text readable */}
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/50 to-transparent" />
 
                 {/* Content Container */}
@@ -162,7 +159,7 @@ const Features = () => {
                     {feature.icon}
                   </div>
 
-                  {/* Text Content - Slides up slightly on hover */}
+                  {/* Text Content */}
                   <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
                     <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors font-heading">
                       {feature.title}

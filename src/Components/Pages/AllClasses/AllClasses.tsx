@@ -91,7 +91,7 @@ const AllClasses = () => {
   const [search, setSearch] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 1. Filter data based on search
+  // Filter data based on search
   const filteredClasses = staticClasses.filter((item) =>
     search.toLowerCase() === ""
       ? item
@@ -101,7 +101,6 @@ const AllClasses = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
-        // Optional: clear search on click outside
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -113,10 +112,10 @@ const AllClasses = () => {
 
 
   return (
-    // MAIN CONTAINER: Zinc-950 for Dark Theme consistency
+    // MAIN CONTAINERency
     <div className="min-h-screen bg-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
-      {/* Background Decor: Subtle Green Glow */}
+      {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       {/* HEADER */}

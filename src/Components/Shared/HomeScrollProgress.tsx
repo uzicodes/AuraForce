@@ -11,7 +11,7 @@ export default function HomeScrollProgress() {
   // Hook into scroll position
   const { scrollYProgress } = useScroll();
 
-  // Make the movement smooth (spring physics)
+  // Make the movement smooth
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,

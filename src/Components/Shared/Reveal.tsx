@@ -6,12 +6,12 @@ import { motion, useInView, useAnimation } from "framer-motion";
 interface Props {
   children: React.ReactNode;
   width?: "fit-content" | "100%";
-  delay?: number; // Optional delay
+  delay?: number;
 }
 
 export const Reveal = ({ children, width = "100%", delay = 0 }: Props) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-75px" }); // Trigger when 75px of element is visible
+  const isInView = useInView(ref, { once: true, margin: "-75px" });
   const mainControls = useAnimation();
 
   useEffect(() => {
@@ -24,12 +24,12 @@ export const Reveal = ({ children, width = "100%", delay = 0 }: Props) => {
     <div ref={ref} style={{ position: "relative", width, overflow: "hidden" }}>
       <motion.div
         variants={{
-          hidden: { opacity: 0, y: 75 }, // Start 75px lower and invisible
-          visible: { opacity: 1, y: 0 }, // End at normal position and visible
+          hidden: { opacity: 0, y: 75 },
+          visible: { opacity: 1, y: 0 },
         }}
         initial="hidden"
         animate={mainControls}
-        transition={{ duration: 0.5, delay: delay, ease: "easeOut" }} // Smooth easing
+        transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
       >
         {children}
       </motion.div>

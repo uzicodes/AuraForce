@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
 
-// STATIC DATA (Updated with Local Images)
+// STATIC DATA 
 const trainers = [
   {
     _id: 1,
@@ -86,7 +86,7 @@ const AllTrainers = () => {
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
 
-      {/* Background Decor: Subtle Green Glow */}
+      {/* Background Decor */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
 
       {/* HEADER SECTION */}
@@ -128,7 +128,6 @@ const AllTrainers = () => {
             <div className="relative h-80 w-full overflow-hidden bg-zinc-800">
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-90" />
 
-              {/* Switched to next/image for optimization, keeping style/crop */}
               <Image
                 src={trainer.image}
                 alt={trainer.name}
