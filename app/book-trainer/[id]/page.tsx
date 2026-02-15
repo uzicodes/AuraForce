@@ -45,7 +45,7 @@ export default async function BookTrainerPage({ params }: { params: Promise<{ id
                             {trainer.role}
                         </p>
 
-                        <div className="relative h-[400px] w-full max-w-md rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl hidden lg:block">
+                        <div className="relative h-80 lg:h-[400px] w-full max-w-md rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl mx-auto lg:mx-0">
                             <Image
                                 src={imageUrl}
                                 alt={trainer.name || "Trainer"}

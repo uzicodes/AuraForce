@@ -44,46 +44,35 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
         }
 
         startTransition(async () => {
-            // We pass a default "Flexible" time slot since the time grid is removed
-            // but the database/action still expects a timeSlot string.
             const result = await bookTrainerAction(trainerId, selectedDate, "Flexible", planType);
 
             if (result?.error) {
                 toast.error(result.error, {
-                    style: { background: '#333', color: '#fff', borderRadius: '10px' }
+                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
                 });
             } else {
                 toast.success(`Successfully booked ${planType.toLowerCase()} package with ${trainerName}!`, {
                     icon: "🔥",
-                    style: { background: '#333', color: '#fff', borderRadius: '10px' }
+                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
                 });
-                // Redirect to profile to see the booking
                 router.push("/profile");
             }
         });
     };
 
-    // Get today's date formatted for the input min attribute (YYYY-MM-DD)
     const today = new Date().toISOString().split('T')[0];
-
-    // Determine current price based on selection
     const price = planType === "WEEKLY" ? feePerWeek : planType === "MONTHLY" ? feePerMonth : 0;
 
     return (
-        <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
+        <div className="bg-zinc-900 border border-zinc-800 p-8 shadow-2xl rounded-none">
             <h3 className="text-2xl font-bold text-white mb-2 font-heading">
                 Schedule your session
             </h3>
 
-            {/* PRICING SUMMARY */}
-            <p className="text-emerald-400 text-sm font-bold uppercase tracking-wider mb-8">
-                Pricing: ৳{feePerWeek || "N/A"} / Weekly | ৳{feePerMonth || "N/A"} / Monthly
-            </p>
-
             <div className="space-y-8">
                 {/* PLAN SELECTION */}
-                <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-4 uppercase tracking-wider">
+                <div className="mt-8">
+                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-4 uppercase tracking-wider font-satoshi">
                         <FaLayerGroup className="text-emerald-500" /> Select Subscription Plan
                     </label>
                     <div className="grid grid-cols-2 gap-4">
@@ -92,19 +81,22 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("WEEKLY")}
-                            className={`relative h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all ${planType === "WEEKLY"
-                                    ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                            className={`relative h-28 border-2 flex flex-col items-center justify-center gap-0 transition-all rounded-none ${planType === "WEEKLY"
+                                    ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                                     : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
-                            <span className={`text-lg font-bold uppercase tracking-wider ${planType === "WEEKLY" ? "text-white" : "text-zinc-400"}`}>
-                                Weekly Plan
+                            <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "WEEKLY" ? "text-black/70" : "text-zinc-500"}`}>
+                                Weekly
                             </span>
-                            <span className={`text-sm ${planType === "WEEKLY" ? "text-emerald-400" : "text-zinc-500"}`}>
+                            <span className={`text-2xl font-bold font-heading ${planType === "WEEKLY" ? "text-black" : "text-white"}`}>
+                                ৳{feePerWeek ? feePerWeek.toLocaleString() : "N/A"}
+                            </span>
+                            <span className={`text-[10px] ${planType === "WEEKLY" ? "text-black/60" : "text-zinc-600"} font-satoshi mt-1`}>
                                 7 Days Access
                             </span>
                             {planType === "WEEKLY" && (
-                                <div className="absolute top-3 right-3 text-emerald-500">
+                                <div className="absolute top-2 right-2 text-black text-xs">
                                     <FaCheckCircle />
                                 </div>
                             )}
@@ -115,19 +107,22 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("MONTHLY")}
-                            className={`relative h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all ${planType === "MONTHLY"
-                                    ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                            className={`relative h-28 border-2 flex flex-col items-center justify-center gap-0 transition-all rounded-none ${planType === "MONTHLY"
+                                    ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                                     : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
-                            <span className={`text-lg font-bold uppercase tracking-wider ${planType === "MONTHLY" ? "text-white" : "text-zinc-400"}`}>
-                                Monthly Plan
+                            <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "MONTHLY" ? "text-black/70" : "text-zinc-500"}`}>
+                                Monthly
                             </span>
-                            <span className={`text-sm ${planType === "MONTHLY" ? "text-emerald-400" : "text-zinc-500"}`}>
+                            <span className={`text-2xl font-bold font-heading ${planType === "MONTHLY" ? "text-black" : "text-white"}`}>
+                                ৳{feePerMonth ? feePerMonth.toLocaleString() : "N/A"}
+                            </span>
+                            <span className={`text-[10px] ${planType === "MONTHLY" ? "text-black/60" : "text-zinc-600"} font-satoshi mt-1`}>
                                 30 Days Access
                             </span>
                             {planType === "MONTHLY" && (
-                                <div className="absolute top-3 right-3 text-emerald-500">
+                                <div className="absolute top-2 right-2 text-black text-xs">
                                     <FaCheckCircle />
                                 </div>
                             )}
@@ -137,7 +132,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
 
                 {/* DATE PICKER */}
                 <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
+                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider font-satoshi">
                         <FaCalendarAlt className="text-emerald-500" /> Select Start Date
                     </label>
                     <input
@@ -145,7 +140,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                         min={today}
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-800 px-4 py-4 text-white focus:outline-none focus:border-emerald-500 transition-colors rounded-none font-satoshi"
                     />
                     {endDate && (
                         <p className="mt-2 text-xs text-zinc-500 font-mono">
@@ -155,8 +150,8 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                 </div>
 
                 {/* TOTAL COST DISPLAY */}
-                <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800 flex justify-between items-center">
-                    <span className="text-zinc-400 text-sm font-bold uppercase tracking-wider">Total Cost</span>
+                <div className="bg-zinc-950 p-4 border border-zinc-800 flex justify-between items-center rounded-none">
+                    <span className="text-zinc-400 text-sm font-bold uppercase tracking-wider font-satoshi">Total Cost</span>
                     <span className="text-2xl font-bold text-white font-heading">
                         ৳{price ? price.toLocaleString() : "0"}
                     </span>
@@ -168,7 +163,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBooking}
                     disabled={isPending || !planType || !selectedDate}
-                    className="w-full bg-white text-black font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-white text-black font-bold text-lg py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-none font-satoshi"
                 >
                     {isPending ? "Processing..." : "Proceed to Payment"}
                 </motion.button>
