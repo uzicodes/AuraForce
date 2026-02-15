@@ -2,6 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
 
@@ -74,6 +77,19 @@ interface DbTrainer {
 
 // Accept dbTrainers as a prop from the page
 const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
+  const router = useRouter();
+  const { isSignedIn } = useUser();
+
+  const handleBookClick = (trainerId: number) => {
+    if (!isSignedIn) {
+      toast.error("You need to log in to book a session.", {
+        style: { background: '#333', color: '#fff' }
+      });
+      router.push("/login");
+      return;
+    }
+    router.push(`/book-trainer/${trainerId}`);
+  };
 
   // MERGE LOGIC: Combine database names/roles with static images/bios
   const mergedTrainers = dbTrainers.map((dbTrainer) => {
@@ -169,7 +185,10 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
                   <FaLinkedin className="text-zinc-600 hover:text-white cursor-pointer transition-colors text-sm" />
                 </div>
 
-                <button className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider">
+                <button
+                  onClick={() => handleBookClick(trainer.id)}
+                  className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider"
+                >
                   Book  <FaArrowRight />
                 </button>
               </div>

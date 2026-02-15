@@ -37,20 +37,18 @@ const calculateAge = (dob: Date) => {
 };
 
 const Profile = async () => {
-  // 1. Check user
+  // Check user
   const user = await checkUser();
   if (!user) redirect("/login");
 
-  // 2. Get Clerk user
+  // Get Clerk user
   const clerkUser = await currentUser();
 
-  // 3. Fetch User Data
+  // Fetch User Data
   const dbUser = await db.user.findUnique({
     where: { clerkUserId: user.clerkUserId },
     include: {
       subscription: true,
-      // Temporarily removed bookings to fix the P2021 error
-      // Will be replaced with classBookings and trainerBookings later
       posts: { orderBy: { createdAt: 'desc' } }
     },
   });
@@ -63,7 +61,6 @@ const Profile = async () => {
   const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
 
-  // ✅ FIX: Prioritize DB Image -> Clerk Image -> Placeholder
   const avatarUrl = dbUser.image || clerkUser?.imageUrl || "/dp.png";
 
   // --- STATS ---
@@ -186,7 +183,6 @@ const Profile = async () => {
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">My Active Plan</h3>
-                {/* Removed the 'Manage' span from here */}
               </div>
               {dbUser.subscription ? (
                 <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-zinc-950/50 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
@@ -226,7 +222,7 @@ const Profile = async () => {
           {/* RIGHT COLUMN */}
           <div className="lg:col-span-1 space-y-8">
 
-            {/* 2. My Trainer Box */}
+            {/* My Trainer Box */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sticky top-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">My Trainer</h3>
@@ -244,7 +240,7 @@ const Profile = async () => {
               </div>
             </div>
 
-            {/* 3. My Classes Box */}
+            {/* My Classes Box */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">My Classes</h3>
