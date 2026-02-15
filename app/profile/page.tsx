@@ -10,16 +10,14 @@ import MyPosts from "@/Components/Pages/Profile/MyPosts";
 import {
   FaUserEdit,
   FaIdCard,
-  FaCheckCircle,
-  FaCalendarCheck,
-  FaLayerGroup,
   FaMapMarkerAlt,
   FaCalendarAlt,
-  FaExclamationCircle,
   FaBirthdayCake,
   FaWeight,
   FaRulerVertical,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaDumbbell,
+  FaUserTie
 } from "react-icons/fa";
 
 // --- HELPERS ---
@@ -31,10 +29,6 @@ const formatDate = (date: Date) => {
     year: "numeric",
   }).format(date);
 };
-
-// Temporarily removing getDayName and getTime since bookings are removed for now
-// const getDayName = (date: Date) => { ... }
-// const getTime = (date: Date) => { ... }
 
 const calculateAge = (dob: Date) => {
   const diffMs = Date.now() - dob.getTime();
@@ -187,40 +181,12 @@ const Profile = async () => {
 
           {/* LEFT COLUMN */}
           <div className="lg:col-span-2 space-y-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {/* Plan Name */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
-                  <FaLayerGroup />
-                </div>
-                <div className="text-lg font-bold text-white mb-1 truncate">{planName}</div>
-                <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Current Plan</div>
-              </div>
-              {/* Status */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
-                  <FaCheckCircle />
-                </div>
-                <div className={`text-lg font-bold mb-1 truncate ${isActive ? "text-white" : "text-red-500"}`}>
-                  {isActive ? "Active" : "Inactive"}
-                </div>
-                <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Status</div>
-              </div>
-              {/* Renewal */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 hover:border-emerald-500/30 transition-colors">
-                <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center mb-3 text-emerald-500">
-                  <FaCalendarCheck />
-                </div>
-                <div className="text-lg font-bold text-white mb-1 truncate">{renewalDate}</div>
-                <div className="text-xs text-zinc-500 uppercase font-medium tracking-wide">Renewal Date</div>
-              </div>
-            </div>
 
             {/* Active Subscription Banner */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">My Active Plan</h3>
-                <span className="text-xs text-emerald-500 font-bold cursor-pointer hover:underline">Manage</span>
+                {/* Removed the 'Manage' span from here */}
               </div>
               {dbUser.subscription ? (
                 <div className="flex flex-col md:flex-row items-center gap-4 p-4 bg-zinc-950/50 rounded-xl border border-zinc-800 hover:border-emerald-500/30 transition-colors">
@@ -241,13 +207,15 @@ const Profile = async () => {
               ) : (
                 <div className="p-8 text-center bg-zinc-950/30 rounded-xl border border-dashed border-zinc-800">
                   <p className="text-zinc-400">You don't have an active subscription.</p>
-                  <button className="mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold">Browse Plans</button>
+                  <Link href="/#membership" className="inline-block mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold transition-colors">
+                    Browse Plans
+                  </Link>
                 </div>
               )}
             </div>
 
             {/* My Posts */}
-            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mt-8">
+            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-white">My Published Posts</h3>
               </div>
@@ -256,20 +224,44 @@ const Profile = async () => {
           </div>
 
           {/* RIGHT COLUMN */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-8">
+
+            {/* 2. My Trainer Box */}
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 sticky top-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Upcoming Bookings</h3>
-                <FaCalendarAlt className="text-emerald-500" />
+                <h3 className="text-xl font-bold text-white">My Trainer</h3>
+                <FaUserTie className="text-emerald-500 text-xl" />
               </div>
 
-              {/* Placeholder until tables are ready */}
-              <div className="text-center py-10">
-                <FaExclamationCircle className="mx-auto text-zinc-600 text-3xl mb-3" />
-                <p className="text-zinc-400 text-sm">Booking system is currently being updated.</p>
+              <div className="p-6 text-center bg-zinc-950/30 rounded-xl border border-dashed border-zinc-800">
+                <div className="w-12 h-12 mx-auto bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500 mb-3">
+                  <FaUserTie size={20} />
+                </div>
+                <p className="text-zinc-400 text-sm">No trainer booked yet.</p>
+                <Link href="/allTrainers" className="inline-block mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold transition-colors">
+                  Find a Trainer
+                </Link>
               </div>
-
             </div>
+
+            {/* 3. My Classes Box */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-bold text-white">My Classes</h3>
+                <FaDumbbell className="text-emerald-500 text-xl" />
+              </div>
+
+              <div className="p-6 text-center bg-zinc-950/30 rounded-xl border border-dashed border-zinc-800">
+                <div className="w-12 h-12 mx-auto bg-zinc-800 rounded-full flex items-center justify-center text-zinc-500 mb-3">
+                  <FaDumbbell size={20} />
+                </div>
+                <p className="text-zinc-400 text-sm">No classes scheduled.</p>
+                <Link href="/allClasses" className="inline-block mt-4 text-emerald-500 hover:text-emerald-400 text-sm font-bold transition-colors">
+                  Browse Classes
+                </Link>
+              </div>
+            </div>
+
           </div>
 
         </div>
