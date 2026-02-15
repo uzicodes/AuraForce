@@ -12,7 +12,7 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
   // Constants
   const TIMEOUT_MS = timeoutMinutes * 60 * 1000;
   const ABSOLUTE_TIMEOUT_MS = absoluteExpiryHours * 60 * 60 * 1000;
-  
+
   const STORAGE_KEY_LAST_ACTIVE = 'auraforce_last_active';
   const STORAGE_KEY_SESSION_START = 'auraforce_session_start';
 
@@ -21,9 +21,9 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
       // Clear tracking data
       localStorage.removeItem(STORAGE_KEY_LAST_ACTIVE);
       localStorage.removeItem(STORAGE_KEY_SESSION_START);
-      
+
       await signOut();
-      router.push('/login'); 
+      router.push('/login');
     } catch (error) {
       console.error('Logout error:', error);
     }
@@ -36,19 +36,20 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
     const now = Date.now();
 
 
-    
+
     // Check Inactivity (Persistence check for tab close/reopen)
-    const storedLastActive = localStorage.getItem(STORAGE_KEY_LAST_ACTIVE);
-    if (storedLastActive) {
-      const lastActiveTime = parseInt(storedLastActive, 10);
-      // If time since last active > inactivity limit
-      if (now - lastActiveTime >= TIMEOUT_MS) {
-        // eslint-disable-next-line no-console
-        console.log("Session expired due to inactivity, Please login again.");
-        handleLogout();
-        return;
-      }
-    }
+    // REMOVED immediate check to prevent auto-logout on page reload/revisiit.
+    // The session should only expire if the user is IDLE while the page is OPEN.
+    // if (storedLastActive) {
+    //   const lastActiveTime = parseInt(storedLastActive, 10);
+    //   // If time since last active > inactivity limit
+    //   if (now - lastActiveTime >= TIMEOUT_MS) {
+    //     // eslint-disable-next-line no-console
+    //     console.log("Session expired due to inactivity, Please login again.");
+    //     handleLogout();
+    //     return;
+    //   }
+    // }
 
     // Check Absolute Limit (24h)
     let sessionStart = localStorage.getItem(STORAGE_KEY_SESSION_START);
@@ -57,7 +58,7 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
       sessionStart = now.toString();
       localStorage.setItem(STORAGE_KEY_SESSION_START, sessionStart);
     }
-    
+
     const sessionStartTime = parseInt(sessionStart, 10);
     const msSinceStart = now - sessionStartTime;
 
@@ -80,7 +81,7 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
 
     // Inactivity Timer (Resets on activity)
     let inactivityTimer: NodeJS.Timeout;
-    
+
     // localStorage writes (avoid performance hit)
     let lastStorageWrite = now;
 
