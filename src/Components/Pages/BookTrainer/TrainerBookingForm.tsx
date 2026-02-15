@@ -3,60 +3,57 @@
 import React, { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaCalendarAlt, FaClock, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
+import { FaCalendarAlt, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { bookTrainerAction } from "@/actions/bookTrainer";
-
-// Standard gym hours time slots
-const TIME_SLOTS = [
-    "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM",
-    "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"
-];
 
 interface TrainerBookingFormProps {
     trainerId: number;
     trainerName: string;
+    feePerWeek?: number | null;
+    feePerMonth?: number | null;
 }
 
-const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps) => {
+const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }: TrainerBookingFormProps) => {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState("");
-    const [selectedTime, setSelectedTime] = useState("");
-    const [packageType, setPackageType] = useState<"WEEKLY" | "MONTHLY">("WEEKLY");
+    const [planType, setPlanType] = useState<"WEEKLY" | "MONTHLY" | null>(null);
     const [endDate, setEndDate] = useState<string>("");
 
     // Calculate end date based on selection
     useEffect(() => {
-        if (!selectedDate) {
+        if (!selectedDate || !planType) {
             setEndDate("");
             return;
         }
 
         const start = new Date(selectedDate);
-        const daysToAdd = packageType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total (inclusive)
+        const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total (inclusive)
 
         const end = new Date(start);
         end.setDate(start.getDate() + daysToAdd);
 
         setEndDate(end.toISOString().split('T')[0]);
-    }, [selectedDate, packageType]);
+    }, [selectedDate, planType]);
 
     const handleBooking = () => {
-        if (!selectedDate || !selectedTime) {
-            toast.error("Please select a start date and a time slot.");
+        if (!selectedDate || !planType) {
+            toast.error("Please select a plan and a start date.");
             return;
         }
 
         startTransition(async () => {
-            const result = await bookTrainerAction(trainerId, selectedDate, selectedTime, packageType);
+            // We pass a default "Flexible" time slot since the time grid is removed
+            // but the database/action still expects a timeSlot string.
+            const result = await bookTrainerAction(trainerId, selectedDate, "Flexible", planType);
 
             if (result?.error) {
                 toast.error(result.error, {
                     style: { background: '#333', color: '#fff', borderRadius: '10px' }
                 });
             } else {
-                toast.success(`Successfully booked ${packageType.toLowerCase()} package with ${trainerName}!`, {
+                toast.success(`Successfully booked ${planType.toLowerCase()} package with ${trainerName}!`, {
                     icon: "🔥",
                     style: { background: '#333', color: '#fff', borderRadius: '10px' }
                 });
@@ -69,43 +66,78 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
     // Get today's date formatted for the input min attribute (YYYY-MM-DD)
     const today = new Date().toISOString().split('T')[0];
 
+    // Determine current price based on selection
+    const price = planType === "WEEKLY" ? feePerWeek : planType === "MONTHLY" ? feePerMonth : 0;
+
     return (
         <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
-            <h3 className="text-2xl font-bold text-white mb-6 font-heading">
+            <h3 className="text-2xl font-bold text-white mb-2 font-heading">
                 Schedule your session
             </h3>
 
-            <div className="space-y-6">
-                {/* PACKAGE SELECTION */}
+            {/* PRICING SUMMARY */}
+            <p className="text-emerald-400 text-sm font-bold uppercase tracking-wider mb-8">
+                Pricing: ৳{feePerWeek || "N/A"} / Weekly | ৳{feePerMonth || "N/A"} / Monthly
+            </p>
+
+            <div className="space-y-8">
+                {/* PLAN SELECTION */}
                 <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
-                        <FaLayerGroup className="text-emerald-500" /> Select Package
+                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-4 uppercase tracking-wider">
+                        <FaLayerGroup className="text-emerald-500" /> Select Subscription Plan
                     </label>
                     <div className="grid grid-cols-2 gap-4">
-                        <button
-                            onClick={() => setPackageType("WEEKLY")}
-                            className={`py-3 px-4 rounded-xl border font-bold text-sm uppercase tracking-wider transition-all ${packageType === "WEEKLY"
-                                    ? "bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-emerald-500/50 hover:text-white"
+                        {/* Weekly Card */}
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setPlanType("WEEKLY")}
+                            className={`relative h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all ${planType === "WEEKLY"
+                                    ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                    : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
-                            Weekly (7 Days)
-                        </button>
-                        <button
-                            onClick={() => setPackageType("MONTHLY")}
-                            className={`py-3 px-4 rounded-xl border font-bold text-sm uppercase tracking-wider transition-all ${packageType === "MONTHLY"
-                                    ? "bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-emerald-500/50 hover:text-white"
+                            <span className={`text-lg font-bold uppercase tracking-wider ${planType === "WEEKLY" ? "text-white" : "text-zinc-400"}`}>
+                                Weekly Plan
+                            </span>
+                            <span className={`text-sm ${planType === "WEEKLY" ? "text-emerald-400" : "text-zinc-500"}`}>
+                                7 Days Access
+                            </span>
+                            {planType === "WEEKLY" && (
+                                <div className="absolute top-3 right-3 text-emerald-500">
+                                    <FaCheckCircle />
+                                </div>
+                            )}
+                        </motion.button>
+
+                        {/* Monthly Card */}
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => setPlanType("MONTHLY")}
+                            className={`relative h-32 rounded-2xl border-2 flex flex-col items-center justify-center gap-2 transition-all ${planType === "MONTHLY"
+                                    ? "bg-emerald-500/10 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                    : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
-                            Monthly (30 Days)
-                        </button>
+                            <span className={`text-lg font-bold uppercase tracking-wider ${planType === "MONTHLY" ? "text-white" : "text-zinc-400"}`}>
+                                Monthly Plan
+                            </span>
+                            <span className={`text-sm ${planType === "MONTHLY" ? "text-emerald-400" : "text-zinc-500"}`}>
+                                30 Days Access
+                            </span>
+                            {planType === "MONTHLY" && (
+                                <div className="absolute top-3 right-3 text-emerald-500">
+                                    <FaCheckCircle />
+                                </div>
+                            )}
+                        </motion.button>
                     </div>
                 </div>
 
                 {/* DATE PICKER */}
                 <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-2 uppercase tracking-wider">
+                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
                         <FaCalendarAlt className="text-emerald-500" /> Select Start Date
                     </label>
                     <input
@@ -113,34 +145,21 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
                         min={today}
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-4 text-white focus:outline-none focus:border-emerald-500 transition-colors"
                     />
                     {endDate && (
-                        <p className="mt-2 text-xs text-emerald-400 font-mono">
-                            Package ends on: <span className="font-bold">{endDate}</span>
+                        <p className="mt-2 text-xs text-zinc-500 font-mono">
+                            Plan expires on: <span className="text-emerald-400 font-bold">{endDate}</span>
                         </p>
                     )}
                 </div>
 
-                {/* TIME SLOTS */}
-                <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
-                        <FaClock className="text-emerald-500" /> Select Daily Time
-                    </label>
-                    <div className="grid grid-cols-3 gap-3">
-                        {TIME_SLOTS.map((slot) => (
-                            <button
-                                key={slot}
-                                onClick={() => setSelectedTime(slot)}
-                                className={`py-2 px-1 text-sm font-bold rounded-lg border transition-all ${selectedTime === slot
-                                    ? "bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
-                                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-emerald-500/50 hover:text-white"
-                                    }`}
-                            >
-                                {slot}
-                            </button>
-                        ))}
-                    </div>
+                {/* TOTAL COST DISPLAY */}
+                <div className="bg-zinc-950 rounded-xl p-4 border border-zinc-800 flex justify-between items-center">
+                    <span className="text-zinc-400 text-sm font-bold uppercase tracking-wider">Total Cost</span>
+                    <span className="text-2xl font-bold text-white font-heading">
+                        ৳{price ? price.toLocaleString() : "0"}
+                    </span>
                 </div>
 
                 {/* SUBMIT BUTTON */}
@@ -148,10 +167,10 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleBooking}
-                    disabled={isPending}
-                    className="w-full mt-4 bg-white text-black font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled={isPending || !planType || !selectedDate}
+                    className="w-full bg-white text-black font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {isPending ? "Booking Package..." : <><FaCheckCircle className="text-emerald-500" /> Confirm {packageType === "WEEKLY" ? "Weekly" : "Monthly"} Package</>}
+                    {isPending ? "Processing..." : "Proceed to Payment"}
                 </motion.button>
             </div>
         </div>
