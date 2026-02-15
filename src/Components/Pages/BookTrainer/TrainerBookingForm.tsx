@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { FaCalendarAlt, FaClock, FaCheckCircle } from "react-icons/fa";
+import { FaCalendarAlt, FaClock, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { bookTrainerAction } from "@/actions/bookTrainer";
 
@@ -23,22 +23,40 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
+    const [packageType, setPackageType] = useState<"WEEKLY" | "MONTHLY">("WEEKLY");
+    const [endDate, setEndDate] = useState<string>("");
+
+    // Calculate end date based on selection
+    useEffect(() => {
+        if (!selectedDate) {
+            setEndDate("");
+            return;
+        }
+
+        const start = new Date(selectedDate);
+        const daysToAdd = packageType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total (inclusive)
+
+        const end = new Date(start);
+        end.setDate(start.getDate() + daysToAdd);
+
+        setEndDate(end.toISOString().split('T')[0]);
+    }, [selectedDate, packageType]);
 
     const handleBooking = () => {
         if (!selectedDate || !selectedTime) {
-            toast.error("Please select both a date and a time slot.");
+            toast.error("Please select a start date and a time slot.");
             return;
         }
 
         startTransition(async () => {
-            const result = await bookTrainerAction(trainerId, selectedDate, selectedTime);
+            const result = await bookTrainerAction(trainerId, selectedDate, selectedTime, packageType);
 
             if (result?.error) {
                 toast.error(result.error, {
                     style: { background: '#333', color: '#fff', borderRadius: '10px' }
                 });
             } else {
-                toast.success(`Successfully booked with ${trainerName}!`, {
+                toast.success(`Successfully booked ${packageType.toLowerCase()} package with ${trainerName}!`, {
                     icon: "🔥",
                     style: { background: '#333', color: '#fff', borderRadius: '10px' }
                 });
@@ -58,10 +76,37 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
             </h3>
 
             <div className="space-y-6">
+                {/* PACKAGE SELECTION */}
+                <div>
+                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
+                        <FaLayerGroup className="text-emerald-500" /> Select Package
+                    </label>
+                    <div className="grid grid-cols-2 gap-4">
+                        <button
+                            onClick={() => setPackageType("WEEKLY")}
+                            className={`py-3 px-4 rounded-xl border font-bold text-sm uppercase tracking-wider transition-all ${packageType === "WEEKLY"
+                                    ? "bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-emerald-500/50 hover:text-white"
+                                }`}
+                        >
+                            Weekly (7 Days)
+                        </button>
+                        <button
+                            onClick={() => setPackageType("MONTHLY")}
+                            className={`py-3 px-4 rounded-xl border font-bold text-sm uppercase tracking-wider transition-all ${packageType === "MONTHLY"
+                                    ? "bg-emerald-500 border-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                                    : "bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-emerald-500/50 hover:text-white"
+                                }`}
+                        >
+                            Monthly (30 Days)
+                        </button>
+                    </div>
+                </div>
+
                 {/* DATE PICKER */}
                 <div>
                     <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-2 uppercase tracking-wider">
-                        <FaCalendarAlt className="text-emerald-500" /> Select Date
+                        <FaCalendarAlt className="text-emerald-500" /> Select Start Date
                     </label>
                     <input
                         type="date"
@@ -70,12 +115,17 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
                         onChange={(e) => setSelectedDate(e.target.value)}
                         className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors"
                     />
+                    {endDate && (
+                        <p className="mt-2 text-xs text-emerald-400 font-mono">
+                            Package ends on: <span className="font-bold">{endDate}</span>
+                        </p>
+                    )}
                 </div>
 
                 {/* TIME SLOTS */}
                 <div>
                     <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider">
-                        <FaClock className="text-emerald-500" /> Select Time
+                        <FaClock className="text-emerald-500" /> Select Daily Time
                     </label>
                     <div className="grid grid-cols-3 gap-3">
                         {TIME_SLOTS.map((slot) => (
@@ -101,7 +151,7 @@ const TrainerBookingForm = ({ trainerId, trainerName }: TrainerBookingFormProps)
                     disabled={isPending}
                     className="w-full mt-4 bg-white text-black font-bold text-lg py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                    {isPending ? "Confirming..." : <><FaCheckCircle className="text-emerald-500" /> Confirm Booking</>}
+                    {isPending ? "Booking Package..." : <><FaCheckCircle className="text-emerald-500" /> Confirm {packageType === "WEEKLY" ? "Weekly" : "Monthly"} Package</>}
                 </motion.button>
             </div>
         </div>
