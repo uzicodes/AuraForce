@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaClock, FaFire, FaArrowRight } from 'react-icons/fa';
 
@@ -19,28 +18,25 @@ interface ClassCardProps {
 }
 
 const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
-  // Determine row (3 cards per row on desktop)
-  const row = Math.floor(index / 3);
-  // Alternate direction: even rows from left, odd rows from right
-  const fromLeft = row % 2 === 0;
-
   return (
     <motion.div
       initial={{
         opacity: 0,
-        x: fromLeft ? -100 : 100,
+        y: 50,
+        scale: 0.95
       }}
       whileInView={{
         opacity: 1,
-        x: 0,
+        y: 0,
+        scale: 1
       }}
-      viewport={{ once: false, margin: "-50px" }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{
-        duration: 0.6,
-        delay: (index % 3) * 0.15, // Stagger within each row
+        duration: 0.5,
+        delay: (index % 3) * 0.1, // Faster stagger
         type: "spring",
         stiffness: 100,
-        damping: 15
+        damping: 20
       }}
       whileHover={{
         y: -10,
@@ -75,7 +71,7 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
         </p>
 
         {/* METADATA ROW */}
-        <div className="flex items-center justify-between text-xs text-zinc-500 font-mono mb-4 border-b border-zinc-800 pb-4">
+        <div className="flex items-center justify-between text-xs text-zinc-500 font-satoshi mb-4 border-b border-zinc-800 pb-4">
           <div className="flex items-center gap-1">
             <FaClock className="text-emerald-500" />
             <span>{singleClass.duration || "60 mins"}</span>
@@ -86,7 +82,7 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
         </div>
 
         {/* BUTTON */}
-        <button className="w-full py-2 rounded-lg bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group/btn">
+        <button className="w-full py-2 rounded-none bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group/btn">
           Join Class
           <FaArrowRight className="text-xs transition-transform group-hover/btn:translate-x-1" />
         </button>

@@ -57,8 +57,8 @@ const Navbar = () => {
   }, [isOpen]);
 
   const navLinks = [
-    { name: "All Trainers", path: "/allTrainers" },
-    { name: "All Classes", path: "/allClasses" },
+    { name: "Trainers", path: "/allTrainers" },
+    { name: "Our Classes", path: "/allClasses" },
     { name: "Forums", path: "/posts" },
   ];
 
@@ -116,7 +116,7 @@ const Navbar = () => {
                   : "text-white/80 hover:text-white hover:bg-white/10"
                   }`}
               >
-                Classes
+                Our Classes
               </Link>
             </li>
             <li>
@@ -130,7 +130,7 @@ const Navbar = () => {
                 Trainers
               </Link>
             </li>
-                        <li>
+            <li>
               <Link
                 href="/posts"
                 className={`relative px-2.5 py-1.5 text-xs font-medium rounded-full transition-all duration-300 ${isActivePath("/posts")
