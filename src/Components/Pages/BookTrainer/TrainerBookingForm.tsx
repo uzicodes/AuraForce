@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { bookTrainerAction } from "@/actions/bookTrainer";
+import { useUser } from "@clerk/nextjs";
 
 interface TrainerBookingFormProps {
     trainerId: number;
@@ -15,6 +16,7 @@ interface TrainerBookingFormProps {
 }
 
 const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }: TrainerBookingFormProps) => {
+    const { isSignedIn } = useUser();
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState("");
@@ -38,6 +40,20 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
     }, [selectedDate, planType]);
 
     const handleBooking = () => {
+        if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
+            // Fallback for development/preview without Clerk keys
+            console.warn("Clerk keys missing");
+        }
+
+        // Validation 1: Check Auth
+        if (!isSignedIn) {
+            toast.error("Please log in to proceed with booking.", {
+                style: { background: '#333', color: '#fff', borderRadius: '0px' }
+            });
+            router.push("/login"); // Redirect to login page
+            return;
+        }
+
         if (!selectedDate || !planType) {
             toast.error("Please select a plan and a start date.");
             return;
@@ -82,8 +98,8 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("WEEKLY")}
                             className={`relative h-28 border-2 flex flex-col items-center justify-center gap-0 transition-all rounded-none ${planType === "WEEKLY"
-                                    ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
-                                    : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
+                                ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
                             <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "WEEKLY" ? "text-black/70" : "text-zinc-500"}`}>
@@ -108,8 +124,8 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("MONTHLY")}
                             className={`relative h-28 border-2 flex flex-col items-center justify-center gap-0 transition-all rounded-none ${planType === "MONTHLY"
-                                    ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
-                                    : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
+                                ? "bg-emerald-500 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                : "bg-zinc-950 border-zinc-800 hover:border-zinc-600"
                                 }`}
                         >
                             <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "MONTHLY" ? "text-black/70" : "text-zinc-500"}`}>

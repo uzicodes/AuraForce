@@ -81,13 +81,6 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
   const { isSignedIn } = useUser();
 
   const handleBookClick = (trainerId: number) => {
-    if (!isSignedIn) {
-      toast.error("You need to log in to book a session.", {
-        style: { background: '#333', color: '#fff' }
-      });
-      router.push("/login");
-      return;
-    }
     router.push(`/book-trainer/${trainerId}`);
   };
 
