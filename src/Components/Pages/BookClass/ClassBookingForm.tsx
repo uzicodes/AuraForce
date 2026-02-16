@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { format } from "date-fns";
 import { bookClass } from "@/actions/bookClass";
 import { motion } from "framer-motion";
-import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay } from "react-icons/fa";
+import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 interface ClassData {
@@ -13,6 +13,9 @@ interface ClassData {
     classname: string | null;
     trainer: string | null;
     duration: string | null;
+    class_fees: number | null;
+    class_time: string | null;
+    class_days: string | null;
 }
 
 interface ClassBookingFormProps {
@@ -24,19 +27,12 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState<string>("");
 
-
-    // Odd IDs: 1, 3, 5, 7, 9... -> Sunday, Tuesday, Thursday, Saturday
-    // Even IDs: 2, 4, 6, 8... -> Monday, Wednesday, Friday
-    const isOddId = classData.id % 2 !== 0;
-    const scheduleDays = isOddId
-        ? "Sunday, Tuesday, Thursday, Saturday"
-        : "Monday, Wednesday, Friday";
-
     // Calculate upcoming 1st of the months (next 3 months)
     const getUpcomingMonths = () => {
         const dates = [];
         const today = new Date();
 
+        // Start from the next month to ensure "upcoming" and "start at beginning"
         let currentMonth = today.getMonth() + 1;
         let currentYear = today.getFullYear();
 
@@ -59,7 +55,6 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
         if (!startDateStr) return "";
         const start = new Date(startDateStr);
 
-        // Add one month to the start date. 
         const end = new Date(start);
         end.setMonth(start.getMonth() + 1);
         // Subtract one day - last day of the month
@@ -116,7 +111,7 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
                                 <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaDumbbell className="text-emerald-500" /> Class
                                 </label>
-                                <div className="text-white text-xl font-bold font-heading">{classData.classname || "N/A"}</div>
+                                <div className="text-yellow-400 text-xl font-bold font-satoshi">{classData.classname || "N/A"}</div>
                             </div>
                             <div className="text-right">
                                 <label className="block text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
@@ -137,7 +132,20 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
                                 <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaClock className="text-emerald-500" /> Schedule
                                 </label>
-                                <div className="text-zinc-300 text-xs leading-relaxed font-satoshi">{scheduleDays}</div>
+                                <div className="text-zinc-300 text-xs leading-relaxed font-satoshi">
+                                    {classData.class_days || "Flexible"} <br />
+                                    <span className="text-zinc-500">{classData.class_time || "Varies"}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* FEES SECTION */}
+                        <div className="pt-4 border-t border-zinc-900 flex justify-between items-center">
+                            <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-0 font-satoshi">
+                                <FaMoneyBillWave className="text-emerald-500" /> Total Cost
+                            </label>
+                            <div className="text-yellow-400 font-bold font-satoshi text-lg">
+                                ৳ {classData.class_fees ? classData.class_fees.toLocaleString() : "N/A"} <span className="text-xs text-zinc-600 font-normal">/ Month</span>
                             </div>
                         </div>
                     </div>

@@ -26,7 +26,7 @@ export async function bookClass(classId: number, startDate: Date) {
             },
         });
 
-        revalidatePath("/profile"); // Revalidate profile page where bookings might be shown
+        revalidatePath("/profile");
         revalidatePath(`/book-class/${classId}`);
 
         return { success: true, message: "Class booked successfully!" };

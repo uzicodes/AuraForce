@@ -12,7 +12,6 @@ export default async function BookClassPage({ params }: { params: { id: string }
         return notFound();
     }
 
-
     // use BigInt(id) if it's a valid integer string.
     let classData;
     try {
@@ -36,11 +35,15 @@ export default async function BookClassPage({ params }: { params: { id: string }
         return notFound();
     }
 
+    // Safely convert BigInt to Number and map new fields
     const serializedClassData = {
         id: Number(classData.id),
         classname: classData.classname,
         trainer: classData.trainer,
         duration: classData.duration,
+        class_fees: classData.class_fees,
+        class_time: classData.class_time,
+        class_days: classData.class_days,
     };
 
     return (
