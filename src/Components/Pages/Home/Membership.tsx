@@ -8,7 +8,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 
-const Membership = () => {
+interface DbPrice {
+  name: string;
+  price: number;
+}
+
+const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
   const { isSignedIn } = useUser(); // current login status
   const router = useRouter();       // Initialize the router
 
@@ -31,7 +36,7 @@ const Membership = () => {
     }
   };
 
-  const packages = [
+  const rawPackages = [
     {
       name: "Basic",
       price: "৳4999",
@@ -60,6 +65,15 @@ const Membership = () => {
       highlight: false
     }
   ];
+
+  // Merge DB prices with hardcoded packages
+  const packages = rawPackages.map((pkg) => {
+    const dbPrice = dbPrices?.find((p) => p.name === pkg.name);
+    return {
+      ...pkg,
+      price: dbPrice ? `৳${dbPrice.price}` : pkg.price, // Overlay DB price if available
+    };
+  });
 
   return (
     <section id="membership" className="py-24 relative overflow-hidden">
