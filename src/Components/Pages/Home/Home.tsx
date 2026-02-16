@@ -7,6 +7,7 @@ import Testimonials from "./Testimonials";
 import NutritionPlan from "./NutritionPlan";
 
 interface DbPrice {
+  id: number;
   name: string;
   price: number;
 }

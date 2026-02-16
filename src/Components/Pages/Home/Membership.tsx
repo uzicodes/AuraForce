@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 
 
 interface DbPrice {
+  id: number;
   name: string;
   price: number;
 }
@@ -18,10 +19,10 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
   const router = useRouter();       // Initialize the router
 
   // logic when a button is clicked
-  const handleSubscribe = (planName: string) => {
+  const handleSubscribe = (planId: number) => {
     if (isSignedIn) {
-      //LOGGED IN? Go to checkout
-      router.push(`/checkout?plan=${planName}`);
+      //LOGGED IN? Go to booking page
+      router.push(`/book-membership/${planId}`);
     } else {
       //  NOT LOGGED IN? Show error toast!!!
       toast.error("Please log in to continue with payment. If you don't have an account, please register.", {
@@ -68,10 +69,11 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
 
   // Merge DB prices with hardcoded packages
   const packages = rawPackages.map((pkg) => {
-    const dbPrice = dbPrices?.find((p) => p.name === pkg.name);
+    const dbMatch = dbPrices?.find((p) => p.name === pkg.name);
     return {
       ...pkg,
-      price: dbPrice ? `৳${dbPrice.price}` : pkg.price, // Overlay DB price if available
+      id: dbMatch?.id ?? 0, // DB id for routing
+      price: dbMatch ? `৳${dbMatch.price}` : pkg.price,
     };
   });
 
@@ -149,7 +151,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
 
               {/* REPLACED <Link> WITH <button> */}
               <button
-                onClick={() => handleSubscribe(pkg.name)}
+                onClick={() => handleSubscribe(pkg.id)}
                 className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
                   ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
                   : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"

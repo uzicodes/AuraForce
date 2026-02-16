@@ -9,6 +9,7 @@ export default async function HomePage() {
   // Fetch specific fields: name and price
   const memberships = await db.memberships.findMany({
     select: {
+      id: true,
       name: true,
       price: true,
     },
