@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { FaClock, FaFire, FaArrowRight } from 'react-icons/fa';
 
@@ -82,10 +83,10 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
         </div>
 
         {/* BUTTON */}
-        <button className="w-full py-2 rounded-none bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group/btn">
+        <Link href={`/book-class/${singleClass._id}`} className="w-full py-2 rounded-none bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group/btn">
           Join Class
           <FaArrowRight className="text-xs transition-transform group-hover/btn:translate-x-1" />
-        </button>
+        </Link>
       </div>
     </motion.div>
   );
