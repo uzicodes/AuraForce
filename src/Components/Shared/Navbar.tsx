@@ -82,7 +82,7 @@ const Navbar = () => {
         className="fixed top-4 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 translate-y-0"
       >
         <nav
-          className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 backdrop-blur-xl bg-black/40 shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+          className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/10 backdrop-blur-xl bg-black/40 shadow-[0_8px_32px_rgba(0,0,0,0.4)] w-[95%] lg:w-auto whitespace-nowrap justify-between lg:justify-start"
           style={{
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.37), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
           }}
