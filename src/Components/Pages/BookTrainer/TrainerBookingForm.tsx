@@ -31,7 +31,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
         }
 
         const start = new Date(selectedDate);
-        const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total (inclusive)
+        const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total 
 
         const end = new Date(start);
         end.setDate(start.getDate() + daysToAdd);
@@ -41,11 +41,10 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
 
     const handleBooking = () => {
         if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
-            // Fallback for development/preview without Clerk keys
             console.warn("Clerk keys missing");
         }
 
-        // Validation 1: Check Auth
+        // Validation - Check Auth
         if (!isSignedIn) {
             toast.error("Please log in to proceed with booking.", {
                 style: { background: '#333', color: '#fff', borderRadius: '0px' }

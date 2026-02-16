@@ -32,7 +32,7 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
         const dates = [];
         const today = new Date();
 
-        // Start from the next month to ensure "upcoming" and "start at beginning"
+        // Start from the next month 
         let currentMonth = today.getMonth() + 1;
         let currentYear = today.getFullYear();
 
@@ -97,11 +97,11 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
             <h3 className="text-3xl font-bold text-white mb-2 font-heading">
                 Book Your Class
             </h3>
-            <p className="text-zinc-400 text-sm mb-8 font-satoshi">
+            <p className="text-zinc-400 text-sm mb-5 font-satoshi">
                 Secure your spot in our premium fitness sessions.
             </p>
 
-            <div className="space-y-8">
+            <div className="space-y-5">
 
                 {/* CLASS DETAILS SUMMARY */}
                 <div className="bg-zinc-950 p-6 border border-zinc-800/50">
