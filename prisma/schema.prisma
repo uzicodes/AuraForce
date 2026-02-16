@@ -76,6 +76,9 @@ model Classes {
   classname  String?
   trainer    String?
   duration   String?
+  class_fees Int?
+  class_time String?
+  class_days String?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

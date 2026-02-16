@@ -20,11 +20,11 @@ interface ClassBookingFormProps {
 }
 
 export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
-    const router = useRouter(); // Added router for redirection after success
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState<string>("");
 
-    // Determine schedule based on Class ID
+
     // Odd IDs: 1, 3, 5, 7, 9... -> Sunday, Tuesday, Thursday, Saturday
     // Even IDs: 2, 4, 6, 8... -> Monday, Wednesday, Friday
     const isOddId = classData.id % 2 !== 0;
@@ -36,7 +36,7 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     const getUpcomingMonths = () => {
         const dates = [];
         const today = new Date();
-        // Start from the next month to ensure "upcoming" and "start at beginning"
+
         let currentMonth = today.getMonth() + 1;
         let currentYear = today.getFullYear();
 
@@ -58,12 +58,11 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     const getEndDate = (startDateStr: string) => {
         if (!startDateStr) return "";
         const start = new Date(startDateStr);
+
         // Add one month to the start date. 
-        // Note: Logic for "exactly one month long" could vary (e.g., 30 days vs 1 month calendar).
-        // Assuming calendar month duration as per "Classes are exactly one month long".
         const end = new Date(start);
         end.setMonth(start.getMonth() + 1);
-        // Subtract one day to make it end on the last day of the month
+        // Subtract one day - last day of the month
         end.setDate(end.getDate() - 1);
         return format(end, "MMMM d, yyyy");
     };
