@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useTransition, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { bookTrainerAction } from "@/actions/bookTrainer";
 import { useUser } from "@clerk/nextjs";
 
 interface TrainerBookingFormProps {
@@ -18,7 +17,7 @@ interface TrainerBookingFormProps {
 const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }: TrainerBookingFormProps) => {
     const { isSignedIn } = useUser();
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    const [isPending, setIsPending] = useState(false);
     const [selectedDate, setSelectedDate] = useState("");
     const [planType, setPlanType] = useState<"WEEKLY" | "MONTHLY" | null>(null);
     const [endDate, setEndDate] = useState<string>("");
@@ -58,21 +57,9 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
             return;
         }
 
-        startTransition(async () => {
-            const result = await bookTrainerAction(trainerId, selectedDate, "Flexible", planType);
-
-            if (result?.error) {
-                toast.error(result.error, {
-                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                });
-            } else {
-                toast.success(`Successfully booked ${planType.toLowerCase()} package with ${trainerName}!`, {
-                    icon: "🔥",
-                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                });
-                router.push("/profile");
-            }
-        });
+        setIsPending(true);
+        // Redirect to the generic checkout page → SSLCommerz payment flow
+        router.push(`/checkout?type=trainer&id=${trainerId}`);
     };
 
     const today = new Date().toISOString().split('T')[0];

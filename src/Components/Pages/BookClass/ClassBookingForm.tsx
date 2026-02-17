@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
-import { bookClass } from "@/actions/bookClass";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ interface ClassBookingFormProps {
 
 export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    const [isPending, setIsPending] = useState(false);
     const [selectedDate, setSelectedDate] = useState<string>("");
 
     // Calculate upcoming 1st of the months (next 3 months)
@@ -70,26 +69,9 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
             return;
         }
 
-        startTransition(async () => {
-            try {
-                const result = await bookClass(classData.id, new Date(selectedDate));
-                if (result.success) {
-                    toast.success(result.message, {
-                        icon: "🔥",
-                        style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                    });
-                    router.push("/profile");
-                } else {
-                    toast.error(result.error as string, {
-                        style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                    });
-                }
-            } catch (error) {
-                toast.error("Something went wrong. Please try again.", {
-                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                });
-            }
-        });
+        setIsPending(true);
+        // Redirect to the generic checkout page → SSLCommerz payment flow
+        router.push(`/checkout?type=class&id=${classData.id}`);
     };
 
     return (

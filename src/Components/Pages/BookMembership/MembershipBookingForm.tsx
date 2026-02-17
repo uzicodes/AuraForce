@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
-import { bookMembership } from "@/actions/bookMembership";
 import { motion } from "framer-motion";
 import { FaCrown, FaCalendarAlt, FaMoneyBillWave, FaInfoCircle, FaCheck } from "react-icons/fa";
 import { useRouter } from "next/navigation";
@@ -23,7 +22,7 @@ const descriptionMap: Record<string, string> = {
 
 export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }) {
     const router = useRouter();
-    const [isPending, startTransition] = useTransition();
+    const [isPending, setIsPending] = useState(false);
     const [selectedDate, setSelectedDate] = useState<string>("");
 
     // Calculate end date (1 month after start)
@@ -48,27 +47,9 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
             return;
         }
 
-        startTransition(async () => {
-            try {
-                // NOTE: Make sure your bookMembership action accepts a date parameter if you want to save it!
-                const result = await bookMembership(plan.id, new Date(selectedDate));
-                if (result.success) {
-                    toast.success(result.message || "Membership booked successfully!", {
-                        icon: "🔥",
-                        style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                    });
-                    router.push("/profile");
-                } else {
-                    toast.error(result.error as string, {
-                        style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                    });
-                }
-            } catch (error) {
-                toast.error("Something went wrong. Please try again.", {
-                    style: { background: '#333', color: '#fff', borderRadius: '0px' }
-                });
-            }
-        });
+        setIsPending(true);
+        // Redirect to the generic checkout page → SSLCommerz payment flow
+        router.push(`/checkout?type=membership&id=${plan.id}`);
     };
 
     return (
