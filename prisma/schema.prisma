@@ -119,6 +119,17 @@ model Memberships {
   created_at DateTime? @default(now()) @db.Timestamptz(6)
 }
 
+model Payments {
+  id            Int       @id @default(autoincrement())
+  clerkUserId   String
+  amount        Int
+  transactionId String    @unique
+  bookingType   String
+  referenceId   Int
+  status        String?   @default("PENDING")
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+}
+
 enum VoteType {
   UP
   DOWN
