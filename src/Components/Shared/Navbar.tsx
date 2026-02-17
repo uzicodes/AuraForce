@@ -193,6 +193,25 @@ const Navbar = () => {
             )}
           </div>
 
+          {/* Mobile Profile Image (Visible only when logged in) */}
+          {isSignedIn && (
+            <Link
+              href="/profile"
+              className="lg:hidden relative flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400 mr-1"
+            >
+              {hasImage ? (
+                <Image
+                  src={displayImage!}
+                  alt="Profile"
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <FaUser className="text-xs text-zinc-300" />
+              )}
+            </Link>
+          )}
+
           {/* Mobile Menu Button */}
           <button
             className="lg:hidden menu-button focus:outline-none p-2 rounded-full hover:bg-white/10 transition-colors"
