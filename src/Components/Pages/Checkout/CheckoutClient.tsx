@@ -70,7 +70,7 @@ export default function CheckoutClient({
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/10 blur-[160px] rounded-full pointer-events-none" />
 
             <div className="relative z-10 w-full max-w-md">
-                <div className={`relative rounded-3xl p-8 shadow-2xl shadow-black/40 overflow-hidden group ${type === "membership"
+                <div className={`relative rounded-none p-8 shadow-2xl shadow-black/40 overflow-hidden group font-satoshi ${type === "membership"
                     ? "bg-zinc-900/40 backdrop-blur-[80px] border border-white/10"
                     : "bg-zinc-900 border border-zinc-800"
                     }`}>
@@ -90,7 +90,7 @@ export default function CheckoutClient({
                     <div className="relative z-10">
                         {/* Header */}
                         <div className="text-center mb-8">
-                            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest border border-emerald-500/20 mb-5">
+                            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-none text-[11px] font-bold uppercase tracking-widest border border-emerald-500/20 mb-5">
                                 <FaShieldAlt className="text-[10px]" />
                                 Secure Checkout
                             </div>
@@ -98,13 +98,13 @@ export default function CheckoutClient({
                             <h1 className="text-2xl font-bold text-white mb-1 font-heading">
                                 {itemName}
                             </h1>
-                            <p className="text-sm text-zinc-400 capitalize">{typeLabel}</p>
+                            <p className="text-sm text-zinc-400 capitalize font-satoshi">{typeLabel}</p>
                         </div>
 
                         {/* DETAILS SECTION */}
-                        <div className="mb-6 space-y-3">
+                        <div className="mb-6 space-y-3 font-satoshi">
                             {type === "membership" && details?.features && (
-                                <div className="bg-zinc-950/40 p-4 rounded-xl border border-zinc-800/50">
+                                <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50">
                                     <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3">Includes:</p>
                                     <ul className="space-y-2">
                                         {details.features.slice(0, 4).map((feat: string, i: number) => (
@@ -117,8 +117,8 @@ export default function CheckoutClient({
                             )}
 
                             {type === "trainer" && details?.role && (
-                                <div className="bg-zinc-950/40 p-4 rounded-xl border border-zinc-800/50 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500">
+                                <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50 flex items-center gap-3">
+                                    <div className="w-10 h-10 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500">
                                         <FaUserTie />
                                     </div>
                                     <div>
@@ -129,9 +129,9 @@ export default function CheckoutClient({
                             )}
 
                             {type === "class" && (
-                                <div className="bg-zinc-950/40 p-4 rounded-xl border border-zinc-800/50 space-y-3">
+                                <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50 space-y-3">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500 text-xs">
+                                        <div className="w-8 h-8 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500 text-xs">
                                             <FaUserTie />
                                         </div>
                                         <div>
@@ -140,7 +140,7 @@ export default function CheckoutClient({
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-500 text-xs">
+                                        <div className="w-8 h-8 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500 text-xs">
                                             <FaClock />
                                         </div>
                                         <div>
@@ -155,10 +155,10 @@ export default function CheckoutClient({
                         </div>
 
                         {/* Order Summary */}
-                        <div className="bg-zinc-950/60 border border-zinc-800 rounded-2xl p-5 mb-8">
+                        <div className="bg-zinc-950/60 border border-zinc-800 rounded-none p-5 mb-8 font-satoshi">
                             <div className="flex items-center justify-between mb-4 pb-4 border-b border-zinc-800/60">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-11 h-11 bg-emerald-500/10 rounded-xl flex items-center justify-center text-lg">
+                                    <div className="w-11 h-11 bg-emerald-500/10 rounded-none flex items-center justify-center text-lg">
                                         {type === "membership" ? "👑" : type === "class" ? "🏋️" : "💪"}
                                     </div>
                                     <div>
@@ -183,7 +183,7 @@ export default function CheckoutClient({
                         <button
                             onClick={handlePayment}
                             disabled={loading}
-                            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-none transition-all duration-200 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2.5 disabled:opacity-60 disabled:cursor-not-allowed transform active:scale-[0.98] text-sm tracking-wide"
+                            className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-none transition-all duration-200 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2.5 disabled:opacity-60 disabled:cursor-not-allowed transform active:scale-[0.98] text-sm tracking-wide font-satoshi"
                         >
                             {loading ? (
                                 <span className="flex items-center gap-2">
