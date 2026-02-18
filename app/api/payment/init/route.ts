@@ -96,9 +96,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.error("[SSLCOMMERZ_RESPONSE]", apiResponse);
+    console.error("[SSLCOMMERZ_RESPONSE]", JSON.stringify(apiResponse));
+    const failReason =
+      apiResponse?.failedreason ||
+      apiResponse?.error ||
+      "No gateway URL received.";
     return NextResponse.json(
-      { error: "Failed to initialize payment session. No gateway URL received." },
+      {
+        error: `Failed to initialize payment session. ${failReason}`,
+      },
       { status: 400 }
     );
   } catch (error: any) {
