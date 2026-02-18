@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {
-    // ── 1. Authentication ──────────────────────────────────────────────
+    // ── Authentication ───
     const { userId } = await auth();
 
     if (!userId) {
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── 2. Parse Payload ───────────────────────────────────────────────
+    // ── Parse Payload ───
     const { amount, bookingType, referenceId, userName, userEmail } =
       await req.json();
 
@@ -25,10 +25,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ── 3. Generate Transaction ID ─────────────────────────────────────
+    // ── Generate Transaction ID ───
     const tran_id = `TXN_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-    // ── 4. Database Entry (status defaults to "PENDING") ───────────────
+    // ── Database Entry (status defaults to "PENDING") ───
     await db.payments.create({
       data: {
         clerkUserId: userId,
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // ── 5. SSLCommerz Config ───────────────────────────────────────────
+    // ── SSLCommerz Config ───
     const store_id = process.env.SSLCOMMERZ_STORE_ID!;
     const store_passwd = process.env.SSLCOMMERZ_STORE_PASSWORD!;
     const is_live = process.env.SSLCOMMERZ_IS_LIVE === "true";
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
-    // ── 6. Build FormData for SSLCommerz API ───────────────────────────
+    // ── Build FormData for SSLCommerz API ───
     const formData = new URLSearchParams();
     formData.append("store_id", store_id);
     formData.append("store_passwd", store_passwd);
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     formData.append("product_category", "fitness");
     formData.append("product_profile", "non-physical-goods");
 
-    // ── 7. Call SSLCommerz Init API directly ────────────────────────────
+    // ── Call SSLCommerz Init API directly ───
     const sslRes = await fetch(`${baseURL}/gwprocess/v4/api.php`, {
       method: "POST",
       headers: {
