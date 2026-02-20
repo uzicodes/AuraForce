@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { bookClass } from "@/actions/bookClass";
 
 interface ClassData {
     id: number;
@@ -63,15 +64,30 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
 
     const endDateFormatted = getEndDate(selectedDate);
 
-    const handleBooking = () => {
+    const handleBooking = async () => {
         if (!selectedDate) {
             toast.error("Please select a start date.");
             return;
         }
 
         setIsPending(true);
-        // Redirect to the generic checkout page → SSLCommerz payment flow
-        router.push(`/checkout?type=class&id=${classData.id}`);
+
+        try {
+            // Create the booking record in the database first
+            const result = await bookClass(classData.id, new Date(selectedDate));
+
+            if (!result.success) {
+                toast.error(result.error || "Failed to book class.");
+                setIsPending(false);
+                return;
+            }
+
+            // Then redirect to payment
+            router.push(`/checkout?type=class&id=${classData.id}`);
+        } catch (error) {
+            toast.error("Something went wrong. Please try again.");
+            setIsPending(false);
+        }
     };
 
     return (

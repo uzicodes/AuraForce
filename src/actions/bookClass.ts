@@ -16,12 +16,32 @@ export async function bookClass(classId: number, startDate: Date) {
             return { success: false, error: "Missing class or start date." };
         }
 
+        // Fetch the user's real name from DB
+        const user = await db.user.findUnique({
+            where: { clerkUserId: userId },
+            select: { name: true },
+        });
+
+        // Fetch the class name from DB
+        const classInfo = await db.classes.findUnique({
+            where: { id: BigInt(classId) },
+            select: { classname: true },
+        });
+
+        // Calculate validTill (1 month from start, last day of the month)
+        const validTill = new Date(startDate);
+        validTill.setMonth(validTill.getMonth() + 1);
+        validTill.setDate(validTill.getDate() - 1);
+
         // Create the booking
         await db.classBookings.create({
             data: {
                 clerkUserId: userId,
                 classId: classId,
+                name: user?.name || null,
+                className: classInfo?.classname || null,
                 bookingDate: startDate,
+                validTill: validTill,
                 status: "CONFIRMED",
             },
         });

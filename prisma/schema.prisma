@@ -95,7 +95,10 @@ model ClassBookings {
   id          Int       @id @default(autoincrement())
   clerkUserId String
   classId     Int
+  name        String?
+  className   String?
   bookingDate DateTime  @db.Timestamp(6)
+  validTill   DateTime? @db.Timestamp(6)
   status      String?   @default("CONFIRMED")
   created_at  DateTime? @default(now()) @db.Timestamptz(6)
 }
