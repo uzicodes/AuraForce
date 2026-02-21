@@ -18,7 +18,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
   const { isSignedIn } = useUser(); // current login status
   const router = useRouter();       // Initialize the router
 
-  // logic when a button is clicked
+  // button is clicked
   const handleSubscribe = (planId: number) => {
     if (isSignedIn) {
       //LOGGED IN? Go to booking page
@@ -149,7 +149,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
                 ))}
               </ul>
 
-              {/* REPLACED <Link> WITH <button> */}
+
               <button
                 onClick={() => handleSubscribe(pkg.id)}
                 className={`w-full py-3 rounded-none font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
