@@ -152,7 +152,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
               {/* REPLACED <Link> WITH <button> */}
               <button
                 onClick={() => handleSubscribe(pkg.id)}
-                className={`w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
+                className={`w-full py-3 rounded-none font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
                   ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
                   : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
                   }`}
