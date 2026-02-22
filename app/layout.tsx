@@ -5,8 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { ClerkProvider } from '@clerk/nextjs';
-import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider'; 
-import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress'; 
+import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider';
+import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress';
 import ScrollToTop from '@/Components/Helpers/ScrollToTop';
 
 import Navbar from '@/Components/Shared/Navbar';
@@ -20,7 +20,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
 
   // Hide footer on login and register pages
-  const hideFooter = pathname === '/login' || pathname === '/register';
+  const hideFooter = pathname === '/login' || pathname === '/register' || pathname?.startsWith('/admin');
+  const hideNavbar = pathname?.startsWith('/admin');
 
   return (
     <ClerkProvider>
@@ -33,30 +34,32 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
           <link rel="manifest" href="/site.webmanifest" />
         </head>
-        
+
         {/* Added bg-zinc-950 here to ensure base is always dark */}
         <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
           <QueryClientProvider client={queryClient}>
-            
+
             <AutoLogoutProvider>
-              
-              {/* --- AMBIENT GLOW BACKGROUND (Applied to All Pages) --- */}
-              <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
-                {/* Top Left Glow */}
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
-                {/* Bottom Right Glow */}
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
-              </div>
 
-              <ScrollToTop />
-              <HomeScrollProgress />
+              {/* --- AMBIENT GLOW BACKGROUND (Applied to All Pages except admin) --- */}
+              {!hideNavbar && (
+                <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
+                  {/* Top Left Glow */}
+                  <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
+                  {/* Bottom Right Glow */}
+                  <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
+                </div>
+              )}
 
-              <Navbar />
-              
-              <div className="min-h-[calc(100vh-216px)] relative z-0">
+              {!hideNavbar && <ScrollToTop />}
+              {!hideNavbar && <HomeScrollProgress />}
+
+              {!hideNavbar && <Navbar />}
+
+              <div className={hideNavbar ? '' : 'min-h-[calc(100vh-216px)] relative z-0'}>
                 {children}
               </div>
-              
+
               {!hideFooter && <Footer />}
               <Toaster />
 

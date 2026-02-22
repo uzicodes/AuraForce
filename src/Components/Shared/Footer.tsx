@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaArrowUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Shield } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -131,6 +131,13 @@ const Footer = () => {
                 <Send size={14} />
               </button>
             </form>
+            <Link
+              href="/admin/login"
+              className="mt-2 inline-flex items-center gap-1.5 text-[10px] text-zinc-600 hover:text-emerald-500 transition-colors duration-300 group"
+            >
+              <Shield size={11} className="group-hover:text-emerald-500 transition-colors" />
+              Admin Portal
+            </Link>
           </div>
         </div>
 
