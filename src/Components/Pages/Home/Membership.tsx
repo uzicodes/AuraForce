@@ -154,7 +154,11 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
                 onClick={() => handleSubscribe(pkg.id)}
                 className={`w-full py-3 rounded-none font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
                   ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
-                  : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
+                  : pkg.name === "Basic"
+                    ? "bg-zinc-800 text-white hover:bg-blue-600 hover:border-blue-600 border border-zinc-700"
+                    : pkg.name === "Premium"
+                      ? "bg-zinc-800 text-white hover:bg-amber-500 hover:border-amber-500 hover:text-black border border-zinc-700"
+                      : "bg-zinc-800 text-white hover:bg-zinc-700 border border-zinc-700"
                   }`}
               >
                 {pkg.button}

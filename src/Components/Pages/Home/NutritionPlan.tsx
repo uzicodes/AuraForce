@@ -194,7 +194,7 @@ const NutritionPlan = () => {
             <motion.div variants={itemVariants} className="pt-6">
               <button
                 onClick={handleStartPlan}
-                className="px-8 py-3.5 bg-white text-black font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                className="px-8 py-3.5 bg-emarald-600 hover:bg-blue-500 text-white font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]"
               >
                 Start Your Nutrition Plan
               </button>

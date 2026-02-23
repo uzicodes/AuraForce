@@ -31,8 +31,8 @@ const Newsletter = () => {
 
     if (result.success) {
       setStatus("success");
-      // Only clear email if the user is a guest. 
-      // Logged-in users usually prefer seeing their email persists.
+
+      // Logged-in users-autofill email
       if (!isSignedIn) setEmail("");
       toast.success("Successfully subscribed!");
     } else {
@@ -100,7 +100,7 @@ const Newsletter = () => {
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="absolute right-2 top-2 bottom-2 bg-emerald-600 hover:bg-emerald-500 text-white px-6 rounded-full font-semibold text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-500 text-white px-6 rounded-full font-semibold text-sm transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     {status === "loading" ? (
                       <>
