@@ -52,8 +52,16 @@ const Newsletter = () => {
         {/* The Card Container */}
         <div className="max-w-4xl mx-auto bg-zinc-900/80 backdrop-blur-xl border border-zinc-800 rounded-3xl p-8 md:p-12 lg:p-16 text-center relative overflow-hidden group">
 
-          {/* Decor: Subtle Shine Effect on hover */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+          {/* Moving Shine Effect */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+            <div
+              className="absolute inset-0 w-[200%] h-[200%] animate-shine opacity-[0.05]"
+              style={{
+                background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
+                animationDuration: '4s'
+              }}
+            />
+          </div>
 
           {status === "success" ? (
             // SUCCESS STATE UI

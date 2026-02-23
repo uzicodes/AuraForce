@@ -45,3 +45,17 @@
 .animate-breathe {
     animation: breathe 3s ease-in-out infinite;
 }
+
+/* Diagonal Shine Animation */
+@keyframes shine {
+    0% {
+        transform: translate(-100%, 100%) rotate(45deg);
+    }
+    100% {
+        transform: translate(100%, -100%) rotate(45deg);
+    }
+}
+
+.animate-shine {
+    animation: shine 3s linear infinite;
+}
