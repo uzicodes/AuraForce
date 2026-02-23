@@ -20,9 +20,9 @@ import {
 const sidebarLinks = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Members', href: '/admin/members', icon: Users },
-    { name: 'Trainers', href: '/admin/trainers', icon: Dumbbell },
-    { name: 'Classes', href: '/admin/classes', icon: CalendarCheck },
-    { name: 'Memberships', href: '/admin/memberships', icon: ClipboardList },
+    { name: 'Trainer Bookings', href: '/admin/trainers', icon: Dumbbell },
+    { name: 'Class Bookings', href: '/admin/classes', icon: CalendarCheck },
+    { name: 'Membership Bookings', href: '/admin/memberships', icon: ClipboardList },
     { name: 'Plans', href: '/admin/plans', icon: Gem },
     { name: 'Payments', href: '/admin/payments', icon: CreditCard },
 ];
