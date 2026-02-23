@@ -133,9 +133,9 @@ const Footer = () => {
             </form>
             <Link
               href="/admin/login"
-              className="mt-2 inline-flex items-center gap-1.5 text-[10px] text-zinc-600 hover:text-emerald-500 transition-colors duration-300 group"
+              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-lg text-[10px] text-zinc-500 hover:text-emerald-400 hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all duration-300 group"
             >
-              <Shield size={11} className="group-hover:text-emerald-500 transition-colors" />
+              <Shield size={11} className="group-hover:text-emerald-400 transition-colors" />
               Admin Portal
             </Link>
           </div>
