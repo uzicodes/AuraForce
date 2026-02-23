@@ -11,7 +11,7 @@ import {
     CalendarCheck,
     CreditCard,
     ClipboardList,
-    Settings,
+    Gem,
     LogOut,
     Menu,
     X,
@@ -24,8 +24,8 @@ const sidebarLinks = [
     { name: 'Trainers', href: '/admin/trainers', icon: Dumbbell },
     { name: 'Classes', href: '/admin/classes', icon: CalendarCheck },
     { name: 'Memberships', href: '/admin/memberships', icon: ClipboardList },
+    { name: 'Plans', href: '/admin/plans', icon: Gem },
     { name: 'Payments', href: '/admin/payments', icon: CreditCard },
-    { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

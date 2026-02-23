@@ -120,6 +120,7 @@ export default function MembersPage() {
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">ID</th>
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Member</th>
                                 <th className="text-left px-5 py-3.5 font-medium hidden md:table-cell uppercase tracking-wider">Phone</th>
+                                <th className="text-left px-5 py-3.5 font-medium hidden md:table-cell uppercase tracking-wider">Gender</th>
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Role</th>
                                 <th className="text-left px-5 py-3.5 font-medium hidden sm:table-cell uppercase tracking-wider">Joined</th>
                                 <th className="text-left px-5 py-3.5 font-medium hidden lg:table-cell uppercase tracking-wider">Location</th>
@@ -128,7 +129,7 @@ export default function MembersPage() {
                         <tbody>
                             {loading ? (
                                 <tr>
-                                    <td colSpan={6} className="px-5 py-12 text-center">
+                                    <td colSpan={7} className="px-5 py-12 text-center">
                                         <div className="flex flex-col items-center gap-3">
                                             <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
                                             <p className="text-zinc-500 text-sm">Loading members...</p>
@@ -137,7 +138,7 @@ export default function MembersPage() {
                                 </tr>
                             ) : filteredMembers.length === 0 ? (
                                 <tr>
-                                    <td colSpan={6} className="px-5 py-12 text-center">
+                                    <td colSpan={7} className="px-5 py-12 text-center">
                                         <p className="text-zinc-500 text-sm">No members found.</p>
                                     </td>
                                 </tr>
@@ -169,6 +170,7 @@ export default function MembersPage() {
                                             </div>
                                         </td>
                                         <td className="px-5 py-3.5 text-zinc-400 hidden md:table-cell">{m.phone || '—'}</td>
+                                        <td className="px-5 py-3.5 text-zinc-400 hidden md:table-cell uppercase">{m.gender || '—'}</td>
                                         <td className="px-5 py-3.5">
                                             <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${roleColorMap[m.role] || roleColorMap['MEMBER']}`}>
                                                 {m.role}
