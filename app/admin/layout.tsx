@@ -13,7 +13,6 @@ import {
     ClipboardList,
     Gem,
     LogOut,
-    Menu,
     X,
     ChevronRight,
 } from 'lucide-react';
@@ -146,27 +145,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* ----- Main content ----- */}
             <div className="flex-1 flex flex-col min-w-0">
 
-                {/* Top Bar */}
-                <header className="sticky top-0 z-30 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800 px-4 lg:px-6 py-3 flex items-center justify-between">
-                    <button
-                        onClick={() => setSidebarOpen(true)}
-                        className="lg:hidden text-zinc-400 hover:text-white transition-colors"
-                    >
-                        <Menu size={22} />
-                    </button>
 
-                    <div className="hidden lg:block">
-                        <h1 className="text-sm font-bold text-white font-heading">
-                            {sidebarLinks.find((l) => l.href === pathname)?.name || 'Admin Panel'}
-                        </h1>
-                    </div>
-
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-sm font-bold">
-                            A
-                        </div>
-                    </div>
-                </header>
 
                 {/* Page content */}
                 <main className="flex-1 p-4 lg:p-6 overflow-y-auto">

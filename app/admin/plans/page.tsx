@@ -1,14 +1,16 @@
 'use client';
 
-import { Crown, Dumbbell, CalendarCheck, DollarSign, Clock, Users, Star } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Crown, Dumbbell, CalendarCheck, Clock, Star } from 'lucide-react';
 
-/* ── Dummy data ── */
+interface Membership {
+    id: number;
+    name: string;
+    price: number;
+    period: string;
+}
 
-const memberships = [
-    { id: 1, name: 'Basic', price: 1500, period: '/month', features: ['Gym Access', 'Locker Room', 'Free WiFi'], members: 84 },
-    { id: 2, name: 'Standard', price: 3000, period: '/month', features: ['Gym Access', 'Locker Room', 'Free WiFi', '1 Class/Week', 'Diet Plan'], members: 112 },
-    { id: 3, name: 'Premium', price: 5000, period: '/month', features: ['Unlimited Gym', 'All Classes', 'Personal Trainer', 'Sauna & Steam', 'Diet Plan', 'Priority Support'], members: 67 },
-];
+/* ── Remaining Dummy data ── */
 
 const trainers = [
     { id: 1, name: 'Ahmad Raza', role: 'Strength Coach', feeWeek: 2000, feeMonth: 7000, rating: 4.9 },
@@ -40,6 +42,25 @@ const tierBadge: Record<string, string> = {
 };
 
 export default function PlansPage() {
+    const [membershipPlans, setMembershipPlans] = useState<Membership[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchMemberships() {
+            try {
+                const res = await fetch('/api/admin/memberships');
+                if (!res.ok) throw new Error('Failed to fetch memberships');
+                const data = await res.json();
+                setMembershipPlans(data);
+            } catch (err) {
+                console.error('Error fetching memberships:', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchMemberships();
+    }, []);
+
     return (
         <div className="space-y-10">
 
@@ -51,39 +72,31 @@ export default function PlansPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    {memberships.map((plan) => (
-                        <div
-                            key={plan.id}
-                            className={`relative bg-gradient-to-b ${tierColors[plan.name]} border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:scale-[1.02] hover:shadow-lg`}
-                        >
-                            {/* Badge */}
-                            <span className={`self-start inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${tierBadge[plan.name]}`}>
-                                {plan.name}
-                            </span>
+                    {loading ? (
+                        [1, 2, 3].map((i) => (
+                            <div key={i} className="bg-zinc-900/60 border border-zinc-800 rounded-2xl p-5 h-32 animate-pulse" />
+                        ))
+                    ) : membershipPlans.length === 0 ? (
+                        <p className="text-zinc-500 text-sm">No membership plans found in database.</p>
+                    ) : (
+                        membershipPlans.map((plan) => (
+                            <div
+                                key={plan.id}
+                                className={`relative bg-gradient-to-b ${tierColors[plan.name] || 'border-zinc-800 from-zinc-900/40 to-zinc-900/80'} border rounded-2xl p-5 flex flex-col gap-4 transition-all hover:scale-[1.02] hover:shadow-lg`}
+                            >
+                                {/* Badge */}
+                                <span className={`self-start inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold border uppercase tracking-wider ${tierBadge[plan.name] || 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'}`}>
+                                    {plan.name}
+                                </span>
 
-                            {/* Price */}
-                            <div className="flex items-end gap-1">
-                                <span className="text-3xl font-bold text-white">৳{plan.price.toLocaleString()}</span>
-                                <span className="text-zinc-500 text-sm mb-1">{plan.period}</span>
+                                {/* Price */}
+                                <div className="flex items-end gap-1">
+                                    <span className="text-3xl font-bold text-white">৳{plan.price.toLocaleString()}</span>
+                                    <span className="text-zinc-500 text-sm mb-1">{plan.period}</span>
+                                </div>
                             </div>
-
-                            {/* Members count */}
-                            <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-                                <Users size={12} />
-                                <span>{plan.members} active members</span>
-                            </div>
-
-                            {/* Features */}
-                            <ul className="space-y-1.5 mt-1">
-                                {plan.features.map((f) => (
-                                    <li key={f} className="flex items-center gap-2 text-sm text-zinc-400">
-                                        <span className="w-1 h-1 rounded-full bg-emerald-500 flex-shrink-0" />
-                                        {f}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
+                        ))
+                    )}
                 </div>
             </section>
 
