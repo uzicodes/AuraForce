@@ -20,14 +20,13 @@ interface GymClass {
     class_days: string;
 }
 
-/* ── Remaining Dummy data ── */
-
-const trainers = [
-    { id: 1, name: 'Ahmad Raza', role: 'Strength Coach', feeWeek: 2000, feeMonth: 7000, rating: 4.9 },
-    { id: 2, name: 'Sara Khan', role: 'Yoga Instructor', feeWeek: 1500, feeMonth: 5000, rating: 4.8 },
-    { id: 3, name: 'Omar Faruk', role: 'HIIT Specialist', feeWeek: 1800, feeMonth: 6500, rating: 4.7 },
-    { id: 4, name: 'Nadia Akter', role: 'Cardio Expert', feeWeek: 1600, feeMonth: 5500, rating: 4.6 },
-];
+interface Trainer {
+    id: number;
+    name: string;
+    role: string;
+    fee_per_week: number;
+    fee_per_month: number;
+}
 
 /* ── Color helpers ── */
 
@@ -46,25 +45,29 @@ const tierBadge: Record<string, string> = {
 export default function PlansPage() {
     const [membershipPlans, setMembershipPlans] = useState<Membership[]>([]);
     const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
+    const [trainers, setTrainers] = useState<Trainer[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const [memRes, classRes] = await Promise.all([
+                const [memRes, classRes, trainerRes] = await Promise.all([
                     fetch('/api/admin/memberships'),
-                    fetch('/api/admin/classes')
+                    fetch('/api/admin/classes'),
+                    fetch('/api/admin/trainers')
                 ]);
 
-                if (!memRes.ok || !classRes.ok) throw new Error('Failed to fetch data');
+                if (!memRes.ok || !classRes.ok || !trainerRes.ok) throw new Error('Failed to fetch data');
 
-                const [memData, classData] = await Promise.all([
+                const [memData, classData, trainerData] = await Promise.all([
                     memRes.json(),
-                    classRes.json()
+                    classRes.json(),
+                    trainerRes.json()
                 ]);
 
                 setMembershipPlans(memData);
                 setGymClasses(classData);
+                setTrainers(trainerData);
             } catch (err) {
                 console.error('Error fetching dashboard data:', err);
             } finally {
@@ -129,31 +132,38 @@ export default function PlansPage() {
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Specialization</th>
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden sm:table-cell">Fee / Week</th>
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden sm:table-cell">Fee / Month</th>
-                                    <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Rating</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {trainers.map((t) => (
-                                    <tr key={t.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
-                                        <td className="px-5 py-3.5">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xs font-bold flex-shrink-0">
-                                                    {t.name.split(' ').map((n) => n[0]).join('')}
-                                                </div>
-                                                <span className="text-white font-medium">{t.name}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-5 py-3.5 text-zinc-400">{t.role}</td>
-                                        <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{t.feeWeek.toLocaleString()}</td>
-                                        <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{t.feeMonth.toLocaleString()}</td>
-                                        <td className="px-5 py-3.5">
-                                            <div className="flex items-center gap-1 text-yellow-500">
-                                                <Star size={12} fill="currentColor" />
-                                                <span className="text-sm font-medium">{t.rating}</span>
-                                            </div>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={4} className="px-5 py-12 text-center">
+                                            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
-                                ))}
+                                ) : trainers.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={4} className="px-5 py-12 text-center text-zinc-500">
+                                            No trainers found in database.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    trainers.map((t) => (
+                                        <tr key={t.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                            <td className="px-5 py-3.5">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xs font-bold flex-shrink-0">
+                                                        {(t.name || 'T').split(' ').map((n) => n[0]).join('')}
+                                                    </div>
+                                                    <span className="text-white font-medium">{t.name || 'Unknown Trainer'}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-3.5 text-zinc-400">{t.role}</td>
+                                            <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{(t.fee_per_week || 0).toLocaleString()}</td>
+                                            <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{(t.fee_per_month || 0).toLocaleString()}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
