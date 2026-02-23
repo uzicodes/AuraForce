@@ -10,6 +10,16 @@ interface Membership {
     period: string;
 }
 
+interface GymClass {
+    id: number;
+    classname: string;
+    trainer: string;
+    duration: string;
+    class_fees: number;
+    class_time: string;
+    class_days: string;
+}
+
 /* ── Remaining Dummy data ── */
 
 const trainers = [
@@ -17,14 +27,6 @@ const trainers = [
     { id: 2, name: 'Sara Khan', role: 'Yoga Instructor', feeWeek: 1500, feeMonth: 5000, rating: 4.8 },
     { id: 3, name: 'Omar Faruk', role: 'HIIT Specialist', feeWeek: 1800, feeMonth: 6500, rating: 4.7 },
     { id: 4, name: 'Nadia Akter', role: 'Cardio Expert', feeWeek: 1600, feeMonth: 5500, rating: 4.6 },
-];
-
-const classes = [
-    { id: 1, name: 'Power Lifting', trainer: 'Ahmad Raza', duration: '60 min', fee: 800, time: '6:00 AM', days: 'Mon, Wed, Fri' },
-    { id: 2, name: 'Morning Yoga', trainer: 'Sara Khan', duration: '45 min', fee: 600, time: '7:00 AM', days: 'Tue, Thu, Sat' },
-    { id: 3, name: 'HIIT Burn', trainer: 'Omar Faruk', duration: '45 min', fee: 700, time: '5:30 PM', days: 'Mon, Wed, Fri' },
-    { id: 4, name: 'Cardio Blast', trainer: 'Nadia Akter', duration: '50 min', fee: 650, time: '8:00 AM', days: 'Mon–Sat' },
-    { id: 5, name: 'Zumba Dance', trainer: 'Sara Khan', duration: '55 min', fee: 750, time: '6:00 PM', days: 'Tue, Thu' },
 ];
 
 /* ── Color helpers ── */
@@ -43,22 +45,33 @@ const tierBadge: Record<string, string> = {
 
 export default function PlansPage() {
     const [membershipPlans, setMembershipPlans] = useState<Membership[]>([]);
+    const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        async function fetchMemberships() {
+        async function fetchData() {
             try {
-                const res = await fetch('/api/admin/memberships');
-                if (!res.ok) throw new Error('Failed to fetch memberships');
-                const data = await res.json();
-                setMembershipPlans(data);
+                const [memRes, classRes] = await Promise.all([
+                    fetch('/api/admin/memberships'),
+                    fetch('/api/admin/classes')
+                ]);
+
+                if (!memRes.ok || !classRes.ok) throw new Error('Failed to fetch data');
+
+                const [memData, classData] = await Promise.all([
+                    memRes.json(),
+                    classRes.json()
+                ]);
+
+                setMembershipPlans(memData);
+                setGymClasses(classData);
             } catch (err) {
-                console.error('Error fetching memberships:', err);
+                console.error('Error fetching dashboard data:', err);
             } finally {
                 setLoading(false);
             }
         }
-        fetchMemberships();
+        fetchData();
     }, []);
 
     return (
@@ -168,34 +181,48 @@ export default function PlansPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {classes.map((c) => (
-                                    <tr key={c.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
-                                        <td className="px-5 py-3.5">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0">
-                                                    <CalendarCheck size={14} />
-                                                </div>
-                                                <span className="text-white font-medium">{c.name}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">{c.trainer}</td>
-                                        <td className="px-5 py-3.5 hidden md:table-cell">
-                                            <div className="flex items-center gap-1 text-zinc-400">
-                                                <Clock size={12} />
-                                                <span>{c.duration}</span>
-                                            </div>
-                                        </td>
-                                        <td className="px-5 py-3.5">
-                                            <span className="text-emerald-400 font-medium">৳{c.fee.toLocaleString()}</span>
-                                        </td>
-                                        <td className="px-5 py-3.5 text-zinc-400 hidden lg:table-cell">{c.time}</td>
-                                        <td className="px-5 py-3.5 hidden lg:table-cell">
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border bg-zinc-500/10 text-zinc-400 border-zinc-500/20">
-                                                {c.days}
-                                            </span>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={6} className="px-5 py-12 text-center">
+                                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
-                                ))}
+                                ) : gymClasses.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={6} className="px-5 py-12 text-center text-zinc-500">
+                                            No classes found in database.
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    gymClasses.map((c) => (
+                                        <tr key={c.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                            <td className="px-5 py-3.5">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-8 h-8 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                                                        <CalendarCheck size={14} />
+                                                    </div>
+                                                    <span className="text-white font-medium">{c.classname}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">{c.trainer || 'TBA'}</td>
+                                            <td className="px-5 py-3.5 hidden md:table-cell">
+                                                <div className="flex items-center gap-1 text-zinc-400">
+                                                    <Clock size={12} />
+                                                    <span>{c.duration}</span>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-3.5">
+                                                <span className="text-emerald-400 font-medium">৳{(c.class_fees || 0).toLocaleString()}</span>
+                                            </td>
+                                            <td className="px-5 py-3.5 text-zinc-400 hidden lg:table-cell">{c.class_time}</td>
+                                            <td className="px-5 py-3.5 hidden lg:table-cell">
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border bg-zinc-500/10 text-zinc-400 border-zinc-500/20">
+                                                    {c.class_days}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
