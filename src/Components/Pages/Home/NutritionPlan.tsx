@@ -169,34 +169,34 @@ const NutritionPlan = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
+            className="space-y-3"
           >
             {features.map((item, index) => (
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="flex gap-5 p-5 rounded-2xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800 transition-colors group"
+                className="flex gap-4 p-4 rounded-2xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800 transition-colors group"
               >
-                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-emerald-500 text-2xl group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/20">
+                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-emerald-500 text-xl group-hover:bg-emerald-500 group-hover:text-black transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/20">
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors font-heading">
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-heading">
                     {item.title}
                   </h3>
-                  <p className="text-zinc-400 text-sm leading-relaxed font-satoshi">
+                  <p className="text-zinc-400 text-xs leading-relaxed font-satoshi">
                     {item.desc}
                   </p>
                 </div>
               </motion.div>
             ))}
 
-            <motion.div variants={itemVariants} className="pt-6">
+            <motion.div variants={itemVariants} className="pt-4">
               <button
                 onClick={handleStartPlan}
-                className="px-8 py-3.5 bg-emarald-600 hover:bg-blue-500 text-white font-bold rounded-full hover:bg-zinc-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                className="px-7 py-3 bg-emerald-600 hover:bg-blue-600 text-white font-bold rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)]"
               >
-                Start Your Nutrition Plan
+                Your Nutrition Plan
               </button>
             </motion.div>
 
