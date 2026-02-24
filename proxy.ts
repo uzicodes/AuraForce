@@ -9,7 +9,7 @@ const redis = new Redis({
   token: process.env.UPSTASH_REDIS_REST_TOKEN!,
 });
 
-// Initialize rate limiter with unique prefix for shared database
+// Initialize rate limiter with unique prefix for shared database in upstash(redis)
 const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(5, '10 s'),
