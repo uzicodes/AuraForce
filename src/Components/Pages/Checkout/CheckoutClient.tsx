@@ -51,6 +51,14 @@ export default function CheckoutClient({
                 }),
             });
 
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                setLoading(false);
+                return;
+            }
+
             const data = await res.json();
 
             if (data.url) {

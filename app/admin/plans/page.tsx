@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Crown, Dumbbell, CalendarCheck, Clock, Star } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface Membership {
     id: number;
@@ -57,6 +58,13 @@ export default function PlansPage() {
                     fetch('/api/admin/trainers')
                 ]);
 
+                if (memRes.status === 429 || classRes.status === 429 || trainerRes.status === 429) {
+                    toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                    return;
+                }
+
                 if (!memRes.ok || !classRes.ok || !trainerRes.ok) throw new Error('Failed to fetch data');
 
                 const [memData, classData, trainerData] = await Promise.all([
@@ -70,6 +78,7 @@ export default function PlansPage() {
                 setTrainers(trainerData);
             } catch (err) {
                 console.error('Error fetching dashboard data:', err);
+                toast.error('Something went wrong. Please try again.');
             } finally {
                 setLoading(false);
             }

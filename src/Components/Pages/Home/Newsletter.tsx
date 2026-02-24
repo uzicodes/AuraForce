@@ -27,17 +27,36 @@ const Newsletter = () => {
     const formData = new FormData();
     formData.append("email", email);
 
-    const result = await subscribeToNewsletter(formData);
+    try {
+      const result = await subscribeToNewsletter(formData);
 
-    if (result.success) {
-      setStatus("success");
+      if (result.success) {
+        setStatus("success");
 
-      // Logged-in users-autofill email
-      if (!isSignedIn) setEmail("");
-      toast.success("Successfully subscribed!");
-    } else {
+        // Logged-in users-autofill email
+        if (!isSignedIn) setEmail("");
+        toast.success("Successfully subscribed!");
+      } else {
+        setStatus("idle");
+        const errMsg = result.error || '';
+        if (errMsg.toLowerCase().includes('too many requests') || errMsg.toLowerCase().includes('rate limit')) {
+          toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+            style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+          });
+        } else {
+          toast.error(result.error || "Failed to subscribe");
+        }
+      }
+    } catch (error: any) {
       setStatus("idle");
-      toast.error(result.error || "Failed to subscribe");
+      const msg = error?.message || '';
+      if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+        toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+          style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+        });
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
 

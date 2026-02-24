@@ -32,9 +32,16 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
       await createPost(formData);
       setIsModalOpen(false);
       // Reset form? The modal closes so it's fine.
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      alert("Failed to create post. Please try again.");
+      const msg = error?.message || '';
+      if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+        toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+          style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+        });
+      } else {
+        toast.error("Failed to create post. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -101,8 +108,8 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all border ${activeCategory === cat
-                    ? "bg-emerald-500 text-black border-emerald-500"
-                    : "bg-zinc-800 text-zinc-400 border-transparent hover:bg-zinc-700 hover:text-white"
+                  ? "bg-emerald-500 text-black border-emerald-500"
+                  : "bg-zinc-800 text-zinc-400 border-transparent hover:bg-zinc-700 hover:text-white"
                   }`}
               >
                 {cat}

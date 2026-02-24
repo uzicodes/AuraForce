@@ -47,9 +47,16 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
 
     try {
       await toggleVote(post._id, type);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error("Failed to vote. Please try again.");
+      const msg = error?.message || '';
+      if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+        toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+          style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+        });
+      } else {
+        toast.error("Failed to vote. Please try again.");
+      }
     }
   };
 
@@ -61,9 +68,16 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
     try {
       await deletePost(post._id);
       toast.success("Post deleted successfully");
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      toast.error("Failed to delete post");
+      const msg = error?.message || '';
+      if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+        toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+          style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+        });
+      } else {
+        toast.error("Failed to delete post");
+      }
     } finally {
       setIsDeleting(false);
     }

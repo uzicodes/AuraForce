@@ -77,15 +77,29 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
             const result = await bookClass(classData.id, new Date(selectedDate));
 
             if (!result.success) {
-                toast.error(result.error || "Failed to book class.");
+                const errMsg = result.error || '';
+                if (errMsg.toLowerCase().includes('too many requests') || errMsg.toLowerCase().includes('rate limit')) {
+                    toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                } else {
+                    toast.error(result.error || "Failed to book class.");
+                }
                 setIsPending(false);
                 return;
             }
 
             // Then redirect to payment
             router.push(`/checkout?type=class&id=${classData.id}`);
-        } catch (error) {
-            toast.error("Something went wrong. Please try again.");
+        } catch (error: any) {
+            const msg = error?.message || '';
+            if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+            } else {
+                toast.error("Something went wrong. Please try again.");
+            }
             setIsPending(false);
         }
     };

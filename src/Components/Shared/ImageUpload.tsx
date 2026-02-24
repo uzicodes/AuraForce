@@ -29,16 +29,34 @@ export default function ImageUpload({ clerkId }: ImageUploadProps) {
             // new URL
             const imageUrl = res[0].url;
 
-            // Save to Database
-            await updateProfileImage(clerkId, imageUrl);
+            try {
+              // Save to Database
+              await updateProfileImage(clerkId, imageUrl);
 
-            // Show success
-            toast.success("Profile picture updated!");
-            router.refresh();
+              // Show success
+              toast.success("Profile picture updated!");
+              router.refresh();
+            } catch (error: any) {
+              const msg = error?.message || '';
+              if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                  style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+              } else {
+                toast.error("Something went wrong. Please try again.");
+              }
+            }
           }
         }}
         onUploadError={(error: Error) => {
-          toast.error(`Error: ${error.message}`);
+          const msg = error?.message || '';
+          if (msg.toLowerCase().includes('too many requests') || msg.toLowerCase().includes('rate limit')) {
+            toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+              style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+            });
+          } else {
+            toast.error(`Error: ${error.message}`);
+          }
         }}
       />
       <p className="text-xs text-zinc-500">Max 4MB (JPG, PNG)</p>

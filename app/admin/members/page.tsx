@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Users, Search, Filter } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 interface Member {
     id: string;
@@ -51,11 +52,18 @@ export default function MembersPage() {
         async function fetchMembers() {
             try {
                 const res = await fetch('/api/admin/members');
+                if (res.status === 429) {
+                    toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                    return;
+                }
                 if (!res.ok) throw new Error('Failed to fetch members');
                 const data = await res.json();
                 setMembers(data);
             } catch (err) {
                 console.error('Error fetching members:', err);
+                toast.error('Something went wrong. Please try again.');
             } finally {
                 setLoading(false);
             }
