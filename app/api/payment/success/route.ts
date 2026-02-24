@@ -27,6 +27,7 @@ async function createBookingFromPayment(payment: {
     clerkUserId: string;
     bookingType: string;
     referenceId: number;
+    amount: number;
 }) {
     const { clerkUserId, bookingType, referenceId } = payment;
 
@@ -62,8 +63,37 @@ async function createBookingFromPayment(payment: {
             },
         });
     } else if (bookingType === "trainer") {
-        // Trainer booking - already handled if TrainerBookings uses same pattern
-        // Add trainer booking creation here if needed
+        // Fetch user's MemberID
+        const user = await db.user.findUnique({
+            where: { clerkUserId },
+            select: { MemberID: true },
+        });
+
+        // Fetch trainer details
+        const trainer = await db.trainers.findUnique({
+            where: { id: BigInt(referenceId) },
+            select: {
+                name: true,
+                trainer_time: true,
+                fee_per_week: true,
+                fee_per_month: true,
+            },
+        });
+
+        // Determine plan based on the amount paid
+        const plan = payment.amount === trainer?.fee_per_week ? "WEEKLY" : "MONTHLY";
+
+        await db.trainerBookings.create({
+            data: {
+                clerkUserId,
+                MemberID: user?.MemberID || null,
+                trainerId: referenceId,
+                trainerName: trainer?.name || null,
+                timeSlot: trainer?.trainer_time || "N/A",
+                plan,
+                pricing: payment.amount,
+            },
+        });
     } else if (bookingType === "membership") {
         // Membership subscription - already handled if Subscription uses same pattern
         // Add subscription creation here if needed
