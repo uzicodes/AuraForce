@@ -27,8 +27,8 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
-  // Rate limit API routes
-  if (req.nextUrl.pathname.startsWith('/api/')) {
+  // Rate limit API routes (exclude admin routes — they're behind admin auth)
+  if (req.nextUrl.pathname.startsWith('/api/') && !req.nextUrl.pathname.startsWith('/api/admin/')) {
     const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';
     const { success } = await ratelimit.limit(ip);
 
