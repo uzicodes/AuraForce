@@ -115,6 +115,7 @@ model TrainerBookings {
   trainerName String?
   timeSlot    String
   plan        String?
+  pricing     Int?
 }
 
 model Memberships {
