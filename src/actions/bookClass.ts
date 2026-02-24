@@ -2,7 +2,6 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
-import { revalidatePath } from "next/cache";
 
 export async function bookClass(classId: number, startDate: Date) {
     try {
@@ -16,42 +15,21 @@ export async function bookClass(classId: number, startDate: Date) {
             return { success: false, error: "Missing class or start date." };
         }
 
-        // Fetch the user's real name from DB
-        const user = await db.user.findUnique({
-            where: { clerkUserId: userId },
-            select: { name: true },
-        });
-
-        // Fetch the class name from DB
+        // Verify the class exists
         const classInfo = await db.classes.findUnique({
             where: { id: BigInt(classId) },
             select: { classname: true },
         });
 
-        // Calculate validTill (1 month from start, last day of the month)
-        const validTill = new Date(startDate);
-        validTill.setMonth(validTill.getMonth() + 1);
-        validTill.setDate(validTill.getDate() - 1);
+        if (!classInfo) {
+            return { success: false, error: "Class not found." };
+        }
 
-        // Create the booking
-        await db.classBookings.create({
-            data: {
-                clerkUserId: userId,
-                classId: classId,
-                name: user?.name || null,
-                className: classInfo?.classname || null,
-                bookingDate: startDate,
-                validTill: validTill,
-                status: "CONFIRMED",
-            },
-        });
-
-        revalidatePath("/profile");
-        revalidatePath(`/book-class/${classId}`);
-
-        return { success: true, message: "Class booked successfully!" };
+        // Validation passed — the actual booking record will be created
+        // after successful payment in /api/payment/success
+        return { success: true, message: "Validation passed. Redirecting to payment..." };
     } catch (error) {
-        console.error("Error booking class:", error);
+        console.error("Error validating class booking:", error);
         return { success: false, error: "Failed to book class. Please try again." };
     }
 }
