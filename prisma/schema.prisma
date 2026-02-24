@@ -108,13 +108,13 @@ model ClassBookings {
 }
 
 model TrainerBookings {
-  id          Int       @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   clerkUserId String
+  MemberID    String?
   trainerId   Int
-  bookingDate DateTime  @db.Date
+  trainerName String?
   timeSlot    String
-  status      String?   @default("CONFIRMED")
-  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  plan        String?
 }
 
 model Memberships {
