@@ -14,6 +14,7 @@ export async function GET() {
                 gender: true,
                 location: true,
                 createdAt: true,
+                MemberID: true,
                 // clerkUserId is intentionally omitted
             },
             orderBy: {

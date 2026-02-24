@@ -19,15 +19,37 @@ export const checkUser = async () => {
 
   // If user exists (No email sent)
   if (loggedInUser) {
+    if (!loggedInUser.MemberID) {
+      // Find the count to decide next AF ID
+      const count = await db.user.count();
+      const updatedUser = await db.user.update({
+        where: { id: loggedInUser.id },
+        data: { MemberID: `AF-${1000 + count - 1}` }
+      });
+      return updatedUser;
+    }
     return loggedInUser;
+  }
+
+  // Find latest MemberID to increment
+  const lastUser = await db.user.findFirst({
+    orderBy: { createdAt: 'desc' },
+    select: { MemberID: true }
+  });
+
+  let nextMemberID = "AF-1000";
+  if (lastUser?.MemberID && lastUser.MemberID.startsWith("AF-")) {
+    const lastNum = parseInt(lastUser.MemberID.split("-")[1]);
+    nextMemberID = `AF-${lastNum + 1}`;
   }
 
   // IF USER IS NEW: Create them in DB
   const newUser = await db.user.create({
     data: {
       clerkUserId: user.id,
+      MemberID: nextMemberID,
       name: `${user.firstName} ${user.lastName}`,
-      image: user.imageUrl, 
+      image: user.imageUrl,
       email: user.emailAddresses[0].emailAddress,
     },
   });
@@ -44,11 +66,11 @@ export const checkUser = async () => {
     });
 
     const email = newUser.email;
-    
+
     // Use live domain for images, fallback to localhost safety
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
-      : 'https://auraforce.vercel.app'; 
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'https://auraforce.vercel.app';
 
 
     // awaiting ensures it sends before the page loads.

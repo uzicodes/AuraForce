@@ -9,24 +9,26 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  clerkUserId  String        @unique
-  name         String?
-  email        String        @unique
-  image        String?
-  role         Role          @default(MEMBER)
-  phone        String?
-  dob          DateTime?
-  gender       String?
-  location     String?
-  weight       String?
-  heightFeet   String?
-  heightInches String?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  posts        Post[]
-  subscription Subscription?
-  votes        Vote[]
+  id            String          @id @default(cuid())
+  clerkUserId   String          @unique
+  MemberID      String?         @unique
+  name          String?
+  email         String          @unique
+  image         String?
+  role          Role            @default(MEMBER)
+  phone         String?
+  dob           DateTime?
+  gender        String?
+  location      String?
+  weight        String?
+  heightFeet    String?
+  heightInches  String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  posts         Post[]
+  subscription  Subscription?
+  votes         Vote[]
+  classBookings ClassBookings[]
 }
 
 model Post {
@@ -94,6 +96,7 @@ model Trainers {
 model ClassBookings {
   id          Int       @id @default(autoincrement())
   clerkUserId String
+  user        User      @relation(fields: [clerkUserId], references: [clerkUserId])
   classId     Int
   name        String?
   className   String?

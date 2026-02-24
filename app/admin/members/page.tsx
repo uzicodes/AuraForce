@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 
 interface Member {
     id: string;
+    MemberID: string | null;
     name: string | null;
     email: string;
     image: string | null;
@@ -77,6 +78,7 @@ export default function MembersPage() {
             (m.name?.toLowerCase().includes(q) ?? false) ||
             m.email.toLowerCase().includes(q) ||
             (m.phone?.toLowerCase().includes(q) ?? false) ||
+            (m.MemberID?.toLowerCase().includes(q) ?? false) ||
             m.role.toLowerCase().includes(q)
         );
     });
@@ -154,8 +156,8 @@ export default function MembersPage() {
                                 filteredMembers.map((m) => (
                                     <tr key={m.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors cursor-pointer">
                                         <td className="px-5 py-3.5">
-                                            <span className="text-zinc-500 font-mono text-xs">
-                                                {m.id.slice(-6).toUpperCase()}
+                                            <span className="text-zinc-500 font-mono text-xs uppercase italic tracking-wider">
+                                                {m.MemberID || m.id.slice(-6).toUpperCase()}
                                             </span>
                                         </td>
                                         <td className="px-5 py-3.5">
