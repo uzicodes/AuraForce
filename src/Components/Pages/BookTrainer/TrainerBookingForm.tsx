@@ -12,9 +12,10 @@ interface TrainerBookingFormProps {
     trainerName: string;
     feePerWeek?: number | null;
     feePerMonth?: number | null;
+    trainerTime?: string | null;
 }
 
-const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }: TrainerBookingFormProps) => {
+const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, trainerTime }: TrainerBookingFormProps) => {
     const { isSignedIn } = useUser();
     const router = useRouter();
     const [isPending, setIsPending] = useState(false);
@@ -70,6 +71,16 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth }:
             <h3 className="text-2xl font-bold text-white mb-2 font-heading">
                 Schedule your session
             </h3>
+
+            {trainerTime && (
+                <div className="flex items-center gap-3 bg-emerald-500/10 border border-emerald-500/20 px-4 py-3 rounded-none mb-2">
+                    <FaCalendarAlt className="text-emerald-400 text-sm" />
+                    <div>
+                        <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Daily Session Time</p>
+                        <p className="text-sm text-emerald-400 font-bold font-mono">{trainerTime} — Every Day</p>
+                    </div>
+                </div>
+            )}
 
             <div className="space-y-8">
                 {/* PLAN SELECTION */}

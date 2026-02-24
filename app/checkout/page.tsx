@@ -95,6 +95,7 @@ export default async function CheckoutPage({
 
       details = {
         role: trainer.role,
+        trainerTime: trainer.trainer_time,
         image: staticImages[numericId] || "/images/trainers/1.jpg", // Fallback
       };
       break;

@@ -137,7 +137,9 @@ export default function ClassesPage() {
                                 filteredBookings.map((b) => (
                                     <tr key={b.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
                                         <td className="px-5 py-3.5">
-                                            <span className="text-zinc-500 font-mono text-xs">#{b.id}</span>
+                                            <span className="text-zinc-500 font-mono text-xs uppercase italic tracking-wider">
+                                                {b.user?.MemberID || b.clerkUserId.slice(-6).toUpperCase()}
+                                            </span>
                                         </td>
                                         <td className="px-5 py-3.5">
                                             <div className="flex items-center gap-3">
@@ -157,9 +159,6 @@ export default function ClassesPage() {
                                                 </div>
                                                 <div>
                                                     <p className="text-white text-sm">{b.name || 'Unnamed'}</p>
-                                                    <p className="text-zinc-600 text-[10px] font-mono uppercase italic tracking-wider">
-                                                        {b.user?.MemberID || b.clerkUserId.slice(-6).toUpperCase()}
-                                                    </p>
                                                 </div>
                                             </div>
                                         </td>

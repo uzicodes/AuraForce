@@ -63,6 +63,7 @@ export default async function BookTrainerPage({ params }: { params: Promise<{ id
                             trainerName={trainer.name || "Trainer"}
                             feePerWeek={trainer.fee_per_week}
                             feePerMonth={trainer.fee_per_month}
+                            trainerTime={trainer.trainer_time}
                         />
                     </div>
 

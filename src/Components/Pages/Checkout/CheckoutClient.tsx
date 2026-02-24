@@ -125,14 +125,27 @@ export default function CheckoutClient({
                             )}
 
                             {type === "trainer" && details?.role && (
-                                <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50 flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500">
-                                        <FaUserTie />
+                                <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50 space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500">
+                                            <FaUserTie />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Role</p>
+                                            <p className="text-sm text-white font-medium">{details.role}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Role</p>
-                                        <p className="text-sm text-white font-medium">{details.role}</p>
-                                    </div>
+                                    {details?.trainerTime && (
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 bg-emerald-500/10 rounded-none flex items-center justify-center text-emerald-500">
+                                                <FaClock />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Daily Session</p>
+                                                <p className="text-sm text-emerald-400 font-bold font-mono">{details.trainerTime} — Every Day</p>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             )}
 

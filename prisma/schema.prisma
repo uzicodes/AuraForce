@@ -91,6 +91,7 @@ model Trainers {
   role          String?
   fee_per_week  Int?
   fee_per_month Int?
+  trainer_time  String?
 }
 
 model ClassBookings {
