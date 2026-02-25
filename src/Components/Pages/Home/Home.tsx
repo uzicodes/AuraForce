@@ -5,6 +5,7 @@ import Features from "./Features";
 import Newsletter from "./Newsletter";
 import Testimonials from "./Testimonials";
 import NutritionPlan from "./NutritionPlan";
+import GearArsenal from "./GearArsenal";
 
 interface DbPrice {
   id: number;
@@ -23,6 +24,7 @@ const Home = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
         <Membership dbPrices={dbPrices} />
         <Features />
         <AboutUs />
+        <GearArsenal />
         <Newsletter />
         <NutritionPlan />
         <Testimonials />

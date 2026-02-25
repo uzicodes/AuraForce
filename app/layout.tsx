@@ -25,12 +25,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <ClerkProvider
-        signInUrl="/login"
-        signUpUrl="/register"
-        signInFallbackRedirectUrl="/"
-        signUpFallbackRedirectUrl="/"
-        afterSignOutUrl="/"
-      >
+      signInUrl="/login"
+      signUpUrl="/register"
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/"
+      afterSignOutUrl="/"
+    >
       <html lang="en">
         <head>
           <title>AuraForce !</title>
@@ -41,13 +41,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <link rel="manifest" href="/site.webmanifest" />
         </head>
 
-        {/* Added bg-zinc-950 here to ensure base is always dark */}
+        {/* Added bg-zinc-950 (base is always dark) */}
         <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
           <QueryClientProvider client={queryClient}>
 
             <AutoLogoutProvider>
 
-              {/* --- AMBIENT GLOW BACKGROUND (Applied to All Pages except admin) --- */}
+              {/* --- AMBIENT GLOW BACKGROUND  --- */}
               {!hideNavbar && (
                 <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
                   {/* Top Left Glow */}
