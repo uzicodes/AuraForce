@@ -60,7 +60,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
 
         setIsPending(true);
         // Redirect to the generic checkout page → SSLCommerz payment flow
-        router.push(`/checkout?type=trainer&id=${trainerId}`);
+        router.push(`/checkout?type=trainer&id=${trainerId}&plan=${planType}`);
     };
 
     const today = new Date().toISOString().split('T')[0];

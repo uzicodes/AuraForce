@@ -7,9 +7,9 @@ export const dynamic = "force-dynamic";
 export default async function CheckoutPage({
   searchParams,
 }: {
-  searchParams: Promise<{ type?: string; id?: string }>;
+  searchParams: Promise<{ type?: string; id?: string; plan?: string }>;
 }) {
-  const { type, id } = await searchParams;
+  const { type, id, plan } = await searchParams;
 
   // ── Validate params ──
   if (!id || !type) {
@@ -79,7 +79,7 @@ export default async function CheckoutPage({
       });
       if (!trainer) redirect("/");
       itemName = trainer.name || "Trainer";
-      amount = trainer.fee_per_month || 0;
+      amount = plan === "WEEKLY" ? (trainer.fee_per_week || 0) : (trainer.fee_per_month || 0);
 
       // Static images override (Copied from AllTrainers.tsx)
       const staticImages: Record<number, string> = {
