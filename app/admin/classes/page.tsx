@@ -109,7 +109,7 @@ export default function ClassesPage() {
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="text-yellow-500 text-xs border-b border-zinc-800/50">
-                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">ID</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Member ID</th>
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Class</th>
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Booked By</th>
                                 <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">Booking Date</th>

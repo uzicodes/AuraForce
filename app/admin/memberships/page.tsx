@@ -1,77 +1,191 @@
 'use client';
 
-import { Search, Filter, Plus, Check, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Search, Filter, Crown, User, Calendar } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-const memberships = [
-    { id: 1, name: 'Basic Plan', price: '$49/mo', duration: '1 Month', members: 320, features: ['Gym Access', 'Locker Room', 'Free WiFi'], status: 'Active' },
-    { id: 2, name: 'Premium Plan', price: '$99/mo', duration: '1 Month', members: 580, features: ['All Basic', 'Group Classes', 'Sauna', 'Diet Plan'], status: 'Active' },
-    { id: 3, name: 'Elite Plan', price: '$149/mo', duration: '1 Month', members: 348, features: ['All Premium', 'Personal Trainer', 'Supplements', 'Priority Booking'], status: 'Active' },
-    { id: 4, name: 'Annual Basic', price: '$470/yr', duration: '12 Months', members: 90, features: ['Gym Access', 'Locker Room', 'Free WiFi', '2 Months Free'], status: 'Active' },
-    { id: 5, name: 'Annual Premium', price: '$950/yr', duration: '12 Months', members: 145, features: ['All Basic', 'Group Classes', 'Sauna', 'Diet Plan', '2 Months Free'], status: 'Active' },
-    { id: 6, name: 'Student Plan', price: '$29/mo', duration: '1 Month', members: 120, features: ['Gym Access', 'Locker Room'], status: 'Paused' },
-];
+interface MembershipBooking {
+    id: number;
+    MemberID: string | null;
+    name: string | null;
+    plan: string | null;
+    price: number | null;
+    startDate: string | null;
+    endDate: string | null;
+    status: string | null;
+}
+
+const planBadge: Record<string, string> = {
+    BASIC: 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20',
+    STANDARD: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    PREMIUM: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+};
+
+const statusBadge: Record<string, string> = {
+    ACTIVE: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+    INACTIVE: 'bg-red-500/10 text-red-400 border-red-500/20',
+};
+
+function formatDate(dateStr: string | null): string {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+}
 
 export default function MembershipsPage() {
+    const [bookings, setBookings] = useState<MembershipBooking[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        async function fetchBookings() {
+            try {
+                const res = await fetch('/api/admin/membership-bookings');
+
+                if (res.status === 429) {
+                    toast.error("You are doing that too fast! Please wait a few seconds.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                    return;
+                }
+
+                if (!res.ok) throw new Error('Failed to fetch membership bookings');
+                const data = await res.json();
+                setBookings(data);
+            } catch (err) {
+                console.error('Error fetching membership bookings:', err);
+                toast.error('Something went wrong. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchBookings();
+    }, []);
+
+    const filteredBookings = bookings.filter((b) => {
+        const q = searchQuery.toLowerCase();
+        return (
+            (b.MemberID?.toLowerCase().includes(q) ?? false) ||
+            (b.name?.toLowerCase().includes(q) ?? false) ||
+            (b.plan?.toLowerCase().includes(q) ?? false) ||
+            (b.status?.toLowerCase().includes(q) ?? false)
+        );
+    });
+
     return (
         <div className="space-y-6">
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-white font-heading">Memberships</h2>
-                    <p className="text-sm text-zinc-500 font-satoshi mt-1">Manage membership plans and pricing.</p>
+                    <h2 className="text-2xl font-bold text-white font-heading">Membership Bookings</h2>
+                    <p className="text-sm text-zinc-500 font-satoshi mt-1">View all membership booking records from the database.</p>
                 </div>
-                <button className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-black text-sm font-bold rounded-xl transition-all shadow-lg shadow-emerald-500/10">
-                    <Plus size={16} />
-                    Add Plan
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                    <Crown size={16} className="text-yellow-400" />
+                    <span className="text-sm font-bold text-white">{loading ? '—' : bookings.length}</span>
+                    <span className="text-xs text-zinc-500">Bookings</span>
+                </div>
+            </div>
+
+            {/* Search & Filter */}
+            <div className="flex flex-col sm:flex-row gap-3">
+                <div className="relative flex-1">
+                    <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+                    <input
+                        type="text"
+                        placeholder="Search by member ID, name, plan, or status..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-9 pr-4 py-2.5 bg-zinc-900/60 border border-zinc-800 rounded-xl text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
+                    />
+                </div>
+                <button className="inline-flex items-center gap-2 px-4 py-2.5 bg-zinc-900/60 border border-zinc-800 text-zinc-400 text-sm rounded-xl hover:border-zinc-700 transition-all">
+                    <Filter size={16} />
+                    Filters
                 </button>
             </div>
 
-            {/* Plan Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-                {memberships.map((plan) => (
-                    <div
-                        key={plan.id}
-                        className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl p-6 hover:border-zinc-700 transition-all duration-300 group"
-                    >
-                        <div className="flex items-center justify-between mb-4">
-                            <div>
-                                <h3 className="text-white font-bold text-lg">{plan.name}</h3>
-                                <p className="text-zinc-500 text-xs">{plan.duration}</p>
-                            </div>
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${plan.status === 'Active'
-                                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                                    : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
-                                }`}>
-                                {plan.status}
-                            </span>
-                        </div>
-
-                        <p className="text-3xl font-bold text-emerald-400 mb-4">{plan.price}</p>
-
-                        <div className="flex items-center gap-1.5 text-xs text-zinc-500 mb-4">
-                            <span className="font-medium text-zinc-300">{plan.members}</span> active subscribers
-                        </div>
-
-                        <div className="space-y-2 border-t border-zinc-800/50 pt-4">
-                            {plan.features.map((feature, i) => (
-                                <div key={i} className="flex items-center gap-2 text-xs text-zinc-400">
-                                    <Check size={12} className="text-emerald-500 flex-shrink-0" />
-                                    {feature}
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="mt-5 flex gap-2">
-                            <button className="flex-1 py-2 text-xs font-medium bg-zinc-800 text-zinc-300 rounded-lg hover:bg-zinc-700 transition-colors">
-                                Edit
-                            </button>
-                            <button className="px-3 py-2 text-xs font-medium bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors border border-red-500/20">
-                                <X size={14} />
-                            </button>
-                        </div>
-                    </div>
-                ))}
+            {/* Bookings Table */}
+            <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                        <thead>
+                            <tr className="text-yellow-500 text-xs border-b border-zinc-800/50">
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Member ID</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Name</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Plan</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Price</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">Start Date</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">End Date</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={7} className="px-5 py-12 text-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="w-6 h-6 border-2 border-yellow-500 border-t-transparent rounded-full animate-spin" />
+                                            <p className="text-zinc-500 text-sm">Loading membership bookings...</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ) : filteredBookings.length === 0 ? (
+                                <tr>
+                                    <td colSpan={7} className="px-5 py-12 text-center">
+                                        <p className="text-zinc-500 text-sm">No membership bookings found.</p>
+                                    </td>
+                                </tr>
+                            ) : (
+                                filteredBookings.map((b) => (
+                                    <tr key={b.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                        <td className="px-5 py-3.5">
+                                            <span className="text-zinc-500 font-mono text-xs uppercase italic tracking-wider">
+                                                {b.MemberID || '—'}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center text-yellow-400 flex-shrink-0">
+                                                    <User size={14} />
+                                                </div>
+                                                <span className="text-white font-medium">{b.name || 'Unknown'}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${planBadge[b.plan?.toUpperCase() || ''] || planBadge['BASIC']}`}>
+                                                {b.plan || '—'}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <span className="text-emerald-400 font-bold text-sm font-mono">
+                                                ৳{b.price?.toLocaleString() || '0'}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden md:table-cell">
+                                            <div className="flex items-center gap-1.5 text-zinc-400">
+                                                <Calendar size={12} className="text-zinc-600" />
+                                                <span className="text-xs">{formatDate(b.startDate)}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden md:table-cell">
+                                            <div className="flex items-center gap-1.5 text-zinc-400">
+                                                <Calendar size={12} className="text-zinc-600" />
+                                                <span className="text-xs">{formatDate(b.endDate)}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${statusBadge[b.status?.toUpperCase() || ''] || statusBadge['INACTIVE']}`}>
+                                                {b.status || '—'}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

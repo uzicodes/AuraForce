@@ -95,8 +95,35 @@ async function createBookingFromPayment(payment: {
             },
         });
     } else if (bookingType === "membership") {
-        // Membership subscription - already handled if Subscription uses same pattern
-        // Add subscription creation here if needed
+        // Fetch user details
+        const user = await db.user.findUnique({
+            where: { clerkUserId },
+            select: { MemberID: true, name: true },
+        });
+
+        // Fetch membership plan details
+        const membership = await db.memberships.findUnique({
+            where: { id: referenceId },
+            select: { name: true, price: true },
+        });
+
+        // Start date = today, end date = 30 days from now
+        const startDate = new Date();
+        const endDate = new Date();
+        endDate.setDate(endDate.getDate() + 30);
+
+        await db.membershipBookings.create({
+            data: {
+                clerkUserId,
+                MemberID: user?.MemberID || null,
+                name: user?.name || null,
+                plan: membership?.name || null,
+                price: payment.amount,
+                startDate,
+                endDate,
+                status: "ACTIVE",
+            },
+        });
     }
 }
 

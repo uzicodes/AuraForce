@@ -55,21 +55,7 @@ model Vote {
   @@unique([userId, postId])
 }
 
-model Subscription {
-  id        String   @id @default(cuid())
-  plan      Plan     @default(BASIC)
-  startDate DateTime @default(now())
-  endDate   DateTime
-  isActive  Boolean  @default(true)
-  userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
-}
 
-model Subscriber {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-}
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Classes {
@@ -136,6 +122,18 @@ model Payments {
   referenceId   Int
   status        String?   @default("PENDING")
   created_at    DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model MembershipBookings {
+  id          Int       @id @default(autoincrement())
+  clerkUserId String
+  MemberID    String?
+  name        String?
+  plan        String?
+  price       Int?
+  startDate   DateTime? @db.Date
+  endDate     DateTime? @db.Date
+  status      String?   @default("ACTIVE")
 }
 
 enum VoteType {
