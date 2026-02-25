@@ -1,26 +1,82 @@
 'use client';
 
-import { Search, Filter, Download, CreditCard, TrendingUp, DollarSign, AlertCircle } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Search, Filter, CreditCard, DollarSign, Calendar, User } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-const payments = [
-    { id: 'PAY-001', member: 'Sarah Johnson', email: 'sarah@email.com', amount: '$99.00', plan: 'Premium Plan', method: 'Credit Card', date: 'Feb 20, 2026', status: 'Paid' },
-    { id: 'PAY-002', member: 'Mike Chen', email: 'mike@email.com', amount: '$49.00', plan: 'Basic Plan', method: 'bKash', date: 'Feb 19, 2026', status: 'Paid' },
-    { id: 'PAY-003', member: 'Emily Davis', email: 'emily@email.com', amount: '$99.00', plan: 'Premium Plan', method: 'Credit Card', date: 'Feb 18, 2026', status: 'Paid' },
-    { id: 'PAY-004', member: 'James Wilson', email: 'james@email.com', amount: '$149.00', plan: 'Elite Plan', method: 'Nagad', date: 'Feb 17, 2026', status: 'Pending' },
-    { id: 'PAY-005', member: 'Olivia Brown', email: 'olivia@email.com', amount: '$49.00', plan: 'Basic Plan', method: 'Credit Card', date: 'Feb 16, 2026', status: 'Failed' },
-    { id: 'PAY-006', member: 'Daniel Martinez', email: 'daniel@email.com', amount: '$149.00', plan: 'Elite Plan', method: 'bKash', date: 'Feb 15, 2026', status: 'Paid' },
-    { id: 'PAY-007', member: 'Sophia Lee', email: 'sophia@email.com', amount: '$99.00', plan: 'Premium Plan', method: 'Credit Card', date: 'Feb 14, 2026', status: 'Refunded' },
-    { id: 'PAY-008', member: 'Liam Taylor', email: 'liam@email.com', amount: '$49.00', plan: 'Basic Plan', method: 'Nagad', date: 'Feb 13, 2026', status: 'Paid' },
-];
+interface Payment {
+    id: number;
+    MemberID: string | null;
+    name: string | null;
+    transactionId: string;
+    amount: number;
+    paymentType: string | null;
+    bookingType: string;
+    referenceId: number;
+    created_at: string | null;
+}
 
-const statusColorMap: Record<string, string> = {
-    Paid: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-    Pending: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
-    Failed: 'bg-red-500/10 text-red-400 border-red-500/20',
-    Refunded: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+const bookingBadge: Record<string, string> = {
+    trainer: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+    class: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+    membership: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
 };
 
+function formatDate(dateStr: string | null): string {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+}
+
+function formatTime(dateStr: string | null): string {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+}
+
 export default function PaymentsPage() {
+    const [payments, setPayments] = useState<Payment[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+
+    useEffect(() => {
+        async function fetchPayments() {
+            try {
+                const res = await fetch('/api/admin/payments');
+
+                if (res.status === 429) {
+                    toast.error("You are doing that too fast! Please wait a few seconds.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                    return;
+                }
+
+                if (!res.ok) throw new Error('Failed to fetch payments');
+                const data = await res.json();
+                setPayments(data);
+            } catch (err) {
+                console.error('Error fetching payments:', err);
+                toast.error('Something went wrong. Please try again.');
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchPayments();
+    }, []);
+
+    const totalRevenue = payments.reduce((sum, p) => sum + p.amount, 0);
+
+    const filteredPayments = payments.filter((p) => {
+        const q = searchQuery.toLowerCase();
+        return (
+            (p.MemberID?.toLowerCase().includes(q) ?? false) ||
+            (p.name?.toLowerCase().includes(q) ?? false) ||
+            (p.transactionId.toLowerCase().includes(q)) ||
+            (p.bookingType.toLowerCase().includes(q)) ||
+            (p.paymentType?.toLowerCase().includes(q) ?? false)
+        );
+    });
+
     return (
         <div className="space-y-6">
 
@@ -28,43 +84,31 @@ export default function PaymentsPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
                     <h2 className="text-2xl font-bold text-white font-heading">Payments</h2>
-                    <p className="text-sm text-zinc-500 font-satoshi mt-1">Track all transactions and revenue.</p>
+                    <p className="text-sm text-zinc-500 font-satoshi mt-1">All successful transactions recorded from the database.</p>
                 </div>
-                <button className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800 text-zinc-300 text-sm font-medium rounded-xl hover:border-zinc-700 transition-all">
-                    <Download size={16} />
-                    Export CSV
-                </button>
-            </div>
-
-            {/* Revenue Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                {[
-                    { label: 'Total Revenue', value: '$48,250', icon: DollarSign, color: 'emerald' },
-                    { label: 'This Month', value: '$12,800', icon: TrendingUp, color: 'blue' },
-                    { label: 'Successful', value: '412', icon: CreditCard, color: 'emerald' },
-                    { label: 'Pending / Failed', value: '23', icon: AlertCircle, color: 'amber' },
-                ].map((s) => (
-                    <div key={s.label} className="bg-zinc-900/60 border border-zinc-800 rounded-xl px-5 py-4">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-[10px] text-zinc-500 uppercase tracking-wider">{s.label}</p>
-                                <p className="text-xl font-bold text-white mt-1">{s.value}</p>
-                            </div>
-                            <div className={`w-9 h-9 rounded-lg bg-${s.color}-500/10 border border-${s.color}-500/20 flex items-center justify-center`}>
-                                <s.icon size={16} className={`text-${s.color}-400`} />
-                            </div>
-                        </div>
+                <div className="flex items-center gap-3">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                        <CreditCard size={16} className="text-emerald-400" />
+                        <span className="text-sm font-bold text-white">{loading ? '—' : payments.length}</span>
+                        <span className="text-xs text-zinc-500">Payments</span>
                     </div>
-                ))}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800 rounded-xl">
+                        <DollarSign size={16} className="text-emerald-400" />
+                        <span className="text-sm font-bold text-emerald-400 font-mono">৳{loading ? '—' : totalRevenue.toLocaleString()}</span>
+                        <span className="text-xs text-zinc-500">Revenue</span>
+                    </div>
+                </div>
             </div>
 
-            {/* Search */}
+            {/* Search & Filter */}
             <div className="flex flex-col sm:flex-row gap-3">
                 <div className="relative flex-1">
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
-                        placeholder="Search transactions..."
+                        placeholder="Search by member ID, name, transaction ID, or booking type..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full pl-9 pr-4 py-2.5 bg-zinc-900/60 border border-zinc-800 rounded-xl text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"
                     />
                 </div>
@@ -79,37 +123,78 @@ export default function PaymentsPage() {
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
-                            <tr className="text-zinc-500 text-xs border-b border-zinc-800/50">
-                                <th className="text-left px-5 py-3.5 font-medium">Transaction ID</th>
-                                <th className="text-left px-5 py-3.5 font-medium">Member</th>
-                                <th className="text-left px-5 py-3.5 font-medium hidden md:table-cell">Plan</th>
-                                <th className="text-left px-5 py-3.5 font-medium">Amount</th>
-                                <th className="text-left px-5 py-3.5 font-medium hidden lg:table-cell">Method</th>
-                                <th className="text-left px-5 py-3.5 font-medium hidden sm:table-cell">Date</th>
-                                <th className="text-left px-5 py-3.5 font-medium">Status</th>
+                            <tr className="text-yellow-500 text-xs border-b border-zinc-800/50">
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Member ID</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Name</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden lg:table-cell">Transaction ID</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Amount</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">Payment Type</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Booking Type</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">Ref ID</th>
+                                <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden sm:table-cell">Date & Time</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {payments.map((p) => (
-                                <tr key={p.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors cursor-pointer">
-                                    <td className="px-5 py-3.5 text-zinc-400 font-mono text-xs">{p.id}</td>
-                                    <td className="px-5 py-3.5">
-                                        <div>
-                                            <p className="text-white font-medium text-sm">{p.member}</p>
-                                            <p className="text-zinc-500 text-xs">{p.email}</p>
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={8} className="px-5 py-12 text-center">
+                                        <div className="flex flex-col items-center gap-3">
+                                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                                            <p className="text-zinc-500 text-sm">Loading payments...</p>
                                         </div>
                                     </td>
-                                    <td className="px-5 py-3.5 text-zinc-400 hidden md:table-cell">{p.plan}</td>
-                                    <td className="px-5 py-3.5 text-white font-medium">{p.amount}</td>
-                                    <td className="px-5 py-3.5 text-zinc-400 hidden lg:table-cell">{p.method}</td>
-                                    <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">{p.date}</td>
-                                    <td className="px-5 py-3.5">
-                                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${statusColorMap[p.status]}`}>
-                                            {p.status}
-                                        </span>
+                                </tr>
+                            ) : filteredPayments.length === 0 ? (
+                                <tr>
+                                    <td colSpan={8} className="px-5 py-12 text-center">
+                                        <p className="text-zinc-500 text-sm">No payments found.</p>
                                     </td>
                                 </tr>
-                            ))}
+                            ) : (
+                                filteredPayments.map((p) => (
+                                    <tr key={p.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                        <td className="px-5 py-3.5">
+                                            <span className="text-zinc-500 font-mono text-xs uppercase italic tracking-wider">
+                                                {p.MemberID || '—'}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 flex-shrink-0">
+                                                    <User size={12} />
+                                                </div>
+                                                <span className="text-white font-medium text-sm">{p.name || 'Unknown'}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden lg:table-cell">
+                                            <span className="text-zinc-600 font-mono text-[10px]">{p.transactionId}</span>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <span className="text-emerald-400 font-bold text-sm font-mono">৳{p.amount.toLocaleString()}</span>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden md:table-cell">
+                                            <span className="text-zinc-400 text-xs">{p.paymentType || '—'}</span>
+                                        </td>
+                                        <td className="px-5 py-3.5">
+                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border capitalize ${bookingBadge[p.bookingType] || 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'}`}>
+                                                {p.bookingType}
+                                            </span>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden md:table-cell">
+                                            <span className="text-zinc-500 font-mono text-xs">#{p.referenceId}</span>
+                                        </td>
+                                        <td className="px-5 py-3.5 hidden sm:table-cell">
+                                            <div className="flex items-center gap-1.5 text-zinc-400">
+                                                <Calendar size={12} className="text-zinc-600" />
+                                                <div>
+                                                    <p className="text-xs">{formatDate(p.created_at)}</p>
+                                                    <p className="text-[10px] text-zinc-600">{formatTime(p.created_at)}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
                         </tbody>
                     </table>
                 </div>
