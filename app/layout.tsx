@@ -24,7 +24,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const hideNavbar = pathname?.startsWith('/admin');
 
   return (
-    <ClerkProvider>
+    <ClerkProvider
+        signInUrl="/login"
+        signUpUrl="/register"
+        signInFallbackRedirectUrl="/"
+        signUpFallbackRedirectUrl="/"
+        afterSignOutUrl="/"
+      >
       <html lang="en">
         <head>
           <title>AuraForce !</title>
