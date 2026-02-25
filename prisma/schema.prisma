@@ -26,7 +26,6 @@ model User {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   posts         Post[]
-  subscription  Subscription?
   votes         Vote[]
   classBookings ClassBookings[]
 }
