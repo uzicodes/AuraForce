@@ -3,8 +3,6 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { Plan } from "@prisma/client";
-
 
 export async function bookMembership(membershipId: number, startDate: Date) {
     try {
@@ -17,13 +15,14 @@ export async function bookMembership(membershipId: number, startDate: Date) {
         // Look up the internal User record using the Clerk user ID
         const dbUser = await db.user.findUnique({
             where: { clerkUserId },
+            select: { MemberID: true, name: true },
         });
 
         if (!dbUser) {
             return { success: false, error: "User not found. Please complete your profile." };
         }
 
-        // Fetch the membership plan to map its name to the Plan enum
+        // Fetch the membership plan
         const membership = await db.memberships.findUnique({
             where: { id: membershipId },
         });
@@ -32,36 +31,28 @@ export async function bookMembership(membershipId: number, startDate: Date) {
             return { success: false, error: "Membership plan not found." };
         }
 
-        // Map the membership name to the Plan enum (BASIC, STANDARD, PREMIUM)
-        const planName = membership.name.toUpperCase() as keyof typeof Plan;
-        const planEnum: Plan = Plan[planName] || Plan.BASIC;
-
         // Calculate endDate (exactly 1 month from the selected start date)
         const endDate = new Date(startDate);
         endDate.setMonth(endDate.getMonth() + 1);
 
-        // Upsert subscription — create or update if the user already has one
-        await db.subscription.upsert({
-            where: { userId: dbUser.id },
-            update: {
-                plan: planEnum,
+        // Create membership booking
+        await db.membershipBookings.create({
+            data: {
+                clerkUserId,
+                MemberID: dbUser.MemberID || null,
+                name: dbUser.name || null,
+                plan: membership.name,
+                price: membership.price,
                 startDate: startDate,
                 endDate: endDate,
-                isActive: true,
-            },
-            create: {
-                userId: dbUser.id,
-                plan: planEnum,
-                startDate: startDate,
-                endDate: endDate,
-                isActive: true,
+                status: "ACTIVE",
             },
         });
 
         revalidatePath("/profile");
-        return { success: true, message: "Subscription confirmed!" };
+        return { success: true, message: "Membership booking confirmed!" };
     } catch (error) {
         console.error("Booking error:", error);
-        return { success: false, error: "Failed to confirm subscription." };
+        return { success: false, error: "Failed to confirm membership booking." };
     }
 }

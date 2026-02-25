@@ -50,17 +50,22 @@ const Profile = async () => {
   const dbUser = await db.user.findUnique({
     where: { clerkUserId: user.clerkUserId },
     include: {
-      subscription: true,
       posts: { orderBy: { createdAt: 'desc' } }
     },
   });
 
   if (!dbUser) redirect("/login");
 
+  // Fetch active membership booking
+  const activeMembership = await db.membershipBookings.findFirst({
+    where: { clerkUserId: user.clerkUserId, status: "ACTIVE" },
+    orderBy: { id: 'desc' },
+  });
+
   // 4. Prepare Display Data
-  const planName = dbUser.subscription?.plan || "NO ACTIVE PLAN";
-  const isActive = dbUser.subscription?.isActive || false;
-  const renewalDate = dbUser.subscription?.endDate ? formatDate(dbUser.subscription.endDate) : "N/A";
+  const planName = activeMembership?.plan || "NO ACTIVE PLAN";
+  const isActive = activeMembership?.status === "ACTIVE";
+  const renewalDate = activeMembership?.endDate ? formatDate(activeMembership.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
 
   const avatarUrl = dbUser.image || clerkUser?.imageUrl || "/dp.png";
@@ -226,7 +231,7 @@ const Profile = async () => {
               </div>
 
               <div className="px-8 pb-8">
-                {dbUser.subscription ? (
+                {activeMembership ? (
                   <div className="relative group p-6 bg-gradient-to-br from-zinc-800/50 to-zinc-900/80 rounded-xl border border-zinc-700/50 hover:border-emerald-500/30 transition-all duration-500">
                     {/* Glow effect on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none" />
