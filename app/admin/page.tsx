@@ -1,46 +1,116 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import {
     Users,
     Dumbbell,
     CalendarCheck,
     CreditCard,
-    TrendingUp,
-    TrendingDown,
     ArrowUpRight,
 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
-const stats = [
-    { label: 'Total Members', value: '1,248', change: '+12%', trend: 'up', icon: Users, color: 'emerald' },
-    { label: 'Active Trainers', value: '24', change: '+3', trend: 'up', icon: Dumbbell, color: 'blue' },
-    { label: 'Classes Today', value: '18', change: '-2', trend: 'down', icon: CalendarCheck, color: 'amber' },
-    { label: 'Revenue (Month)', value: '$48,250', change: '+8.5%', trend: 'up', icon: CreditCard, color: 'purple' },
-];
+interface Member {
+    id: string;
+    name: string | null;
+    email: string;
+    image: string | null;
+    role: string;
+    createdAt: string;
+}
 
-const recentMembers = [
-    { name: 'Sarah Johnson', email: 'sarah@email.com', plan: 'Premium', joined: 'Feb 20, 2026', status: 'Active' },
-    { name: 'Mike Chen', email: 'mike@email.com', plan: 'Basic', joined: 'Feb 19, 2026', status: 'Active' },
-    { name: 'Emily Davis', email: 'emily@email.com', plan: 'Premium', joined: 'Feb 18, 2026', status: 'Active' },
-    { name: 'James Wilson', email: 'james@email.com', plan: 'Elite', joined: 'Feb 17, 2026', status: 'Inactive' },
-    { name: 'Olivia Brown', email: 'olivia@email.com', plan: 'Basic', joined: 'Feb 16, 2026', status: 'Active' },
-];
-
-const recentPayments = [
-    { member: 'Sarah Johnson', amount: '$99.00', type: 'Premium Plan', date: 'Feb 20', status: 'Paid' },
-    { member: 'Mike Chen', amount: '$49.00', type: 'Basic Plan', date: 'Feb 19', status: 'Paid' },
-    { member: 'Emily Davis', amount: '$99.00', type: 'Premium Plan', date: 'Feb 18', status: 'Paid' },
-    { member: 'James Wilson', amount: '$149.00', type: 'Elite Plan', date: 'Feb 17', status: 'Pending' },
-    { member: 'Olivia Brown', amount: '$49.00', type: 'Basic Plan', date: 'Feb 16', status: 'Failed' },
-];
+interface Payment {
+    id: number;
+    clerkUserId: string;
+    amount: number;
+    bookingType: string;
+    status: string | null;
+    transactionId: string;
+}
 
 const colorMap: Record<string, { bg: string; text: string; border: string; shadow: string }> = {
     emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', shadow: 'shadow-emerald-500/5' },
-    blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', shadow: 'shadow-blue-500/5' },
-    amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', shadow: 'shadow-amber-500/5' },
     purple: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20', shadow: 'shadow-purple-500/5' },
+    amber: { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', shadow: 'shadow-amber-500/5' },
+    blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', shadow: 'shadow-blue-500/5' },
 };
 
 export default function AdminDashboard() {
+    const [members, setMembers] = useState<Member[]>([]);
+    const [trainerCount, setTrainerCount] = useState(0);
+    const [classCount, setClassCount] = useState(0);
+    const [payments, setPayments] = useState<Payment[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function fetchDashboardData() {
+            try {
+                const [memRes, trainerRes, classRes, payRes] = await Promise.all([
+                    fetch('/api/admin/members'),
+                    fetch('/api/admin/trainers'),
+                    fetch('/api/admin/classes'),
+                    fetch('/api/admin/payments'),
+                ]);
+
+                if (memRes.status === 429 || trainerRes.status === 429 || classRes.status === 429) {
+                    toast.error("You are doing that too fast! Please wait a few seconds.", {
+                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                    });
+                    return;
+                }
+
+                const memData = memRes.ok ? await memRes.json() : [];
+                const trainerData = trainerRes.ok ? await trainerRes.json() : [];
+                const classData = classRes.ok ? await classRes.json() : [];
+                const payData = payRes.ok ? await payRes.json() : [];
+
+                setMembers(memData);
+                setTrainerCount(trainerData.length);
+                setClassCount(classData.length);
+                setPayments(Array.isArray(payData) ? payData : []);
+            } catch (err) {
+                console.error('Dashboard fetch error:', err);
+                toast.error('Failed to load dashboard data.');
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchDashboardData();
+    }, []);
+
+    const totalRevenue = payments
+        .filter(p => p.status === 'SUCCESS')
+        .reduce((sum, p) => sum + p.amount, 0);
+
+    const stats = [
+        { label: 'Total Members', value: loading ? '—' : members.length.toLocaleString(), icon: Users, color: 'emerald' },
+        { label: 'Active Trainers', value: loading ? '—' : trainerCount.toLocaleString(), icon: Dumbbell, color: 'purple' },
+        { label: 'Total Classes', value: loading ? '—' : classCount.toLocaleString(), icon: CalendarCheck, color: 'amber' },
+        { label: 'Revenue', value: loading ? '—' : `৳${totalRevenue.toLocaleString()}`, icon: CreditCard, color: 'blue' },
+    ];
+
+    // Get the 5 most recent members
+    const recentMembers = members.slice(0, 5);
+
+    // Get the 5 most recent payments
+    const recentPayments = payments.slice(0, 5);
+
+    const statusBadge = (status: string | null) => {
+        switch (status) {
+            case 'SUCCESS':
+                return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
+            case 'PENDING':
+                return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
+            default:
+                return 'bg-red-500/10 text-red-400 border border-red-500/20';
+        }
+    };
+
+    function formatDate(dateStr: string): string {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    }
+
     return (
         <div className="space-y-6">
 
@@ -71,18 +141,6 @@ export default function AdminDashboard() {
                                     <stat.icon size={18} className={c.text} />
                                 </div>
                             </div>
-
-                            <div className="relative z-10 mt-3 flex items-center gap-1.5">
-                                {stat.trend === 'up' ? (
-                                    <TrendingUp size={14} className="text-emerald-400" />
-                                ) : (
-                                    <TrendingDown size={14} className="text-red-400" />
-                                )}
-                                <span className={`text-xs font-medium ${stat.trend === 'up' ? 'text-emerald-400' : 'text-red-400'}`}>
-                                    {stat.change}
-                                </span>
-                                <span className="text-xs text-zinc-600">vs last month</span>
-                            </div>
                         </div>
                     );
                 })}
@@ -104,30 +162,53 @@ export default function AdminDashboard() {
                             <thead>
                                 <tr className="text-zinc-500 text-xs border-b border-zinc-800/50">
                                     <th className="text-left px-5 py-3 font-medium">Name</th>
-                                    <th className="text-left px-5 py-3 font-medium">Plan</th>
-                                    <th className="text-left px-5 py-3 font-medium">Status</th>
+                                    <th className="text-left px-5 py-3 font-medium">Role</th>
+                                    <th className="text-left px-5 py-3 font-medium hidden sm:table-cell">Joined</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {recentMembers.map((m, i) => (
-                                    <tr key={i} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
-                                        <td className="px-5 py-3">
-                                            <div>
-                                                <p className="text-white font-medium text-sm">{m.name}</p>
-                                                <p className="text-zinc-500 text-xs">{m.email}</p>
-                                            </div>
-                                        </td>
-                                        <td className="px-5 py-3 text-zinc-300">{m.plan}</td>
-                                        <td className="px-5 py-3">
-                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${m.status === 'Active'
-                                                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                                    : 'bg-red-500/10 text-red-400 border border-red-500/20'
-                                                }`}>
-                                                {m.status}
-                                            </span>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={3} className="px-5 py-8 text-center">
+                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
-                                ))}
+                                ) : recentMembers.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={3} className="px-5 py-8 text-center text-zinc-500 text-sm">No members found.</td>
+                                    </tr>
+                                ) : (
+                                    recentMembers.map((m) => (
+                                        <tr key={m.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                            <td className="px-5 py-3">
+                                                <div className="flex items-center gap-3">
+                                                    {m.image ? (
+                                                        <img src={m.image} alt={m.name || ''} className="w-7 h-7 rounded-full object-cover border border-zinc-700 flex-shrink-0" />
+                                                    ) : (
+                                                        <div className="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold flex-shrink-0">
+                                                            {(m.name || m.email).substring(0, 2).toUpperCase()}
+                                                        </div>
+                                                    )}
+                                                    <div>
+                                                        <p className="text-white font-medium text-sm">{m.name || 'Unnamed'}</p>
+                                                        <p className="text-zinc-500 text-xs">{m.email}</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-3">
+                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${m.role === 'ADMIN'
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                                        : m.role === 'TRAINER'
+                                                            ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                                                            : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                                                    }`}>
+                                                    {m.role}
+                                                </span>
+                                            </td>
+                                            <td className="px-5 py-3 text-zinc-400 text-xs hidden sm:table-cell">{formatDate(m.createdAt)}</td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
@@ -145,33 +226,40 @@ export default function AdminDashboard() {
                         <table className="w-full text-sm">
                             <thead>
                                 <tr className="text-zinc-500 text-xs border-b border-zinc-800/50">
-                                    <th className="text-left px-5 py-3 font-medium">Member</th>
+                                    <th className="text-left px-5 py-3 font-medium">Type</th>
                                     <th className="text-left px-5 py-3 font-medium">Amount</th>
                                     <th className="text-left px-5 py-3 font-medium">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {recentPayments.map((p, i) => (
-                                    <tr key={i} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
-                                        <td className="px-5 py-3">
-                                            <div>
-                                                <p className="text-white font-medium text-sm">{p.member}</p>
-                                                <p className="text-zinc-500 text-xs">{p.type}</p>
-                                            </div>
-                                        </td>
-                                        <td className="px-5 py-3 text-zinc-300 font-medium">{p.amount}</td>
-                                        <td className="px-5 py-3">
-                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${p.status === 'Paid'
-                                                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                                                    : p.status === 'Pending'
-                                                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                                                        : 'bg-red-500/10 text-red-400 border border-red-500/20'
-                                                }`}>
-                                                {p.status}
-                                            </span>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan={3} className="px-5 py-8 text-center">
+                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
-                                ))}
+                                ) : recentPayments.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={3} className="px-5 py-8 text-center text-zinc-500 text-sm">No payments found.</td>
+                                    </tr>
+                                ) : (
+                                    recentPayments.map((p) => (
+                                        <tr key={p.id} className="border-b border-zinc-800/30 hover:bg-zinc-800/20 transition-colors">
+                                            <td className="px-5 py-3">
+                                                <div>
+                                                    <p className="text-white font-medium text-sm capitalize">{p.bookingType}</p>
+                                                    <p className="text-zinc-600 text-[10px] font-mono">{p.transactionId}</p>
+                                                </div>
+                                            </td>
+                                            <td className="px-5 py-3 text-emerald-400 font-bold text-sm font-mono">৳{p.amount.toLocaleString()}</td>
+                                            <td className="px-5 py-3">
+                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${statusBadge(p.status)}`}>
+                                                    {p.status || 'UNKNOWN'}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
