@@ -27,6 +27,7 @@ interface Trainer {
     role: string;
     fee_per_week: number;
     fee_per_month: number;
+    trainer_time: string | null;
 }
 
 /* ── Color helpers ── */
@@ -139,6 +140,7 @@ export default function PlansPage() {
                                 <tr className="text-yellow-500 text-xs border-b border-zinc-800/50">
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Trainer</th>
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider">Specialization</th>
+                                    <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden md:table-cell">Time</th>
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden sm:table-cell">Fee / Week</th>
                                     <th className="text-left px-5 py-3.5 font-medium uppercase tracking-wider hidden sm:table-cell">Fee / Month</th>
                                 </tr>
@@ -146,13 +148,13 @@ export default function PlansPage() {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={4} className="px-5 py-12 text-center">
+                                        <td colSpan={5} className="px-5 py-12 text-center">
                                             <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
                                 ) : trainers.length === 0 ? (
                                     <tr>
-                                        <td colSpan={4} className="px-5 py-12 text-center text-zinc-500">
+                                        <td colSpan={5} className="px-5 py-12 text-center text-zinc-500">
                                             No trainers found in database.
                                         </td>
                                     </tr>
@@ -168,6 +170,12 @@ export default function PlansPage() {
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3.5 text-zinc-400">{t.role}</td>
+                                            <td className="px-5 py-3.5 hidden md:table-cell">
+                                                <div className="flex items-center gap-1.5 text-zinc-400">
+                                                    <Clock size={12} className="text-purple-400" />
+                                                    <span className="font-mono text-xs">{t.trainer_time || '—'}</span>
+                                                </div>
+                                            </td>
                                             <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{(t.fee_per_week || 0).toLocaleString()}</td>
                                             <td className="px-5 py-3.5 text-zinc-400 hidden sm:table-cell">৳{(t.fee_per_month || 0).toLocaleString()}</td>
                                         </tr>

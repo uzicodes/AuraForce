@@ -10,6 +10,7 @@ export async function GET() {
                 role: true,
                 fee_per_week: true,
                 fee_per_month: true,
+                trainer_time: true,
             },
             orderBy: {
                 name: 'asc',
