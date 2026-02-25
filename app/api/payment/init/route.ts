@@ -28,12 +28,14 @@ export async function POST(req: NextRequest) {
     // ── Generate Transaction ID ───
     const tran_id = `TXN_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 
-    // ── Database Entry (status defaults to "PENDING") ───
-    await db.payments.create({
+    // ── Store metadata in PendingTransactions (NOT in Payments) ───
+    // This record is temporary — it will be consumed on success and deleted.
+    // The Payments table only gets records after confirmed successful payment.
+    await db.pendingTransactions.create({
       data: {
+        transactionId: tran_id,
         clerkUserId: userId,
         amount: Number(amount),
-        transactionId: tran_id,
         bookingType,
         referenceId: Number(referenceId),
       },
@@ -58,9 +60,9 @@ export async function POST(req: NextRequest) {
     formData.append("currency", "BDT");
     formData.append("tran_id", tran_id);
 
-    formData.append("success_url", `${APP_URL}/api/payment/success?tran_id=${tran_id}`);
-    formData.append("fail_url", `${APP_URL}/api/payment/fail?tran_id=${tran_id}`);
-    formData.append("cancel_url", `${APP_URL}/api/payment/cancel?tran_id=${tran_id}`);
+    formData.append("success_url", `${APP_URL}/api/payment/success`);
+    formData.append("fail_url", `${APP_URL}/api/payment/fail`);
+    formData.append("cancel_url", `${APP_URL}/api/payment/cancel`);
     formData.append("ipn_url", `${APP_URL}/api/payment/ipn`);
 
     // Customer details (required by SSLCommerz sandbox)

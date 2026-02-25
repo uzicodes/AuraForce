@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
 function htmlRedirect(url: string) {
-    const html = `
+  const html = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -15,46 +15,38 @@ function htmlRedirect(url: string) {
       </body>
     </html>
   `;
-    return new NextResponse(html, {
-        status: 200,
-        headers: { "Content-Type": "text/html" },
-    });
+  return new NextResponse(html, {
+    status: 200,
+    headers: { "Content-Type": "text/html" },
+  });
 }
 
 export async function POST(req: NextRequest) {
-    try {
-        const formData = await req.formData();
-        const tran_id = formData.get("tran_id") as string;
-        const queryTranId = req.nextUrl.searchParams.get("tran_id");
-        const transactionId = tran_id || queryTranId;
+  try {
+    const formData = await req.formData();
+    const tran_id = formData.get("tran_id") as string;
 
-        if (transactionId) {
-            await db.payments.update({
-                where: { transactionId },
-                data: { status: "FAILED" },
-            });
-        }
-
-        return htmlRedirect("/?payment=failed");
-    } catch (error) {
-        console.error("[PAYMENT_FAIL_ERROR]", error);
-        return htmlRedirect("/?payment=error");
+    // Clean up the pending transaction (no Payments record created)
+    if (tran_id) {
+      await db.pendingTransactions.delete({
+        where: { transactionId: tran_id },
+      }).catch(() => { }); // Ignore if not found
     }
+  } catch (error) {
+    console.error("[PAYMENT_FAIL_ERROR]", error);
+  }
+
+  return htmlRedirect("/?payment=failed");
 }
 
 export async function GET(req: NextRequest) {
-    const tran_id = req.nextUrl.searchParams.get("tran_id");
+  const tran_id = req.nextUrl.searchParams.get("tran_id");
 
-    if (tran_id) {
-        try {
-            await db.payments.update({
-                where: { transactionId: tran_id },
-                data: { status: "FAILED" },
-            });
-        } catch (error) {
-            console.error("[PAYMENT_FAIL_GET_ERROR]", error);
-        }
-    }
+  if (tran_id) {
+    await db.pendingTransactions.delete({
+      where: { transactionId: tran_id },
+    }).catch(() => { });
+  }
 
-    return htmlRedirect("/?payment=failed");
+  return htmlRedirect("/?payment=failed");
 }

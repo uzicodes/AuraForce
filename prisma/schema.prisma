@@ -115,11 +115,23 @@ model Memberships {
 model Payments {
   id            Int       @id @default(autoincrement())
   clerkUserId   String
-  amount        Int
+  MemberID      String?
+  name          String?
   transactionId String    @unique
+  amount        Int
+  paymentType   String?
   bookingType   String
   referenceId   Int
-  status        String?   @default("PENDING")
+  created_at    DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+model PendingTransactions {
+  id            Int       @id @default(autoincrement())
+  transactionId String    @unique
+  clerkUserId   String
+  amount        Int
+  bookingType   String
+  referenceId   Int
   created_at    DateTime? @default(now()) @db.Timestamptz(6)
 }
 

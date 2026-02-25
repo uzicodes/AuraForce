@@ -22,29 +22,46 @@ function htmlRedirect(url: string) {
     });
 }
 
-// Create the actual booking record after successful payment
-async function createBookingFromPayment(payment: {
-    clerkUserId: string;
-    bookingType: string;
-    referenceId: number;
-    amount: number;
-}) {
-    const { clerkUserId, bookingType, referenceId } = payment;
+// Create payment record + booking after confirmed successful payment
+async function handleSuccessfulPayment(
+    transactionId: string,
+    pending: {
+        clerkUserId: string;
+        amount: number;
+        bookingType: string;
+        referenceId: number;
+    },
+    paymentType?: string
+) {
+    const { clerkUserId, amount, bookingType, referenceId } = pending;
 
+    // Fetch user details
+    const user = await db.user.findUnique({
+        where: { clerkUserId },
+        select: { MemberID: true, name: true },
+    });
+
+    // ── Create the Payments record (only successful ones reach here) ──
+    await db.payments.create({
+        data: {
+            clerkUserId,
+            MemberID: user?.MemberID || null,
+            name: user?.name || null,
+            transactionId,
+            amount,
+            paymentType: paymentType || null,
+            bookingType,
+            referenceId,
+        },
+    });
+
+    // ── Create the corresponding booking record ──
     if (bookingType === "class") {
-        // Fetch user name
-        const user = await db.user.findUnique({
-            where: { clerkUserId },
-            select: { name: true },
-        });
-
-        // Fetch class name
         const classInfo = await db.classes.findUnique({
             where: { id: BigInt(referenceId) },
             select: { classname: true },
         });
 
-        // Calculate booking date (1st of next month) and validTill (last day of that month)
         const now = new Date();
         const bookingDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
         const validTill = new Date(bookingDate);
@@ -63,13 +80,6 @@ async function createBookingFromPayment(payment: {
             },
         });
     } else if (bookingType === "trainer") {
-        // Fetch user's MemberID
-        const user = await db.user.findUnique({
-            where: { clerkUserId },
-            select: { MemberID: true },
-        });
-
-        // Fetch trainer details
         const trainer = await db.trainers.findUnique({
             where: { id: BigInt(referenceId) },
             select: {
@@ -80,8 +90,7 @@ async function createBookingFromPayment(payment: {
             },
         });
 
-        // Determine plan based on the amount paid
-        const plan = payment.amount === trainer?.fee_per_week ? "WEEKLY" : "MONTHLY";
+        const plan = amount === trainer?.fee_per_week ? "WEEKLY" : "MONTHLY";
 
         await db.trainerBookings.create({
             data: {
@@ -91,23 +100,15 @@ async function createBookingFromPayment(payment: {
                 trainerName: trainer?.name || null,
                 timeSlot: trainer?.trainer_time || "N/A",
                 plan,
-                pricing: payment.amount,
+                pricing: amount,
             },
         });
     } else if (bookingType === "membership") {
-        // Fetch user details
-        const user = await db.user.findUnique({
-            where: { clerkUserId },
-            select: { MemberID: true, name: true },
-        });
-
-        // Fetch membership plan details
         const membership = await db.memberships.findUnique({
             where: { id: referenceId },
-            select: { name: true, price: true },
+            select: { name: true },
         });
 
-        // Start date = today, end date = 30 days from now
         const startDate = new Date();
         const endDate = new Date();
         endDate.setDate(endDate.getDate() + 30);
@@ -118,36 +119,63 @@ async function createBookingFromPayment(payment: {
                 MemberID: user?.MemberID || null,
                 name: user?.name || null,
                 plan: membership?.name || null,
-                price: payment.amount,
+                price: amount,
                 startDate,
                 endDate,
                 status: "ACTIVE",
             },
         });
     }
+
+    // ── Delete the pending transaction (cleanup) ──
+    await db.pendingTransactions.delete({
+        where: { transactionId },
+    });
+}
+
+async function processPayment(transactionId: string, paymentType?: string) {
+    // Check if already processed (prevent duplicates)
+    const existingPayment = await db.payments.findUnique({
+        where: { transactionId },
+    });
+    if (existingPayment) {
+        return; // Already processed
+    }
+
+    // Look up the pending transaction metadata
+    const pending = await db.pendingTransactions.findUnique({
+        where: { transactionId },
+    });
+
+    if (!pending) {
+        throw new Error(`No pending transaction found for ${transactionId}`);
+    }
+
+    await handleSuccessfulPayment(transactionId, pending, paymentType);
 }
 
 export async function POST(req: NextRequest) {
     try {
         const formData = await req.formData();
-        const tran_id = formData.get("tran_id") as string;
-        const queryTranId = req.nextUrl.searchParams.get("tran_id");
-        const transactionId = tran_id || queryTranId;
 
-        if (!transactionId) {
+        // SSLCommerz sends tran_id in the POST body
+        const tran_id = formData.get("tran_id") as string;
+
+        // SSLCommerz may return the payment method
+        const cardType = formData.get("card_type") as string | null;
+        const cardBrand = formData.get("card_brand") as string | null;
+        const paymentType = cardBrand || cardType || null;
+
+        console.log("[PAYMENT_SUCCESS] tran_id:", tran_id);
+
+        if (!tran_id) {
+            console.error("[PAYMENT_SUCCESS] Missing tran_id");
             return htmlRedirect("/?payment=missing");
         }
 
-        // Update payment status
-        const payment = await db.payments.update({
-            where: { transactionId },
-            data: { status: "SUCCESS" },
-        });
+        await processPayment(tran_id, paymentType || undefined);
 
-        // Create the actual booking record
-        await createBookingFromPayment(payment);
-
-        return htmlRedirect(`/checkout/success?tran_id=${transactionId}`);
+        return htmlRedirect(`/checkout/success?tran_id=${tran_id}`);
     } catch (error) {
         console.error("[PAYMENT_SUCCESS_ERROR]", error);
         return htmlRedirect("/?payment=error");
@@ -162,15 +190,7 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-        // Update payment status
-        const payment = await db.payments.update({
-            where: { transactionId: tran_id },
-            data: { status: "SUCCESS" },
-        });
-
-        // Create the actual booking record
-        await createBookingFromPayment(payment);
-
+        await processPayment(tran_id);
         return htmlRedirect(`/checkout/success?tran_id=${tran_id}`);
     } catch (error) {
         console.error("[PAYMENT_SUCCESS_GET_ERROR]", error);

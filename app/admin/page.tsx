@@ -24,7 +24,6 @@ interface Payment {
     clerkUserId: string;
     amount: number;
     bookingType: string;
-    status: string | null;
     transactionId: string;
 }
 
@@ -79,7 +78,6 @@ export default function AdminDashboard() {
     }, []);
 
     const totalRevenue = payments
-        .filter(p => p.status === 'SUCCESS')
         .reduce((sum, p) => sum + p.amount, 0);
 
     const stats = [
@@ -95,16 +93,6 @@ export default function AdminDashboard() {
     // Get the 5 most recent payments
     const recentPayments = payments.slice(0, 5);
 
-    const statusBadge = (status: string | null) => {
-        switch (status) {
-            case 'SUCCESS':
-                return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
-            case 'PENDING':
-                return 'bg-amber-500/10 text-amber-400 border border-amber-500/20';
-            default:
-                return 'bg-red-500/10 text-red-400 border border-red-500/20';
-        }
-    };
 
     function formatDate(dateStr: string): string {
         const d = new Date(dateStr);
@@ -169,7 +157,7 @@ export default function AdminDashboard() {
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={3} className="px-5 py-8 text-center">
+                                        <td colSpan={2} className="px-5 py-8 text-center">
                                             <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
@@ -197,10 +185,10 @@ export default function AdminDashboard() {
                                             </td>
                                             <td className="px-5 py-3">
                                                 <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${m.role === 'ADMIN'
-                                                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                                                        : m.role === 'TRAINER'
-                                                            ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
-                                                            : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                                                    ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                                    : m.role === 'TRAINER'
+                                                        ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                                                        : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
                                                     }`}>
                                                     {m.role}
                                                 </span>
@@ -228,13 +216,12 @@ export default function AdminDashboard() {
                                 <tr className="text-zinc-500 text-xs border-b border-zinc-800/50">
                                     <th className="text-left px-5 py-3 font-medium">Type</th>
                                     <th className="text-left px-5 py-3 font-medium">Amount</th>
-                                    <th className="text-left px-5 py-3 font-medium">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {loading ? (
                                     <tr>
-                                        <td colSpan={3} className="px-5 py-8 text-center">
+                                        <td colSpan={2} className="px-5 py-8 text-center">
                                             <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
                                         </td>
                                     </tr>
@@ -252,11 +239,6 @@ export default function AdminDashboard() {
                                                 </div>
                                             </td>
                                             <td className="px-5 py-3 text-emerald-400 font-bold text-sm font-mono">৳{p.amount.toLocaleString()}</td>
-                                            <td className="px-5 py-3">
-                                                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${statusBadge(p.status)}`}>
-                                                    {p.status || 'UNKNOWN'}
-                                                </span>
-                                            </td>
                                         </tr>
                                     ))
                                 )}
