@@ -1,6 +1,5 @@
 'use server'
 
-import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
 
@@ -12,19 +11,6 @@ export async function subscribeToNewsletter(formData: FormData) {
   }
 
   try {
-    // Check DB for duplicates
-    const existing = await db.subscriber.findUnique({
-      where: { email },
-    });
-
-    if (existing) {
-      return { success: false, error: "You are already subscribed!" };
-    }
-
-    // Save to Database
-    await db.subscriber.create({
-      data: { email },
-    });
 
     // Configure Gmail Transporter
     const transporter = nodemailer.createTransport({
@@ -37,8 +23,8 @@ export async function subscribeToNewsletter(formData: FormData) {
 
 
     // ensures images work on both Vercel and Localhost
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}` 
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
       : 'https://auraforce.vercel.app'; // Vercel domain fallback
 
     // Email (Updated Design)
@@ -117,7 +103,7 @@ export async function subscribeToNewsletter(formData: FormData) {
 
     revalidatePath("/");
     return { success: true };
-    
+
   } catch (error) {
     console.error("Subscription Error:", error);
     return { success: false, error: "Something went wrong. Try again." };
