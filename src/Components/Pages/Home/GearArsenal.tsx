@@ -21,22 +21,22 @@ const shopItems = [
     {
         name: "Kettlebells",
         category: "Functional",
-        image: "https://images.unsplash.com/photo-1517963879433-6ad2b056d712?q=80&w=600&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1632077804406-188472f1a810?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Boxing Gloves",
         category: "Combat",
-        image: "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=600&auto=format&fit=crop",
+        image: "https://plus.unsplash.com/premium_photo-1661642133019-b7b859310d9f?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Resistance Bands",
         category: "Accessories",
-        image: "https://images.unsplash.com/photo-1598289431512-b97b0917affc?q=80&w=600&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=1171&auto=format&fit=crop",
     },
     {
         name: "Power Rack",
         category: "Strength",
-        image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=600&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1646656130703-8f95eed6a79b?q=80&w=687&auto=format&fit=crop",
     },
     {
         name: "Jump Rope",
