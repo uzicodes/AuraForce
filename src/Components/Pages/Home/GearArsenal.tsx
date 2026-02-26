@@ -10,62 +10,50 @@ import { FaDumbbell } from "react-icons/fa";
 const shopItems = [
     {
         name: "Hex Dumbbells",
-        category: "Strength",
         image: "https://plus.unsplash.com/premium_photo-1671028546491-f70b21a32cc2?fm=jpg&q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Barbell Set",
-        category: "Strength",
         image: "https://images.unsplash.com/photo-1689514226761-336eaf77e311?fm=jpg&q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Kettlebells",
-        category: "Functional",
         image: "https://images.unsplash.com/photo-1632077804406-188472f1a810?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Boxing Gloves",
-        category: "Combat",
         image: "https://plus.unsplash.com/premium_photo-1661642133019-b7b859310d9f?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Resistance Bands",
-        category: "Accessories",
         image: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=1171&auto=format&fit=crop",
     },
     {
         name: "Power Rack",
-        category: "Strength",
         image: "https://images.unsplash.com/photo-1646656130703-8f95eed6a79b?q=80&w=687&auto=format&fit=crop",
     },
     {
         name: "Jump Rope",
-        category: "Cardio",
         image: "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Yoga Mat",
-        category: "Recovery",
         image: "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Weight Plates",
-        category: "Strength",
         image: "https://images.unsplash.com/photo-1521804906057-1df8fdb718b7?q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Foam Roller",
-        category: "Recovery",
         image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Battle Ropes",
-        category: "Functional",
         image: "https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?q=80&w=600&auto=format&fit=crop",
     },
     {
         name: "Pull-Up Bar",
-        category: "Calisthenics",
         image: "https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?q=80&w=600&auto=format&fit=crop",
     },
 ];
@@ -116,7 +104,7 @@ const GearArsenal = () => {
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-                {/* Section Header — preserved user edits */}
+                {/* Section Header */}
                 <div className="text-center mb-20 max-w-3xl mx-auto">
                     <Reveal>
                         <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
@@ -141,7 +129,7 @@ const GearArsenal = () => {
                     </Reveal>
                 </div>
 
-                {/* Shop-Style Product Grid — 12 items, 4 columns on desktop */}
+                {/* Shop-Style Product Grid */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
@@ -167,10 +155,6 @@ const GearArsenal = () => {
                                 {/* Subtle overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
-                                {/* Category tag */}
-                                <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${categoryColors[item.category] || "text-zinc-400 bg-zinc-800 border-zinc-700"}`}>
-                                    {item.category}
-                                </div>
 
                                 {/* Shine sweep */}
                                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/8 to-transparent pointer-events-none" />
@@ -178,10 +162,9 @@ const GearArsenal = () => {
 
                             {/* Product Info */}
                             <div className="px-3 py-2.5">
-                                <h3 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors duration-300 font-heading truncate">
+                                <h3 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors duration-300 font-ubuntu truncate">
                                     {item.name}
                                 </h3>
-                                {/* Subtle bottom accent line on hover */}
                                 <div className="mt-2 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-emerald-500 to-emerald-400/50 transition-all duration-500 rounded-full" />
                             </div>                        </motion.div>
                     ))}

@@ -29,6 +29,10 @@
     letter-spacing: 0.05em;
 }
 
+.font-ubuntu {
+    font-family: 'Ubuntu', sans-serif;
+}
+
 /* Breathing/Pulsing animation like a heartbeat */
 @keyframes breathe {
 
