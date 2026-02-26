@@ -96,7 +96,6 @@ const Features = () => {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => {
-            // animations for each card position
             const animations = [
               { x: -100, rotate: -5 },
               { y: -80, scale: 0.8 },
@@ -161,7 +160,7 @@ const Features = () => {
 
                   {/* Text Content */}
                   <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors font-heading">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors font-ubuntu">
                       {feature.title}
                     </h3>
                     <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">

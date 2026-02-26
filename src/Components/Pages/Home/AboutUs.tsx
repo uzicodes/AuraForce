@@ -57,7 +57,7 @@ const AboutUs = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           <div className="order-2 lg:order-1 space-y-8">
-            <h3 className="text-3xl font-bold text-white leading-tight font-heading">
+            <h3 className="text-3xl font-bold text-white leading-tight font-ubuntu">
               Empowering Your Fitness Journey <br />
               <span className="text-emerald-500">Since Day One.</span>
             </h3>

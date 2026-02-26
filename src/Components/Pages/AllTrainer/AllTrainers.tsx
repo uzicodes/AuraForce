@@ -156,7 +156,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
             {/* TEXT CONTENT */}
             <div className="p-5 pt-2 flex-grow flex flex-col">
               <div className="mb-4">
-                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-heading">
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-ubuntu">
                   {/* Database Name */}
                   {trainer.name}
                 </h3>
