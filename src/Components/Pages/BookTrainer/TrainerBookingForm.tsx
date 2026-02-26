@@ -68,7 +68,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
 
     return (
         <div className="bg-zinc-900 border border-zinc-800 p-8 shadow-2xl rounded-none">
-            <h3 className="text-2xl font-bold text-white mb-2 font-heading">
+            <h3 className="text-2xl font-bold text-white mb-2 font-ubuntu">
                 Schedule your session
             </h3>
 
@@ -77,7 +77,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
                     <FaCalendarAlt className="text-emerald-400 text-sm" />
                     <div>
                         <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Daily Session Time</p>
-                        <p className="text-sm text-emerald-400 font-bold font-mono">{trainerTime} — Every Day</p>
+                        <p className="text-sm text-emerald-400 font-bold font-ubuntu">{trainerTime} — Every Day</p>
                     </div>
                 </div>
             )}
@@ -102,7 +102,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
                             <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "WEEKLY" ? "text-black/70" : "text-zinc-500"}`}>
                                 Weekly
                             </span>
-                            <span className={`text-2xl font-bold font-heading ${planType === "WEEKLY" ? "text-black" : "text-white"}`}>
+                            <span className={`text-2xl font-bold font-ubuntu ${planType === "WEEKLY" ? "text-black" : "text-white"}`}>
                                 ৳{feePerWeek ? feePerWeek.toLocaleString() : "N/A"}
                             </span>
                             <span className={`text-[10px] ${planType === "WEEKLY" ? "text-black/60" : "text-zinc-600"} font-satoshi mt-1`}>
@@ -128,7 +128,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
                             <span className={`text-xs font-bold uppercase tracking-wider font-satoshi mb-1 ${planType === "MONTHLY" ? "text-black/70" : "text-zinc-500"}`}>
                                 Monthly
                             </span>
-                            <span className={`text-2xl font-bold font-heading ${planType === "MONTHLY" ? "text-black" : "text-white"}`}>
+                            <span className={`text-2xl font-bold font-ubuntu ${planType === "MONTHLY" ? "text-black" : "text-white"}`}>
                                 ৳{feePerMonth ? feePerMonth.toLocaleString() : "N/A"}
                             </span>
                             <span className={`text-[10px] ${planType === "MONTHLY" ? "text-black/60" : "text-zinc-600"} font-satoshi mt-1`}>
@@ -165,7 +165,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
                 {/* TOTAL COST DISPLAY */}
                 <div className="bg-zinc-950 p-4 border border-zinc-800 flex justify-between items-center rounded-none">
                     <span className="text-zinc-400 text-sm font-bold uppercase tracking-wider font-satoshi">Total Cost</span>
-                    <span className="text-2xl font-bold text-white font-heading">
+                    <span className="text-2xl font-bold text-white font-ubuntu">
                         ৳{price ? price.toLocaleString() : "0"}
                     </span>
                 </div>

@@ -130,7 +130,7 @@ const AdminLogin = () => {
                             </div>
                         </div>
 
-                        <h2 className="text-2xl font-bold text-white mb-1 font-heading tracking-wider">
+                        <h2 className="text-2xl font-bold text-white mb-1 font-ubuntu tracking-wider">
                             ADMIN <span className="text-emerald-400">ACCESS</span>
                         </h2>
                         <p className="text-[11px] text-zinc-500 font-satoshi leading-relaxed">

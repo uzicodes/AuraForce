@@ -94,7 +94,7 @@ export default function PlansPage() {
             <section className="space-y-4">
                 <div className="flex items-center gap-2">
                     <Crown size={18} className="text-yellow-500" />
-                    <h3 className="text-lg font-bold text-white font-heading">Membership Plans</h3>
+                    <h3 className="text-lg font-bold text-white font-ubuntu">Membership Plans</h3>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -130,7 +130,7 @@ export default function PlansPage() {
             <section className="space-y-4">
                 <div className="flex items-center gap-2">
                     <Dumbbell size={18} className="text-purple-400" />
-                    <h3 className="text-lg font-bold text-white font-heading">Our Trainers</h3>
+                    <h3 className="text-lg font-bold text-white font-ubuntu">Our Trainers</h3>
                 </div>
 
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
@@ -191,7 +191,7 @@ export default function PlansPage() {
             <section className="space-y-4">
                 <div className="flex items-center gap-2">
                     <CalendarCheck size={18} className="text-emerald-400" />
-                    <h3 className="text-lg font-bold text-white font-heading">Our Classes</h3>
+                    <h3 className="text-lg font-bold text-white font-ubuntu">Our Classes</h3>
                 </div>
 
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">

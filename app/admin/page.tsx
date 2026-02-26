@@ -104,7 +104,7 @@ export default function AdminDashboard() {
 
             {/* Page Header */}
             <div>
-                <h2 className="text-2xl font-bold text-white font-heading">Dashboard Overview</h2>
+                <h2 className="text-2xl font-bold text-white font-ubuntu">Dashboard Overview</h2>
                 <p className="text-sm text-zinc-500 font-satoshi mt-1">Welcome back, Admin. Here&apos;s what&apos;s happening today.</p>
             </div>
 
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
                 {/* Recent Members */}
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
                     <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
-                        <h3 className="text-sm font-bold text-white font-heading">Recent Members</h3>
+                        <h3 className="text-sm font-bold text-white font-ubuntu">Recent Members</h3>
                         <a href="/admin/members" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
                             View All <ArrowUpRight size={12} />
                         </a>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                 {/* Recent Payments */}
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
                     <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
-                        <h3 className="text-sm font-bold text-white font-heading">Recent Payments</h3>
+                        <h3 className="text-sm font-bold text-white font-ubuntu">Recent Payments</h3>
                         <a href="/admin/payments" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
                             View All <ArrowUpRight size={12} />
                         </a>

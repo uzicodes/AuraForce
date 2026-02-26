@@ -91,7 +91,7 @@ export default function MembersPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-white font-heading">Members</h2>
+                    <h2 className="text-2xl font-bold text-white font-ubuntu">Members</h2>
                     <p className="text-sm text-zinc-500 font-satoshi mt-1">Manage all gym members and their subscriptions.</p>
                 </div>
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-900/60 border border-zinc-800 rounded-xl">

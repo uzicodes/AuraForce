@@ -103,7 +103,7 @@ export default function CheckoutClient({
                                 Secure Checkout
                             </div>
 
-                            <h1 className="text-2xl font-bold text-white mb-1 font-heading">
+                            <h1 className="text-2xl font-bold text-white mb-1 font-ubuntu">
                                 {itemName}
                             </h1>
                             <p className="text-sm text-zinc-400 capitalize font-satoshi">{typeLabel}</p>
@@ -142,7 +142,7 @@ export default function CheckoutClient({
                                             </div>
                                             <div>
                                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Daily Session</p>
-                                                <p className="text-sm text-emerald-400 font-bold font-mono">{details.trainerTime} — Every Day</p>
+                                                <p className="text-sm text-emerald-400 font-bold font-ubuntu">{details.trainerTime} — Every Day</p>
                                             </div>
                                         </div>
                                     )}
@@ -187,14 +187,14 @@ export default function CheckoutClient({
                                         <p className="text-[11px] text-zinc-500 capitalize">{type}</p>
                                     </div>
                                 </div>
-                                <p className="text-sm font-bold text-emerald-400">
+                                <p className="text-sm font-bold text-emerald-400 font-ubuntu">
                                     ৳{amount.toLocaleString()}
                                 </p>
                             </div>
 
                             <div className="flex items-center justify-between">
                                 <span className="text-sm font-bold text-white">Total</span>
-                                <span className="text-lg font-bold text-emerald-400">
+                                <span className="text-lg font-bold text-emerald-400 font-ubuntu">
                                     ৳{amount.toLocaleString()}
                                 </span>
                             </div>

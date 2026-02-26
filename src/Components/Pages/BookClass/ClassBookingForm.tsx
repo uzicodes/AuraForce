@@ -106,7 +106,7 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
 
     return (
         <div className="bg-zinc-900 border border-zinc-800 p-8 shadow-2xl rounded-none max-w-lg w-full">
-            <h3 className="text-3xl font-bold text-white mb-2 font-heading">
+            <h3 className="text-3xl font-bold text-white mb-2 font-ubuntu">
                 Book Your Class
             </h3>
             <p className="text-zinc-400 text-sm mb-5 font-satoshi">

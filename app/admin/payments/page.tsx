@@ -83,7 +83,7 @@ export default function PaymentsPage() {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-white font-heading">Payments</h2>
+                    <h2 className="text-2xl font-bold text-white font-ubuntu">Payments</h2>
                     <p className="text-sm text-zinc-500 font-satoshi mt-1">All successful transactions recorded from the database.</p>
                 </div>
                 <div className="flex items-center gap-3">
