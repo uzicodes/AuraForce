@@ -30,15 +30,15 @@ const shopItems = [
     },
     {
         name: "Power Rack",
-        image: "https://images.unsplash.com/photo-1646656130703-8f95eed6a79b?q=80&w=687&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1697490580141-a76008636dd7?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Jump Rope",
-        image: "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?q=80&w=600&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1651315283994-03ec73dc21f1?q=80&w=1025&auto=format&fit=crop",
     },
     {
-        name: "Yoga Mat",
-        image: "https://images.unsplash.com/photo-1592432678016-e910b452f9a2?q=80&w=600&auto=format&fit=crop",
+        name: "Treadmill",
+        image: "https://images.unsplash.com/photo-1633394782240-f81aba3f850d?q=80&w=687&auto=format&fit=crop",
     },
     {
         name: "Weight Plates",
@@ -46,15 +46,15 @@ const shopItems = [
     },
     {
         name: "Foam Roller",
-        image: "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600&auto=format&fit=crop",
+        image: "https://plus.unsplash.com/premium_photo-1661923103649-0223557b8589?q=80&w=1170&auto=format&fit=crop",
     },
     {
         name: "Battle Ropes",
-        image: "https://images.unsplash.com/photo-1520877880798-5ee004e3f11e?q=80&w=600&auto=format&fit=crop",
+        image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?q=80&w=1169&auto=format&fit=crop",
     },
     {
         name: "Pull-Up Bar",
-        image: "https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?q=80&w=600&auto=format&fit=crop",
+        image: "https://plus.unsplash.com/premium_photo-1672280783578-2f8e64dc4461?q=80&w=1088&auto=format&fit=crop",
     },
 ];
 
