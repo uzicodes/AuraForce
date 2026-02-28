@@ -95,10 +95,10 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-amber-400 mb-6 tracking-tight flex items-center justify-center flex-wrap font-ubuntu">
-              <span className="ml-3">Choose</span>
-              <span className="ml-3">Your</span>
-              <span className="ml-3">Power</span>
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap font-heading">
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Choose</span>
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Your</span>
+              <span className="ml-3 text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Power</span>
             </h2>
           </Reveal>
 
