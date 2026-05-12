@@ -1,28 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import styles from './GlobalLoader.module.css';
 
 const GlobalLoader = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
+  const pathname = usePathname();
 
+  // Handle initial page load
   useEffect(() => {
-    // Check if the page has already finished loading on initial mount
     if (document.readyState === 'complete') {
       setIsLoading(false);
       return;
     }
 
-    // Listen for the initial load event
     const handleLoad = () => {
       setIsLoading(false);
     };
 
     window.addEventListener('load', handleLoad);
 
-    // Fallback timeout for initial load
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 5000);
@@ -33,30 +31,22 @@ const GlobalLoader = () => {
     };
   }, []);
 
-  // Handle client-side navigation
+  // Handle navigation between pages
   useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setIsLoading(true);
-    };
+    setIsLoading(true);
 
-    const handleRouteChangeEnd = () => {
+    // Add a small delay to ensure new content is rendering
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    };
+    }, 800);
 
-    // Listen for Next.js router events
-    window.addEventListener('routeChangeStart', handleRouteChangeStart);
-    window.addEventListener('routeChangeEnd', handleRouteChangeEnd);
-
-    return () => {
-      window.removeEventListener('routeChangeStart', handleRouteChangeStart);
-      window.removeEventListener('routeChangeEnd', handleRouteChangeEnd);
-    };
-  }, []);
+    return () => clearTimeout(timer);
+  }, [pathname]);
 
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-950 pointer-events-auto">
       <div className="flex flex-col items-center justify-center gap-8">
         {/* Square Grid Loader Animation */}
         <div className={styles.loaderContainer}>
