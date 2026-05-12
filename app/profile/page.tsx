@@ -62,10 +62,13 @@ const Profile = async () => {
     orderBy: { id: 'desc' },
   });
 
+  // Check if membership is still valid (not expired)
+  const isSubscriptionValid = activeMembership && activeMembership.endDate && new Date(activeMembership.endDate) > new Date();
+
   // 4. Prepare Display Data
-  const planName = activeMembership?.plan || "NO ACTIVE PLAN";
-  const isActive = activeMembership?.status === "ACTIVE";
-  const renewalDate = activeMembership?.endDate ? formatDate(activeMembership.endDate) : "N/A";
+  const planName = isSubscriptionValid ? (activeMembership?.plan || "NO ACTIVE PLAN") : "NO ACTIVE PLAN";
+  const isActive = isSubscriptionValid;
+  const renewalDate = isSubscriptionValid && activeMembership?.endDate ? formatDate(activeMembership.endDate) : "N/A";
   const memberSince = formatDate(dbUser.createdAt);
 
   const avatarUrl = dbUser.image || clerkUser?.imageUrl || "/dp.png";
@@ -231,7 +234,7 @@ const Profile = async () => {
               </div>
 
               <div className="px-8 pb-8">
-                {activeMembership ? (
+                {isSubscriptionValid ? (
                   <div className="relative group p-6 bg-gradient-to-br from-zinc-800/50 to-zinc-900/80 rounded-xl border border-zinc-700/50 hover:border-emerald-500/30 transition-all duration-500">
                     {/* Glow effect on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none" />
@@ -258,14 +261,14 @@ const Profile = async () => {
                     <div className="w-14 h-14 mx-auto bg-zinc-800 rounded-xl flex items-center justify-center text-zinc-500 mb-4">
                       <FaCrown size={22} />
                     </div>
-                    <p className="text-zinc-400 mb-1">You don&apos;t have an active subscription.</p>
-                    <p className="text-zinc-600 text-sm mb-5">Get started with a plan to unlock premium features.</p>
-                    <Link
+                    <p className="text-zinc-300 font-semibold mb-2">You have currently no active subscriptions</p>
+                    <p className="text-zinc-600 text-sm mb-5">Upgrade to a membership plan to unlock premium features and benefits.</p>
+                    <a
                       href="/#membership"
                       className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-2.5 transition-all duration-300 shadow-lg shadow-emerald-900/20"
                     >
                       Browse Plans <FaArrowRight className="text-xs" />
-                    </Link>
+                    </a>
                   </div>
                 )}
               </div>
