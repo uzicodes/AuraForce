@@ -1,9 +1,16 @@
 "use client";
 
-import GlobalLoader from "@/Components/Shared/GlobalLoader";
+import { useEffect } from "react";
+import GlobalLoader, { useLoader } from "@/Components/Shared/GlobalLoader";
 
-const Loading = () => {
-  return <GlobalLoader />;
-};
+// Next.js Suspense fallback — shown while page server components are loading.
+export default function Loading() {
+  const { setRouteLoading } = useLoader();
 
-export default Loading;
+  useEffect(() => {
+    setRouteLoading(true);
+    return () => setRouteLoading(false);
+  }, [setRouteLoading]);
+
+  return <GlobalLoader forceShow />;
+}

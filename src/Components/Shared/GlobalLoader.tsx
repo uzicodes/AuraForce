@@ -1,29 +1,42 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import styles from './GlobalLoader.module.css';
 
-const GlobalLoader = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const pathname = usePathname();
+// --- Loader Context ---
 
-  // Handle initial page load
+interface LoaderContextType {
+  isInitialLoading: boolean;
+  isRouteLoading: boolean;
+  setRouteLoading: (loading: boolean) => void;
+}
+
+const LoaderContext = createContext<LoaderContextType>({
+  isInitialLoading: true,
+  isRouteLoading: false,
+  setRouteLoading: () => {},
+});
+
+export const useLoader = () => useContext(LoaderContext);
+
+export const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isRouteLoading, setIsRouteLoading] = useState(false);
+
+  const setRouteLoading = useCallback((loading: boolean) => {
+    setIsRouteLoading(loading);
+  }, []);
+
   useEffect(() => {
     if (document.readyState === 'complete') {
-      setIsLoading(false);
+      setIsInitialLoading(false);
       return;
     }
 
-    const handleLoad = () => {
-      setIsLoading(false);
-    };
-
+    const handleLoad = () => setIsInitialLoading(false);
     window.addEventListener('load', handleLoad);
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 5000);
+    const timer = setTimeout(() => setIsInitialLoading(false), 15000);
 
     return () => {
       window.removeEventListener('load', handleLoad);
@@ -31,19 +44,19 @@ const GlobalLoader = () => {
     };
   }, []);
 
-  // Handle navigation between pages
-  useEffect(() => {
-    setIsLoading(true);
+  return (
+    <LoaderContext.Provider value={{ isInitialLoading, isRouteLoading, setRouteLoading }}>
+      {children}
+    </LoaderContext.Provider>
+  );
+};
 
-    // Add a small delay to ensure new content is rendering
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
+// --- Loader UI Component ---
 
-    return () => clearTimeout(timer);
-  }, [pathname]);
+const GlobalLoader = ({ forceShow = false }: { forceShow?: boolean }) => {
+  const { isInitialLoading } = useLoader();
 
-  if (!isLoading) return null;
+  if (!forceShow && !isInitialLoading) return null;
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-zinc-950 pointer-events-auto">
