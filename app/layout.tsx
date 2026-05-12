@@ -8,6 +8,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider';
 import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress';
 import ScrollToTop from '@/Components/Helpers/ScrollToTop';
+import GlobalLoader from '@/Components/Shared/GlobalLoader';
 
 import Navbar from '@/Components/Shared/Navbar';
 import Footer from '@/Components/Shared/Footer';
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Added bg-zinc-950 (base is always dark) */}
         <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
+          <GlobalLoader />
           <QueryClientProvider client={queryClient}>
 
             <AutoLogoutProvider>
