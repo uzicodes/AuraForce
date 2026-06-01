@@ -18,17 +18,17 @@ const ubuntu = Ubuntu({
 const satoshi = localFont({
   src: [
     {
-      path: '../public/fonts/satoshi-regular.woff2',
+      path: '../public/fonts/Satoshi-Regular.woff2',
       weight: '400',
       style: 'normal',
     },
     {
-      path: '../public/fonts/satoshi-medium.woff2',
+      path: '../public/fonts/Satoshi-Medium.woff2',
       weight: '500',
       style: 'normal',
     },
     {
-      path: '../public/fonts/satoshi-bold.woff2',
+      path: '../public/fonts/Satoshi-Bold.woff2',
       weight: '700',
       style: 'normal',
     },
@@ -54,7 +54,7 @@ const tenada = localFont({
 const parket = localFont({
   src: [
     {
-      path: '../public/fonts/parket.woff2',
+      path: '../public/fonts/Parket.woff2',
       weight: '400',
       style: 'normal',
     },
