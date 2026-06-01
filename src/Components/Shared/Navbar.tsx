@@ -259,11 +259,11 @@ const Navbar = () => {
               >
                 <Link
                   href={link.path}
-                  className={`flex items-center gap-3 text-xl font-medium transition-colors duration-200 py-2 border-b ${isActivePath(link.path)
+                  className={`flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300 ${isActivePath(link.path)
                     ? "text-gray-400 border-gray-400/50"
                     : darkMode
-                      ? "text-white border-gray-700 hover:text-[#16A34A]"
-                      : "text-gray-800 border-gray-200 hover:text-[#16A34A]"
+                      ? "text-white border-gray-700 group-hover:text-[#16A34A]"
+                      : "text-gray-800 border-gray-200 group-hover:text-[#16A34A]"
                     }`}
                   onClick={() => setIsOpen(false)}
                 >
@@ -275,8 +275,8 @@ const Navbar = () => {
               <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
                 <Link
                   href="/profile"
-                  className={`flex items-center gap-3 text-xl font-medium ${darkMode ? "text-white" : "text-gray-800"
-                    } hover:text-[#16A34A] transition-colors duration-200 py-2 border-b ${darkMode ? "border-gray-700" : "border-gray-200"
+                  className={`flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300 ${darkMode ? "text-white" : "text-gray-800"
+                    } group-hover:text-[#16A34A] ${darkMode ? "border-gray-700" : "border-gray-200"
                     }`}
                   onClick={() => setIsOpen(false)}
                 >

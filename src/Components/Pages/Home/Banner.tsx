@@ -34,7 +34,7 @@ const Counter = ({ value, suffix = "", prefix = "" }: { value: number, suffix?: 
 
 const Banner = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
 
       {/* Background Image Container */}
       <div className="absolute inset-0">
@@ -89,7 +89,7 @@ const Banner = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 mt-20 pt-8 border-t border-zinc-800/60">
+          <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-zinc-800/60">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
                 <Counter value={5} suffix="K+" />

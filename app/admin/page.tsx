@@ -171,7 +171,7 @@ export default function AdminDashboard() {
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-3">
                                                     {m.image ? (
-                                                        <img src={m.image} alt={m.name || ''} className="w-7 h-7 rounded-full object-cover border border-zinc-700 flex-shrink-0" />
+                                                        <img src={m.image} alt={m.name || ''} width={28} height={28} className="w-7 h-7 rounded-full object-cover border border-zinc-700 flex-shrink-0" />
                                                     ) : (
                                                         <div className="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold flex-shrink-0">
                                                             {(m.name || m.email).substring(0, 2).toUpperCase()}
