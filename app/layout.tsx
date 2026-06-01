@@ -41,7 +41,7 @@ const satoshi = localFont({
 const tenada = localFont({
   src: [
     {
-      path: '../public/fonts/tenada.woff2',
+      path: '../public/fonts/Tenada.woff2',
       weight: '400',
       style: 'normal',
     },
