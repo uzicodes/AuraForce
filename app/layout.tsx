@@ -1,64 +1,92 @@
-'use client';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Toaster } from 'react-hot-toast';
-import { useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { Ubuntu } from 'next/font/google';
+import localFont from 'next/font/local';
 import { ClerkProvider } from '@clerk/nextjs';
-import AutoLogoutProvider from '@/Components/Shared/AutoLogoutProvider';
-import HomeScrollProgress from '@/Components/Shared/HomeScrollProgress';
-import ScrollToTop from '@/Components/Helpers/ScrollToTop';
-import GlobalLoader, { LoaderProvider, useLoader } from '@/Components/Shared/GlobalLoader';
-
-import Navbar from '@/Components/Shared/Navbar';
-import Footer from '@/Components/Shared/Footer';
 import '../src/index.css';
 import '../src/App.css';
 import '../src/button.css';
+import LayoutInner from './LayoutInner';
 
-/** Inner layout that can access LoaderContext */
-function LayoutInner({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const { isInitialLoading, isRouteLoading } = useLoader();
+// Import Ubuntu from Google Fonts with optimization
+const ubuntu = Ubuntu({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+  variable: '--font-ubuntu',
+});
 
-  const isLoading = isInitialLoading || isRouteLoading;
+// Import Satoshi local font (.woff2)
+const satoshi = localFont({
+  src: [
+    {
+      path: '../public/fonts/satoshi-regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/satoshi-medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/satoshi-bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-satoshi',
+});
 
-  // Hide footer on login and register pages
-  const hideFooter = pathname === '/login' || pathname === '/register' || pathname?.startsWith('/admin');
-  const hideNavbar = pathname?.startsWith('/admin');
+// Import Tenada local font (.woff2)
+const tenada = localFont({
+  src: [
+    {
+      path: '../public/fonts/tenada.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-tenada',
+});
 
-  return (
-    <>
-      <GlobalLoader />
+// Import Parket local font (.woff2)
+const parket = localFont({
+  src: [
+    {
+      path: '../public/fonts/parket.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-parket',
+});
 
-      {/* --- AMBIENT GLOW BACKGROUND  --- */}
-      {!hideNavbar && (
-        <div className="fixed inset-0 -z-50 pointer-events-none overflow-hidden">
-          {/* Top Left Glow */}
-          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
-          {/* Bottom Right Glow */}
-          <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px]" />
-        </div>
-      )}
-
-      {!hideNavbar && <ScrollToTop />}
-      {!hideNavbar && <HomeScrollProgress />}
-
-      {!hideNavbar && <Navbar />}
-
-      <div className={hideNavbar ? '' : 'min-h-[calc(100vh-216px)] relative z-0'}>
-        {children}
-      </div>
-
-      {!hideFooter && !isLoading && <Footer />}
-      <Toaster />
-    </>
-  );
-}
+export const metadata = {
+  title: 'AuraForce !',
+  icons: {
+    icon: [
+      {
+        url: '/favicon.ico',
+      },
+      {
+        url: '/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient());
-
   return (
     <ClerkProvider
       signInUrl="/login"
@@ -67,26 +95,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       signUpFallbackRedirectUrl="/"
       afterSignOutUrl="/"
     >
-      <html lang="en">
+      <html
+        lang="en"
+        className={`${ubuntu.variable} ${satoshi.variable} ${tenada.variable} ${parket.variable}`}
+      >
         <head>
-          <title>AuraForce !</title>
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
-          <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/site.webmanifest" />
-          <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap" rel="stylesheet" />
+          {/* Metadata is now handled by the metadata object above */}
         </head>
-
-        {/* Added bg-zinc-950 (base is always dark) */}
         <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
-          <LoaderProvider>
-            <QueryClientProvider client={queryClient}>
-              <AutoLogoutProvider>
-                <LayoutInner>{children}</LayoutInner>
-              </AutoLogoutProvider>
-            </QueryClientProvider>
-          </LoaderProvider>
+          <LayoutInner>{children}</LayoutInner>
         </body>
       </html>
     </ClerkProvider>
