@@ -100,7 +100,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${ubuntu.variable} ${satoshi.variable} ${tenada.variable} ${parket.variable}`}
       >
         <head>
-          {/* Metadata is now handled by the metadata object above */}
+          {/* Preconnect to Clerk frontend API domain for faster connection */}
+          <link rel="preconnect" href="https://api.clerk.dev" />
+          <link rel="dns-prefetch" href="https://api.clerk.dev" />
+          
+          {/* Preconnect to Clerk JS bundles */}
+          <link rel="preconnect" href="https://cdn.clerk.com" />
+          <link rel="dns-prefetch" href="https://cdn.clerk.com" />
         </head>
         <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
           <LayoutInner>{children}</LayoutInner>

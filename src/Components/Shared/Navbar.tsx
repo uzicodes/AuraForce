@@ -5,9 +5,10 @@ import { useState, useEffect, useRef } from "react";
 import { FaTimes, FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
-import { useUser, SignOutButton } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { getNavProfileImage } from "@/actions/getNavData";
+import DynamicSignOutButtonWrapper from "./DynamicSignOutButton";
 
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
@@ -313,14 +314,12 @@ const Navbar = () => {
             )}
 
             {isSignedIn && (
-              <SignOutButton>
-                <button
-                  className="block w-full py-3 px-4 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-500 transition-all duration-200 transform hover:scale-105"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Logout
-                </button>
-              </SignOutButton>
+              <DynamicSignOutButtonWrapper
+                onClick={() => setIsOpen(false)}
+                className="block w-full py-3 px-4 bg-red-600 text-center text-white font-medium rounded-lg hover:bg-red-500 transition-all duration-200 transform hover:scale-105"
+              >
+                Logout
+              </DynamicSignOutButtonWrapper>
             )}
           </div>
         </div>
