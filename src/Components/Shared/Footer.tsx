@@ -43,6 +43,7 @@ const Footer = () => {
                   src="/for favicon.png"
                   alt="Aura Force Logo"
                   fill
+                  sizes="32px"
                   className="object-contain"
                 />
               </div>
@@ -57,9 +58,14 @@ const Footer = () => {
 
             {/* Social Icons */}
             <div className="flex gap-3">
-              {[FaFacebookF, FaTwitter, FaInstagram, FaYoutube].map((Icon, index) => (
+              {[
+                { Icon: FaFacebookF, name: 'facebook' },
+                { Icon: FaTwitter, name: 'twitter' },
+                { Icon: FaInstagram, name: 'instagram' },
+                { Icon: FaYoutube, name: 'youtube' },
+              ].map(({ Icon, name }) => (
                 <a
-                  key={index}
+                  key={name}
                   href="#"
                   className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-300"
                 >

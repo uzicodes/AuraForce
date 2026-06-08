@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaClock, FaFire, FaArrowRight } from 'react-icons/fa';
 
@@ -49,10 +50,12 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
       {/* IMAGE AREA */}
       <div className="relative h-48 w-full overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent z-10 opacity-80" />
-        <img
+        <Image
           src={singleClass.image}
           alt={singleClass.classname}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-110"
         />
 
         {/* Floating Badge (Intensity) */}

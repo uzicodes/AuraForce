@@ -142,6 +142,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
                 src={trainer.image || "/images/trainers/1.jpg"}
                 alt={trainer.name || "Trainer"}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
               />
 

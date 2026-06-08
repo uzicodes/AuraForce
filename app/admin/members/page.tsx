@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Users, Search, Filter } from 'lucide-react';
+import Image from 'next/image';
 import toast from 'react-hot-toast';
 
 interface Member {
@@ -163,9 +164,11 @@ export default function MembersPage() {
                                         <td className="px-5 py-3.5">
                                             <div className="flex items-center gap-3">
                                                 {m.image ? (
-                                                    <img
+                                                    <Image
                                                         src={m.image}
                                                         alt={m.name || m.email}
+                                                        width={32}
+                                                        height={32}
                                                         className="w-8 h-8 rounded-full object-cover border border-zinc-700 flex-shrink-0"
                                                     />
                                                 ) : (

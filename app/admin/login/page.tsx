@@ -144,7 +144,7 @@ const AdminLogin = () => {
                         <div className="flex justify-center gap-3 mb-8" onPaste={handlePaste}>
                             {pin.map((digit, index) => (
                                 <input
-                                    key={index}
+                                    key={`pin-${index}`}
                                     ref={(el) => { inputRefs.current[index] = el; }}
                                     type="password"
                                     inputMode="numeric"

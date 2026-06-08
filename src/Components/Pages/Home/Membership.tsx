@@ -113,7 +113,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {packages.map((pkg, index) => (
             <motion.div
-              key={index}
+              key={pkg.name}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -143,8 +143,8 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
               </div>
 
               <ul className="space-y-4 mb-8 flex-grow">
-                {pkg.features.map((feat, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-zinc-300 font-satoshi">
+                {pkg.features.map((feat) => (
+                  <li key={feat} className="flex items-center gap-3 text-sm text-zinc-300 font-satoshi">
                     <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${pkg.highlight ? "bg-emerald-500 text-black" : "bg-zinc-800 text-zinc-400"}`}>
                       <FaCheck className="text-[10px]" />
                     </span>

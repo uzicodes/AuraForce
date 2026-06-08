@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
@@ -21,23 +21,16 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
     const [isPending, setIsPending] = useState(false);
     const [selectedDate, setSelectedDate] = useState("");
     const [planType, setPlanType] = useState<"WEEKLY" | "MONTHLY" | null>(null);
-    const [endDate, setEndDate] = useState<string>("");
 
-    // Calculate end date based on selection
-    useEffect(() => {
-        if (!selectedDate || !planType) {
-            setEndDate("");
-            return;
-        }
-
+    // Derive end date directly from selectedDate and planType — no state or effects needed
+    const endDate = (() => {
+        if (!selectedDate || !planType) return "";
         const start = new Date(selectedDate);
-        const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total 
-
+        const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total
         const end = new Date(start);
         end.setDate(start.getDate() + daysToAdd);
-
-        setEndDate(end.toISOString().split('T')[0]);
-    }, [selectedDate, planType]);
+        return end.toISOString().split('T')[0];
+    })();
 
     const handleBooking = () => {
         if (!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {

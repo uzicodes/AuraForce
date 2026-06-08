@@ -137,9 +137,9 @@ const GearArsenal = () => {
                     viewport={{ once: true, margin: "-60px" }}
                     className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5"
                 >
-                    {shopItems.map((item, index) => (
+                    {shopItems.map((item) => (
                         <motion.div
-                            key={index}
+                            key={item.name}
                             variants={cardVariants}
                             whileHover={{ y: -6, transition: { duration: 0.25 } }}
                             className="group relative rounded-xl overflow-hidden border border-zinc-800/80 bg-zinc-900/60 backdrop-blur-sm cursor-pointer hover:border-emerald-500/40 transition-all duration-400"

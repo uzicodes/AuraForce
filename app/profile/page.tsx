@@ -114,6 +114,7 @@ const Profile = async () => {
           src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
           alt="Profile Banner"
           fill
+          sizes="100vw"
           className="object-cover"
           priority
         />
@@ -136,6 +137,7 @@ const Profile = async () => {
                   src={avatarUrl}
                   alt={dbUser.name || "User"}
                   fill
+                  sizes="(max-width: 768px) 144px, 176px"
                   className="object-cover"
                 />
               </div>
@@ -178,9 +180,9 @@ const Profile = async () => {
               {/* Stat Chips */}
               {statItems.length > 0 && (
                 <div className="flex flex-wrap justify-center md:justify-start gap-2.5">
-                  {statItems.map((stat, idx) => (
+                  {statItems.map((stat) => (
                     <div
-                      key={idx}
+                      key={stat!.label}
                       className="flex items-center gap-2 bg-zinc-800/50 border border-zinc-700/50 rounded-lg px-4 py-2 hover:border-emerald-500/30 transition-colors duration-300"
                     >
                       <span className="text-emerald-400 text-sm">{stat!.icon}</span>
@@ -263,12 +265,12 @@ const Profile = async () => {
                     </div>
                     <p className="text-zinc-300 font-semibold mb-2">You have currently no active subscriptions</p>
                     <p className="text-zinc-600 text-sm mb-5">Upgrade to a membership plan to unlock premium features and benefits.</p>
-                    <a
+                    <Link
                       href="/#membership"
                       className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-6 py-2.5 transition-all duration-300 shadow-lg shadow-emerald-900/20"
                     >
                       Browse Plans <FaArrowRight className="text-xs" />
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>

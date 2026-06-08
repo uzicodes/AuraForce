@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { updateProfile } from "@/actions/updateProfile";
@@ -15,21 +15,19 @@ export default function EditForm({ user }: { user: any }) {
 
   // Initialize Date of Birth state with REAL DB DATA (if it exists)
   const [dob, setDob] = useState(user.dob ? new Date(user.dob).toISOString().split('T')[0] : "");
-  const [age, setAge] = useState("");
 
-  // Auto-Calculate Age when DOB changes
-  useEffect(() => {
-    if (dob) {
-      const today = new Date();
-      const birthDate = new Date(dob);
-      let calculatedAge = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        calculatedAge--;
-      }
-      setAge(calculatedAge.toString());
+  // Derive age directly from dob — no need for state or effects
+  const age = (() => {
+    if (!dob) return "";
+    const today = new Date();
+    const birthDate = new Date(dob);
+    let calculatedAge = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      calculatedAge--;
     }
-  }, [dob]);
+    return calculatedAge.toString();
+  })();
 
   return (
     <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl">
@@ -43,6 +41,7 @@ export default function EditForm({ user }: { user: any }) {
               src={user.image || "/dp.png"}
               alt="Profile"
               fill
+              sizes="96px"
               className="object-cover"
             />
           </div>

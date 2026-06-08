@@ -79,8 +79,8 @@ const AboutUs = () => {
             </div>
 
             <div className="space-y-4 pt-4">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex items-start gap-3 group">
+              {benefits.map((benefit) => (
+                <div key={benefit} className="flex items-start gap-3 group">
                   <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-emerald-500 transition-colors duration-300">
                     <FaCheck className="text-emerald-500 text-xs group-hover:text-black transition-colors duration-300" />
                   </div>
@@ -92,10 +92,10 @@ const AboutUs = () => {
             </div>
 
             <div className="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800">
-              {stats.map((stat, index) => {
+              {stats.map((stat) => {
                 const IconComponent = stat.icon;
                 return (
-                  <div key={index} className="text-center">
+                  <div key={stat.label} className="text-center">
                     <div className="text-2xl md:text-3xl font-bold text-white mb-1">
                       {stat.number}
                     </div>
@@ -121,6 +121,7 @@ const AboutUs = () => {
                     src={src}
                     alt={`Gallery image ${index + 1}`}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                     priority={index === 0}
                   />

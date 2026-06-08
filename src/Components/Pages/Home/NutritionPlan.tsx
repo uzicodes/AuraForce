@@ -148,11 +148,12 @@ const NutritionPlan = () => {
                 className="h-full w-full"
               >
                 {carouselImages.map((src, index) => (
-                  <SwiperSlide key={index} className="relative h-full w-full">
+                  <SwiperSlide key={`${src}-${index}`} className="relative h-full w-full">
                     <Image
                       src={src}
                       alt={`Nutrition Slide ${index + 1}`}
                       fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 via-transparent to-transparent" />
@@ -170,9 +171,9 @@ const NutritionPlan = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="space-y-3"
           >
-            {features.map((item, index) => (
+            {features.map((item) => (
               <motion.div
-                key={index}
+                key={item.title}
                 variants={itemVariants}
                 className="flex gap-4 p-4 rounded-2xl hover:bg-zinc-900/50 border border-transparent hover:border-zinc-800 transition-colors group"
               >

@@ -96,8 +96,8 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
                                     <FaCheck className="text-emerald-500" /> Key Features
                                 </label>
                                 <ul className="space-y-1">
-                                    {plan.features.map((feature, index) => (
-                                        <li key={index} className="text-zinc-400 text-xs flex items-start gap-2 font-satoshi">
+                                    {plan.features.map((feature) => (
+                                        <li key={feature} className="text-zinc-400 text-xs flex items-start gap-2 font-satoshi">
                                             <span className="text-emerald-500/50 mt-0.5">•</span> {feature}
                                         </li>
                                     ))}

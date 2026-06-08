@@ -115,8 +115,8 @@ export default function CheckoutClient({
                                 <div className="bg-zinc-950/40 p-4 rounded-none border border-zinc-800/50">
                                     <p className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-3">Includes:</p>
                                     <ul className="space-y-2">
-                                        {details.features.slice(0, 4).map((feat: string, i: number) => (
-                                            <li key={i} className="text-xs text-zinc-300 flex items-start gap-2">
+                                        {details.features.slice(0, 4).map((feat: string) => (
+                                            <li key={feat} className="text-xs text-zinc-300 flex items-start gap-2">
                                                 <FaCheck className="text-emerald-500 mt-0.5 text-[10px]" /> {feat}
                                             </li>
                                         ))}

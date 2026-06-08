@@ -9,6 +9,8 @@ import {
     ArrowUpRight,
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface Member {
     id: string;
@@ -141,9 +143,9 @@ export default function AdminDashboard() {
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
                     <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
                         <h3 className="text-sm font-bold text-white font-ubuntu">Recent Members</h3>
-                        <a href="/admin/members" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
+                        <Link href="/admin/members" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
                             View All <ArrowUpRight size={12} />
-                        </a>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
@@ -171,7 +173,7 @@ export default function AdminDashboard() {
                                             <td className="px-5 py-3">
                                                 <div className="flex items-center gap-3">
                                                     {m.image ? (
-                                                        <img src={m.image} alt={m.name || ''} width={28} height={28} className="w-7 h-7 rounded-full object-cover border border-zinc-700 flex-shrink-0" />
+                                                        <Image src={m.image} alt={m.name || ''} width={28} height={28} className="w-7 h-7 rounded-full object-cover border border-zinc-700 flex-shrink-0" />
                                                     ) : (
                                                         <div className="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-[10px] font-bold flex-shrink-0">
                                                             {(m.name || m.email).substring(0, 2).toUpperCase()}
@@ -206,9 +208,9 @@ export default function AdminDashboard() {
                 <div className="bg-zinc-900/60 backdrop-blur-sm border border-zinc-800 rounded-2xl overflow-hidden">
                     <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
                         <h3 className="text-sm font-bold text-white font-ubuntu">Recent Payments</h3>
-                        <a href="/admin/payments" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
+                        <Link href="/admin/payments" className="text-xs text-emerald-400 hover:text-emerald-300 flex items-center gap-1 transition-colors">
                             View All <ArrowUpRight size={12} />
-                        </a>
+                        </Link>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full text-sm">
