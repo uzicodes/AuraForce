@@ -78,7 +78,7 @@ const Testimonials = () => {
           transition={{ staggerChildren: 0.15 }}
           className="text-center mb-16 max-w-3xl mx-auto"
         >
-          <motion.div variants={scaleRevealVariant} className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
+          <motion.div variants={scaleRevealVariant} className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
             <span>Success Stories</span>
           </motion.div>
 

@@ -88,7 +88,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
         {/* Header with Reveal Animation */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <Reveal>
-            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-black-500/20 mb-6">
+            <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
               <FaTags />
               <span>Membership Plans</span>
             </div>

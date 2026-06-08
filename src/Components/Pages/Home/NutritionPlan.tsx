@@ -103,9 +103,8 @@ const NutritionPlan = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6"
+            className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default"
           >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>The Ideal Diet</span>
           </motion.div>
           <motion.h2

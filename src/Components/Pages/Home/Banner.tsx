@@ -70,7 +70,7 @@ const Banner = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-5 justify-center items-center">
             <Link href="/allClasses">
-              <button className="group relative bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/20 overflow-hidden">
+              <button className="group relative bg-emerald-600 hover:bg-emerald-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:text-black hover:shadow-2xl hover:shadow-emerald-500/20 overflow-hidden">
                 <span className="relative z-10 flex items-center gap-2">
                   Get Started !
                 </span>
@@ -80,7 +80,7 @@ const Banner = () => {
 
             <Link href="https://youtu.be/Sm8O9Lcnr7o?si=-xBc7pWkuUAgAnU1" target="_blank">
               <button className="group flex items-center gap-3 bg-zinc-800/40 backdrop-blur-sm hover:bg-zinc-800/60 text-white px-6 py-4 rounded-full font-semibold transition-all duration-300 border border-zinc-700 hover:border-emerald-500/50">
-                <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-black transition-colors duration-300">
+                <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-red-600 transition-colors duration-300 ">
                   <FaPlay className="text-sm ml-1" />
                 </div>
                 Watch Demo
