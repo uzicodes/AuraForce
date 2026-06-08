@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.37.3",
