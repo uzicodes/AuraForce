@@ -88,7 +88,7 @@ const Trainer = ({ trainer }) => {
           
           {/* CTA Button */}
           <Link to={`/trainerDetails/${_id}`} className="block w-full">
-            <button className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm">
+            <button type="button" className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm">
               View Details
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

@@ -137,7 +137,7 @@ const AboutUs = () => {
                     <p className="text-zinc-400 text-sm font-satoshi">Join the strongest community today.</p>
                   </div>
                   <Link href="/allClasses">
-                    <button className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
+                    <button type="button" className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform">
                       <FaArrowRight />
                     </button>
                   </Link>

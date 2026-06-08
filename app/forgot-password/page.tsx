@@ -115,7 +115,7 @@ const ForgotPassword = () => {
                 />
               </div>
             </div>
-            <button disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50">
+            <button type="submit" disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50">
               {loading ? "Sending..." : "Send Reset Code"}
             </button>
             <div className="text-center mt-4">
@@ -164,7 +164,7 @@ const ForgotPassword = () => {
               </div>
             </div>
 
-            <button disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50">
+            <button type="submit" disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50">
               {loading ? "Resetting..." : "Reset Password"}
             </button>
           </form>

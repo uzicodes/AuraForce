@@ -40,27 +40,26 @@ const calculateAge = (dob: Date) => {
 
 const Profile = async () => {
   // Check user
+  // Check user
   const user = await checkUser();
   if (!user) redirect("/login");
 
-  // Get Clerk user
-  const clerkUser = await currentUser();
-
-  // Fetch User Data
-  const dbUser = await db.user.findUnique({
-    where: { clerkUserId: user.clerkUserId },
-    include: {
-      posts: { orderBy: { createdAt: 'desc' } }
-    },
-  });
+  // Fetch all user-related data in parallel
+  const [clerkUser, dbUser, activeMembership] = await Promise.all([
+    currentUser(),
+    db.user.findUnique({
+      where: { clerkUserId: user.clerkUserId },
+      include: {
+        posts: { orderBy: { createdAt: 'desc' } }
+      },
+    }),
+    db.membershipBookings.findFirst({
+      where: { clerkUserId: user.clerkUserId, status: "ACTIVE" },
+      orderBy: { id: 'desc' },
+    })
+  ]);
 
   if (!dbUser) redirect("/login");
-
-  // Fetch active membership booking
-  const activeMembership = await db.membershipBookings.findFirst({
-    where: { clerkUserId: user.clerkUserId, status: "ACTIVE" },
-    orderBy: { id: 'desc' },
-  });
 
   // Check if membership is still valid (not expired)
   const isSubscriptionValid = activeMembership && activeMembership.endDate && new Date(activeMembership.endDate) > new Date();
@@ -205,7 +204,7 @@ const Profile = async () => {
                 <FaUserEdit /> Edit Profile
               </Link>
               <SignOutButton>
-                <button className="flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-red-600 text-zinc-300 hover:text-white text-sm font-bold border border-zinc-700 hover:border-red-500 transition-all duration-300 cursor-pointer">
+                <button type="button" className="flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-red-600 text-zinc-300 hover:text-white text-sm font-bold border border-zinc-700 hover:border-red-500 transition-all duration-300 cursor-pointer">
                   <FaSignOutAlt /> Logout
                 </button>
               </SignOutButton>

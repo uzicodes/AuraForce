@@ -27,7 +27,7 @@ export default function DynamicSignOutButtonWrapper({
 }: DynamicSignOutButtonWrapperProps) {
   return (
     <DynamicSignOutButton>
-      <button onClick={onClick} className={className}>
+      <button type="button" onClick={onClick} className={className}>
         {children}
       </button>
     </DynamicSignOutButton>

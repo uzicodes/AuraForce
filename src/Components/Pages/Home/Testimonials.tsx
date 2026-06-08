@@ -166,10 +166,10 @@ const Testimonials = () => {
 
           <div className="flex items-center justify-between mt-8 px-2">
             <div className="flex gap-4">
-              <button className="custom-prev w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
+              <button type="button" className="custom-prev w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
                 <FaArrowLeft />
               </button>
-              <button className="custom-next w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
+              <button type="button" className="custom-next w-12 h-12 rounded-full border border-zinc-700 flex items-center justify-center text-zinc-400 hover:bg-emerald-500 hover:text-black hover:border-emerald-500 transition-all duration-300">
                 <FaArrowRight />
               </button>
             </div>
@@ -178,7 +178,8 @@ const Testimonials = () => {
         </motion.div>
       </div>
 
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .custom-pagination .swiper-pagination-bullet {
           width: 10px;
           height: 10px;
@@ -193,7 +194,7 @@ const Testimonials = () => {
           width: 24px;
           border-radius: 999px;
         }
-      `}</style>
+      `}} />
     </section>
   );
 };

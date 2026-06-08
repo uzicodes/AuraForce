@@ -86,7 +86,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({ userEmail }) => (
         You received this email because you subscribed to the AuraForce newsletter with <span style={{ color: '#d4d4d8' }}>{userEmail}</span>.
         <br />
         <br />
-        © {new Date().getFullYear()} AuraForce Inc. All rights reserved.
+        © <span suppressHydrationWarning>{new Date().getFullYear()}</span> AuraForce Inc. All rights reserved.
       </p>
 
     </div>

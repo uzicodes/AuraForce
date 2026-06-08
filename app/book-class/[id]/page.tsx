@@ -12,13 +12,16 @@ export default async function BookClassPage({ params }: { params: { id: string }
         return notFound();
     }
 
+    // Check ID valid number string
+    if (!/^\d+$/.test(id)) {
+        return notFound();
+    }
+
     // use BigInt(id) if it's a valid integer string.
     let classData;
+    let errorOccurred = false;
+    
     try {
-        // Check ID valid number string
-        if (!/^\d+$/.test(id)) {
-            return notFound();
-        }
         const bigIntId = BigInt(id);
 
         classData = await db.classes.findUnique({
@@ -28,6 +31,10 @@ export default async function BookClassPage({ params }: { params: { id: string }
         });
     } catch (error) {
         console.error("Error fetching class:", error);
+        errorOccurred = true;
+    }
+
+    if (errorOccurred || !classData) {
         return notFound();
     }
 

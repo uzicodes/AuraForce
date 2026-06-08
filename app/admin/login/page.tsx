@@ -198,7 +198,8 @@ const AdminLogin = () => {
             </div>
 
             {/* Shake Keyframe (injected via style tag) */}
-            <style jsx>{`
+            <style dangerouslySetInnerHTML={{
+                __html: `
         @keyframes shake {
           0%, 100% { transform: translateX(0); }
           20% { transform: translateX(-8px); }
@@ -206,7 +207,7 @@ const AdminLogin = () => {
           60% { transform: translateX(-6px); }
           80% { transform: translateX(6px); }
         }
-      `}</style>
+      `}} />
         </section>
     );
 };
