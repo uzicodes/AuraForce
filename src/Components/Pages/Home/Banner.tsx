@@ -22,11 +22,12 @@ const Counter = ({ value, suffix = "", prefix = "" }: { value: number, suffix?: 
   }, [isInView, value, motionValue]);
 
   useEffect(() => {
-    return springValue.on("change", (latest) => {
+    const unsubscribe = springValue.on("change", (latest) => {
       if (ref.current) {
         ref.current.textContent = `${prefix}${Math.floor(latest)}${suffix}`;
       }
     });
+    return () => unsubscribe();
   }, [springValue, prefix, suffix]);
 
   return <span ref={ref} />;

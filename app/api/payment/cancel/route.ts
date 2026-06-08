@@ -39,14 +39,7 @@ export async function POST(req: NextRequest) {
   return htmlRedirect("/?payment=cancelled");
 }
 
-export async function GET(req: NextRequest) {
-  const tran_id = req.nextUrl.searchParams.get("tran_id");
-
-  if (tran_id) {
-    await db.pendingTransactions.delete({
-      where: { transactionId: tran_id },
-    }).catch(() => { });
-  }
-
+// GET handler only redirects — no database mutations to prevent CSRF/prefetch issues
+export async function GET() {
   return htmlRedirect("/?payment=cancelled");
 }
