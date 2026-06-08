@@ -27,12 +27,40 @@ export default function HomeScrollProgress() {
     }
   }, [pathname]);
 
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const updateScroll = () => {
+      window.dispatchEvent(new Event("scroll"));
+    };
+
+    const observer = new ResizeObserver(() => {
+      updateScroll();
+    });
+
+    observer.observe(document.documentElement);
+    observer.observe(document.body);
+
+    // Initial triggers to catch any rapid layout shifts after hydration
+    const timer1 = setTimeout(updateScroll, 100);
+    const timer2 = setTimeout(updateScroll, 500);
+    const timer3 = setTimeout(updateScroll, 1000);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, [isVisible]);
+
   if (!isVisible) return null;
 
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 h-1 bg-emerald-500 origin-left z-[100]"
-      style={{ scaleX }}
+      style={{ scaleX, transformOrigin: "0%" }}
     />
   );
 }
