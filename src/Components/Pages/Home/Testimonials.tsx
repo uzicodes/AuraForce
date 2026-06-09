@@ -10,7 +10,7 @@ import { FaQuoteLeft, FaStar, FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { MessageSquareDashed } from "lucide-react";
 import Image from "next/image";
 // 1. Updated Import: Added 'Variants'
-import { motion, Variants } from "framer-motion";
+import { m as motion, Variants } from "framer-motion";
 
 const testimonials = [
   {

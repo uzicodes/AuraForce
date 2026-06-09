@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { m as motion, Variants } from "framer-motion";
 import { Reveal } from "@/Components/Shared/Reveal";
 import { FaDumbbell } from "react-icons/fa";
 

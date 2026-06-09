@@ -10,6 +10,7 @@ import ScrollToTop from '@/Components/Helpers/ScrollToTop';
 import GlobalLoader, { LoaderProvider, useLoader } from '@/Components/Shared/GlobalLoader';
 import Navbar from '@/Components/Shared/Navbar';
 import Footer from '@/Components/Shared/Footer';
+import { LazyMotion, domAnimation } from 'framer-motion';
 
 /** Inner layout that can access LoaderContext */
 function LayoutInnerContent({ children }: { children: React.ReactNode }) {
@@ -58,7 +59,9 @@ export default function LayoutInner({ children }: { children: React.ReactNode })
     <LoaderProvider>
       <QueryClientProvider client={queryClient}>
         <AutoLogoutProvider>
-          <LayoutInnerContent>{children}</LayoutInnerContent>
+          <LazyMotion features={domAnimation}>
+            <LayoutInnerContent>{children}</LayoutInnerContent>
+          </LazyMotion>
         </AutoLogoutProvider>
       </QueryClientProvider>
     </LoaderProvider>

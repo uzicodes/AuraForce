@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { FaCrown, FaCalendarAlt, FaMoneyBillWave, FaInfoCircle, FaCheck } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
@@ -22,7 +22,7 @@ const descriptionMap: Record<string, string> = {
 
 export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }) {
     const router = useRouter();
-    const [isPending, setIsPending] = useState(false);
+    const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState<string>("");
 
     // Calculate end date (1 month after start)
@@ -47,9 +47,9 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
             return;
         }
 
-        setIsPending(true);
-        // Redirect to the generic checkout page → SSLCommerz payment flow
-        router.push(`/checkout?type=membership&id=${plan.id}`);
+        startTransition(() => {
+            router.push(`/checkout?type=membership&id=${plan.id}`);
+        });
     };
 
     return (

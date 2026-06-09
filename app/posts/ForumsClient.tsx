@@ -20,11 +20,12 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
 
 
   // Filter Logic
-  const filteredPosts = allPosts.filter((post) => {
+  const filteredPosts = allPosts.reduce((acc: typeof allPosts, post) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = activeCategory === "All" || post.category === activeCategory;
-    return matchesSearch && matchesCategory;
-  });
+    if (matchesSearch && matchesCategory) acc.push(post);
+    return acc;
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setLoading(true);

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import toast from 'react-hot-toast';
-import { motion } from 'framer-motion';
+import { m as motion } from "framer-motion";
 import { FaDumbbell, FaInstagram, FaTwitter, FaLinkedin, FaArrowRight } from "react-icons/fa";
 
 // STATIC DATA (Only Images, Bios, Specialty, and Socials)

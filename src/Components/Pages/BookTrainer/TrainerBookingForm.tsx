@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaLayerGroup } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
@@ -18,7 +18,7 @@ interface TrainerBookingFormProps {
 const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, trainerTime }: TrainerBookingFormProps) => {
     const { isSignedIn } = useUser();
     const router = useRouter();
-    const [isPending, setIsPending] = useState(false);
+    const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState("");
     const [planType, setPlanType] = useState<"WEEKLY" | "MONTHLY" | null>(null);
 
@@ -51,9 +51,9 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
             return;
         }
 
-        setIsPending(true);
-        // Redirect to the generic checkout page → SSLCommerz payment flow
-        router.push(`/checkout?type=trainer&id=${trainerId}&plan=${planType}`);
+        startTransition(() => {
+            router.push(`/checkout?type=trainer&id=${trainerId}&plan=${planType}`);
+        });
     };
 
     const today = new Date().toISOString().split('T')[0];

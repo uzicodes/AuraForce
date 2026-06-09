@@ -77,14 +77,14 @@ const Newsletter = () => {
               className="absolute inset-0 w-[200%] h-[200%] animate-shine opacity-[0.05]"
               style={{
                 background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
-                animationDuration: '4s'
+                animationDuration: '2s'
               }}
             />
           </div>
 
           {status === "success" ? (
             // SUCCESS STATE UI
-            <div className="animate-in fade-in zoom-in duration-500 py-10">
+            <div className="animate-in fade-in zoom-in duration-300 py-10">
               <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-10 h-10 text-emerald-500" />
               </div>

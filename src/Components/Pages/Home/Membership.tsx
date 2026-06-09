@@ -1,7 +1,7 @@
 "use client";
 
 import { FaCheck, FaCrown, FaTags } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { m as motion } from "framer-motion";
 import { Reveal } from "@/Components/Shared/Reveal";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";

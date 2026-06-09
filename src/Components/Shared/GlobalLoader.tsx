@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 import styles from './GlobalLoader.module.css';
 
 // --- Loader Context ---
@@ -44,8 +44,14 @@ export const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  const contextValue = useMemo(() => ({
+    isInitialLoading,
+    isRouteLoading,
+    setRouteLoading,
+  }), [isInitialLoading, isRouteLoading, setRouteLoading]);
+
   return (
-    <LoaderContext.Provider value={{ isInitialLoading, isRouteLoading, setRouteLoading }}>
+    <LoaderContext.Provider value={contextValue}>
       {children}
     </LoaderContext.Provider>
   );

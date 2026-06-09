@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
       <div className="max-w-md w-full bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-12 text-center relative z-10 shadow-2xl">
 
         {/* Success Icon Animation */}
-        <div className="w-24 h-24 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-bounce">
+        <div className="w-24 h-24 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-in zoom-in duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           <FaCheckCircle className="text-5xl text-emerald-500" />
         </div>
 

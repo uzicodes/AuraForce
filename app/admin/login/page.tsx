@@ -10,7 +10,7 @@ const ADMIN_PIN = '12345';
 
 const AdminLogin = () => {
     const router = useRouter();
-    const [pin, setPin] = useState<string[]>(Array(5).fill(''));
+    const [pin, setPin] = useState<string[]>(() => Array(5).fill(''));
     const [loading, setLoading] = useState(false);
     const [shake, setShake] = useState(false);
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);

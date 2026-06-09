@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { m as motion, Variants } from "framer-motion";
 import { FaAppleAlt, FaFire, FaLeaf, FaChartPie } from "react-icons/fa";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
