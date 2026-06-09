@@ -11,6 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useReducer } from 'react';
 
 interface Member {
     id: string;
@@ -36,12 +37,45 @@ const colorMap: Record<string, { bg: string; text: string; border: string; shado
     blue: { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', shadow: 'shadow-blue-500/5' },
 };
 
+function formatDate(dateStr: string): string {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+}
+
+interface DashboardState {
+    members: Member[];
+    trainerCount: number;
+    classCount: number;
+    payments: Payment[];
+    loading: boolean;
+}
+
+type DashboardAction =
+    | { type: 'SET_DATA'; payload: { members: Member[]; trainerCount: number; classCount: number; payments: Payment[] } }
+    | { type: 'SET_ERROR' };
+
+const initialDashboardState: DashboardState = {
+    members: [],
+    trainerCount: 0,
+    classCount: 0,
+    payments: [],
+    loading: true,
+};
+
+function dashboardReducer(state: DashboardState, action: DashboardAction): DashboardState {
+    switch (action.type) {
+        case 'SET_DATA':
+            return { ...state, ...action.payload, loading: false };
+        case 'SET_ERROR':
+            return { ...state, loading: false };
+        default:
+            return state;
+    }
+}
+
 export default function AdminDashboard() {
-    const [members, setMembers] = useState<Member[]>([]);
-    const [trainerCount, setTrainerCount] = useState(0);
-    const [classCount, setClassCount] = useState(0);
-    const [payments, setPayments] = useState<Payment[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [state, dispatch] = useReducer(dashboardReducer, initialDashboardState);
+    const { members, trainerCount, classCount, payments, loading } = state;
 
     useEffect(() => {
         async function fetchDashboardData() {
@@ -57,6 +91,7 @@ export default function AdminDashboard() {
                     toast.error("You are doing that too fast! Please wait a few seconds.", {
                         style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
                     });
+                    dispatch({ type: 'SET_ERROR' });
                     return;
                 }
 
@@ -65,15 +100,19 @@ export default function AdminDashboard() {
                 const classData = classRes.ok ? await classRes.json() : [];
                 const payData = payRes.ok ? await payRes.json() : [];
 
-                setMembers(memData);
-                setTrainerCount(trainerData.length);
-                setClassCount(classData.length);
-                setPayments(Array.isArray(payData) ? payData : []);
+                dispatch({
+                    type: 'SET_DATA',
+                    payload: {
+                        members: memData,
+                        trainerCount: trainerData.length,
+                        classCount: classData.length,
+                        payments: Array.isArray(payData) ? payData : [],
+                    }
+                });
             } catch (err) {
                 console.error('Dashboard fetch error:', err);
                 toast.error('Failed to load dashboard data.');
-            } finally {
-                setLoading(false);
+                dispatch({ type: 'SET_ERROR' });
             }
         }
         fetchDashboardData();
@@ -94,12 +133,6 @@ export default function AdminDashboard() {
 
     // Get the 5 most recent payments
     const recentPayments = payments.slice(0, 5);
-
-
-    function formatDate(dateStr: string): string {
-        const d = new Date(dateStr);
-        return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-    }
 
     return (
         <div className="space-y-6">

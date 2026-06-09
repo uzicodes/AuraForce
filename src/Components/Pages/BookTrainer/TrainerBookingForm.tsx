@@ -14,6 +14,14 @@ interface TrainerBookingFormProps {
     feePerMonth?: number | null;
     trainerTime?: string | null;
 }
+function calculateTrainerEndDate(startDateStr: string, planType: "WEEKLY" | "MONTHLY" | null): string {
+    if (!startDateStr || !planType) return "";
+    const start = new Date(startDateStr);
+    const daysToAdd = planType === "WEEKLY" ? 6 : 29; // 7 days total or 30 days total
+    const end = new Date(start);
+    end.setDate(start.getDate() + daysToAdd);
+    return end.toISOString().split('T')[0];
+}
 
 const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, trainerTime }: TrainerBookingFormProps) => {
     const { isSignedIn } = useUser();

@@ -13,6 +13,20 @@ const galleryImages = [
 
 ];
 
+const stats = [
+  { icon: FaUsers, number: "10K+", label: "Happy Members" },
+  { icon: FaTrophy, number: "500+", label: "Success Stories" },
+  { icon: FaHeart, number: "99%", label: "Satisfaction Rate" },
+];
+
+const benefits = [
+  "Personalized workout plans tailored to your goals",
+  "Real-time progress tracking and analytics",
+  "Expert guidance from certified trainers",
+  "Supportive community of fitness enthusiasts",
+  "Flexible scheduling that fits your lifestyle",
+];
+
 const AboutUs = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -23,20 +37,6 @@ const AboutUs = () => {
 
     return () => clearInterval(interval);
   }, []);
-
-  const stats = [
-    { icon: FaUsers, number: "10K+", label: "Happy Members" },
-    { icon: FaTrophy, number: "500+", label: "Success Stories" },
-    { icon: FaHeart, number: "99%", label: "Satisfaction Rate" },
-  ];
-
-  const benefits = [
-    "Personalized workout plans tailored to your goals",
-    "Real-time progress tracking and analytics",
-    "Expert guidance from certified trainers",
-    "Supportive community of fitness enthusiasts",
-    "Flexible scheduling that fits your lifestyle",
-  ];
 
   return (
     <section className="py-20 min-h-screen text-zinc-100 overflow-hidden relative">
@@ -144,7 +144,6 @@ const AboutUs = () => {
                 </div>
               </div>
             </div>
-
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-zinc-800 rounded-xl -z-10" />
             <div className="absolute -bottom-4 -left-4 w-full h-full border border-zinc-800 rounded-2xl -z-10" />
           </div>

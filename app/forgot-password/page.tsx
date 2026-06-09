@@ -7,13 +7,42 @@ import toast from 'react-hot-toast';
 import { FaEnvelope, FaLock, FaKey } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useReducer } from 'react';
+
+interface ForgotPasswordState {
+  email: string;
+  password: string;
+  code: string;
+  successfulCreation: boolean;
+  loading: boolean;
+}
+
+type ForgotPasswordAction = 
+  | { type: 'SET_FIELD'; field: keyof ForgotPasswordState; value: string | boolean }
+  | { type: 'SUCCESSFUL_CREATION' };
+
+const initialState: ForgotPasswordState = {
+  email: '',
+  password: '',
+  code: '',
+  successfulCreation: false,
+  loading: false,
+};
+
+function formReducer(state: ForgotPasswordState, action: ForgotPasswordAction): ForgotPasswordState {
+  switch (action.type) {
+    case 'SET_FIELD':
+      return { ...state, [action.field]: action.value };
+    case 'SUCCESSFUL_CREATION':
+      return { ...state, successfulCreation: true, loading: false };
+    default:
+      return state;
+  }
+}
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [code, setCode] = useState('');
-  const [successfulCreation, setSuccessfulCreation] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [state, dispatch] = useReducer(formReducer, initialState);
+  const { email, password, code, successfulCreation, loading } = state;
 
   const router = useRouter();
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -23,27 +52,26 @@ const ForgotPassword = () => {
   // STEP 1: Send the Password Reset Code
   const create = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch({ type: 'SET_FIELD', field: 'loading', value: true });
 
     try {
       await signIn?.create({
         strategy: 'reset_password_email_code',
         identifier: email,
       });
-      setSuccessfulCreation(true);
+      dispatch({ type: 'SUCCESSFUL_CREATION' });
       toast.success('Reset code sent to your email');
     } catch (err: any) {
       console.error('error', err.errors[0].longMessage);
       toast.error(err.errors[0].longMessage || "Invalid email address");
-    } finally {
-      setLoading(false);
+      dispatch({ type: 'SET_FIELD', field: 'loading', value: false });
     }
   };
 
   // STEP 2: Verify Code and Set New Password
   const reset = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    dispatch({ type: 'SET_FIELD', field: 'loading', value: true });
 
     try {
       const result = await signIn?.attemptFirstFactor({
@@ -59,12 +87,12 @@ const ForgotPassword = () => {
       } else {
         console.log(result);
         toast.error("Verification failed. Please try again.");
+        dispatch({ type: 'SET_FIELD', field: 'loading', value: false });
       }
     } catch (err: any) {
       console.error('error', err.errors[0].longMessage);
       toast.error(err.errors[0].longMessage || "Something went wrong");
-    } finally {
-      setLoading(false);
+      dispatch({ type: 'SET_FIELD', field: 'loading', value: false });
     }
   };
 
@@ -109,7 +137,7 @@ const ForgotPassword = () => {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'email', value: e.target.value })}
                   className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:outline-none transition-all"
                   placeholder="name@example.com"
                   required
@@ -140,7 +168,7 @@ const ForgotPassword = () => {
                   id="code"
                   type="text"
                   value={code}
-                  onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'code', value: e.target.value })}
                   className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:outline-none transition-all"
                   placeholder="Enter code"
                   required
@@ -159,7 +187,7 @@ const ForgotPassword = () => {
                   id="password"
                   type="password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => dispatch({ type: 'SET_FIELD', field: 'password', value: e.target.value })}
                   className="block w-full py-2.5 pl-9 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:outline-none transition-all"
                   placeholder="New secure password"
                   required

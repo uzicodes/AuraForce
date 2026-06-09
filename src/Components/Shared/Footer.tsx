@@ -6,6 +6,27 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube, FaArrowUp } from "react
 import { useEffect, useState } from "react";
 import { Send, Shield } from "lucide-react";
 
+const socialLinks = [
+  { Icon: FaFacebookF, name: 'facebook' },
+  { Icon: FaTwitter, name: 'twitter' },
+  { Icon: FaInstagram, name: 'instagram' },
+  { Icon: FaYoutube, name: 'youtube' },
+];
+
+const quickLinks = [
+  { name: "Home", path: "/" },
+  { name: "All Trainers", path: "/allTrainers" },
+  { name: "All Classes", path: "/allClasses" },
+  { name: "Community Forum", path: "/posts" },
+];
+
+const serviceLinks = [
+  { name: "Personal Training", path: "/allTrainers" },
+  { name: "Group Classes", path: "/allClasses" },
+  { name: "Nutrition Planning", path: "/#nutrition-plan" },
+  { name: "Fitness Assessment", path: "/#features" }
+];
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -58,12 +79,7 @@ const Footer = () => {
 
             {/* Social Icons */}
             <div className="flex gap-3">
-              {[
-                { Icon: FaFacebookF, name: 'facebook' },
-                { Icon: FaTwitter, name: 'twitter' },
-                { Icon: FaInstagram, name: 'instagram' },
-                { Icon: FaYoutube, name: 'youtube' },
-              ].map(({ Icon, name }) => (
+              {socialLinks.map(({ Icon, name }) => (
                 <a
                   key={name}
                   href="#"
@@ -80,12 +96,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-base mb-2 font-heading">Quick Links</h3>
             <ul className="space-y-1">
-              {[
-                { name: "Home", path: "/" },
-                { name: "All Trainers", path: "/allTrainers" },
-                { name: "All Classes", path: "/allClasses" },
-                { name: "Community Forum", path: "/posts" },
-              ].map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.path}
@@ -103,12 +114,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-base mb-2 font-heading">Services</h3>
             <ul className="space-y-1">
-              {[
-                { name: "Personal Training", path: "/allTrainers" },
-                { name: "Group Classes", path: "/allClasses" },
-                { name: "Nutrition Planning", path: "/#nutrition-plan" },
-                { name: "Fitness Assessment", path: "/#features" }
-              ].map((item) => (
+              {serviceLinks.map((item) => (
                 <li key={item.name}>
                   <Link href={item.path} className="text-zinc-500 hover:text-emerald-400 transition-all duration-300 flex items-center gap-2 group">
                     <span className="w-1.5 h-1.5 rounded-full bg-zinc-800 group-hover:bg-emerald-500 transition-colors" />

@@ -20,21 +20,20 @@ const descriptionMap: Record<string, string> = {
     Premium: "The ultimate all-inclusive experience.",
 };
 
+function getEndDate(startDateStr: string) {
+    if (!startDateStr) return "";
+    const start = new Date(startDateStr);
+    const end = new Date(start);
+    end.setMonth(start.getMonth() + 1);
+    // Subtract one day - last day of the cycle
+    end.setDate(end.getDate() - 1);
+    return format(end, "MMMM d, yyyy");
+}
+
 export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [selectedDate, setSelectedDate] = useState<string>("");
-
-    // Calculate end date (1 month after start)
-    const getEndDate = (startDateStr: string) => {
-        if (!startDateStr) return "";
-        const start = new Date(startDateStr);
-        const end = new Date(start);
-        end.setMonth(start.getMonth() + 1);
-        // Subtract one day - last day of the cycle
-        end.setDate(end.getDate() - 1);
-        return format(end, "MMMM d, yyyy");
-    };
 
     const endDateFormatted = getEndDate(selectedDate);
 
