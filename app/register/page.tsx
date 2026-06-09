@@ -102,7 +102,7 @@ const Register = () => {
     }
   };
 
-  const handleGoogleSignUp = async (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleGoogleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!isLoaded) return;
     try {
@@ -152,8 +152,9 @@ const Register = () => {
         {verifying ? (
           <form onSubmit={handleVerify} className="px-6 pb-2 space-y-2">
             <div className="space-y-1">
-              <label className="text-[11px] font-medium text-zinc-300 ml-1">Verification Code</label>
+              <label htmlFor="code" className="text-[11px] font-medium text-zinc-300 ml-1">Verification Code</label>
               <input
+                id="code"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="block w-full py-1.5 px-3 text-center text-base tracking-[0.5em] font-mono text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all"
@@ -167,8 +168,8 @@ const Register = () => {
         ) : (
           <form onSubmit={handleRegister} className="px-5 pb-4 space-y-2.5">
             {/* Google Sign Up Button - Quick Option First */}
-            <a
-              href="#"
+            <button
+              type="button"
               onClick={handleGoogleSignUp}
               className="flex items-center justify-center w-full py-1.5 text-sm font-medium text-zinc-300 bg-zinc-800 border border-zinc-700 rounded-lg hover:bg-zinc-700 hover:text-white transition-all duration-200"
             >
@@ -179,7 +180,7 @@ const Register = () => {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
               </svg>
               Continue with Google
-            </a>
+            </button>
 
             <div className="relative flex items-center py-1">
               <div className="flex-grow border-t border-zinc-700"></div>
@@ -189,29 +190,29 @@ const Register = () => {
 
             {/* Name */}
             <div>
-              <label className="text-[11px] font-medium text-zinc-300 ml-1">Full Name</label>
+              <label htmlFor="name" className="text-[11px] font-medium text-zinc-300 ml-1">Full Name</label>
               <div className="relative group mt-0.5">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaUser className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="text" name="name" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="Enter your full name" required />
+                <input id="name" type="text" name="name" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="Enter your full name" required />
               </div>
             </div>
 
             {/* Email */}
             <div>
-              <label className="text-[11px] font-medium text-zinc-300 ml-1">Email</label>
+              <label htmlFor="email" className="text-[11px] font-medium text-zinc-300 ml-1">Email</label>
               <div className="relative group mt-0.5">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaEnvelope className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="email" name="email" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="name@example.com" required />
+                <input id="email" type="email" name="email" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="name@example.com" required />
               </div>
             </div>
 
             {/* Phone Number */}
             <div>
-              <label className="text-[11px] font-medium text-zinc-300 ml-1">Phone Number</label>
+              <label htmlFor="phoneNumber" className="text-[11px] font-medium text-zinc-300 ml-1">Phone Number</label>
               <div className="relative group mt-0.5">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaPhone className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
@@ -220,6 +221,7 @@ const Register = () => {
                   <span className="text-zinc-400 text-xs font-medium">+880</span>
                 </div>
                 <input
+                  id="phoneNumber"
                   type="tel"
                   name="phoneNumber"
                   pattern="[0-9]{11}"
@@ -235,12 +237,12 @@ const Register = () => {
 
             {/* Password */}
             <div>
-              <label className="text-[11px] font-medium text-zinc-300 ml-1">Password</label>
+              <label htmlFor="password" className="text-[11px] font-medium text-zinc-300 ml-1">Password</label>
               <div className="relative group mt-0.5">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaLock className="w-3 h-3 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
-                <input type="password" name="password" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="••••••••" required />
+                <input id="password" type="password" name="password" className="block w-full py-1.5 pl-8 pr-3 text-sm text-white bg-zinc-950/50 border border-zinc-700 rounded-lg focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 focus:outline-none transition-all placeholder-zinc-600" placeholder="••••••••" required />
               </div>
               <p className="text-[9px] text-zinc-500 ml-1 mt-0.5">
                 1 uppercase, 1 special char, 1 number (min 6)

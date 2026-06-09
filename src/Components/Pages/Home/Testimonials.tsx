@@ -128,7 +128,7 @@ const Testimonials = () => {
 
                   <div className="flex justify-between items-start mb-6">
                     <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-                      <FaQuoteLeft className="text-zinc-500 group-hover:text-emerald-500 transition-colors" />
+                      <FaQuoteLeft className="text-zinc-400 group-hover:text-emerald-500 transition-colors" />
                     </div>
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
@@ -154,7 +154,7 @@ const Testimonials = () => {
                       <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors font-heading">
                         {testimonial.name}
                       </h4>
-                      <p className="text-xs text-zinc-500 font-mono uppercase tracking-wide">
+                      <p className="text-xs text-zinc-400 font-mono uppercase tracking-wide">
                         {testimonial.location}
                       </p>
                     </div>

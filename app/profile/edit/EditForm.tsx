@@ -63,9 +63,10 @@ export default function EditForm({ user }: { user: any }) {
 
             {/* Name - NOW USES REAL DATA */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Full Name</label>
+              <label htmlFor="name" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Full Name</label>
               <div className="relative">
                 <input
+                  id="name"
                   type="text"
                   name="name"
                   defaultValue={user.name || ""}
@@ -77,9 +78,10 @@ export default function EditForm({ user }: { user: any }) {
 
             {/* Location */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Location</label>
+              <label htmlFor="location" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Location</label>
               <div className="relative">
                 <input
+                  id="location"
                   type="text"
                   name="location"
                   defaultValue={user.location || ""}
@@ -92,11 +94,12 @@ export default function EditForm({ user }: { user: any }) {
 
             {/* Email (Read Only) */}
             <div className="space-y-1.5 opacity-60">
-              <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
+              <label htmlFor="email" className="text-xs font-bold text-zinc-500 uppercase tracking-wider flex items-center gap-1">
                 Email <FaLock className="text-[10px]" />
               </label>
               <div className="relative">
                 <input
+                  id="email"
                   type="email"
                   defaultValue={user.email}
                   readOnly
@@ -108,9 +111,10 @@ export default function EditForm({ user }: { user: any }) {
 
             {/* Phone */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Phone</label>
+              <label htmlFor="phone" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Phone</label>
               <div className="relative">
                 <input
+                  id="phone"
                   type="text"
                   name="phone"
                   defaultValue={user.phone || ""}
@@ -134,9 +138,10 @@ export default function EditForm({ user }: { user: any }) {
 
               {/* Date of Birth */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Date of Birth</label>
+                <label htmlFor="dob" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Date of Birth</label>
                 <div className="relative">
                   <input
+                    id="dob"
                     type="date"
                     name="dob"
                     value={dob}
@@ -149,9 +154,10 @@ export default function EditForm({ user }: { user: any }) {
 
               {/* Age (Auto-Calculated) */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Age</label>
+                <label htmlFor="age" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Age</label>
                 <div className="relative">
                   <input
+                    id="age"
                     type="text"
                     value={age ? `${age} years` : ""}
                     readOnly
@@ -163,9 +169,10 @@ export default function EditForm({ user }: { user: any }) {
 
               {/* Gender */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Gender</label>
+                <label htmlFor="gender" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Gender</label>
                 <div className="relative">
                   <select
+                    id="gender"
                     name="gender"
                     defaultValue={user.gender || "Male"}
                     className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none"
@@ -180,9 +187,10 @@ export default function EditForm({ user }: { user: any }) {
 
               {/* Weight */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Weight (kg)</label>
+                <label htmlFor="weight" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Weight (kg)</label>
                 <div className="relative">
                   <input
+                    id="weight"
                     type="number"
                     name="weight"
                     defaultValue={user.weight || ""}
@@ -196,10 +204,11 @@ export default function EditForm({ user }: { user: any }) {
 
               {/* Height (Split Fields) */}
               <div className="md:col-span-2 space-y-1.5">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Height</label>
+                <label htmlFor="heightFeet" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Height</label>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="relative">
                     <input
+                      id="heightFeet"
                       type="number"
                       name="heightFeet"
                       defaultValue={user.heightFeet || ""}
@@ -211,6 +220,7 @@ export default function EditForm({ user }: { user: any }) {
                   </div>
                   <div className="relative">
                     <input
+                      id="heightInches"
                       type="number"
                       name="heightInches"
                       defaultValue={user.heightInches || ""}

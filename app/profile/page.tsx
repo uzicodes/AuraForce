@@ -171,8 +171,8 @@ const Profile = async () => {
                 <span className="flex items-center gap-1.5 bg-zinc-800/70 px-3 py-1.5 rounded-lg border border-zinc-700/50 text-xs font-medium">
                   <FaIdCard className="text-emerald-500 text-[11px]" /> ID: {dbUser.id.slice(-6).toUpperCase()}
                 </span>
-                <span className="flex items-center gap-1.5 text-xs text-zinc-500">
-                  <FaCalendarAlt className="text-zinc-600" /> Joined {memberSince}
+                <span className="flex items-center gap-1.5 text-xs text-zinc-400">
+                  <FaCalendarAlt className="text-zinc-500" /> Joined {memberSince}
                 </span>
               </div>
 
@@ -259,7 +259,7 @@ const Profile = async () => {
                   </div>
                 ) : (
                   <div className="p-10 text-center bg-zinc-950/40 rounded-xl border border-dashed border-zinc-800 hover:border-zinc-700 transition-colors">
-                    <div className="w-14 h-14 mx-auto bg-zinc-800 rounded-xl flex items-center justify-center text-zinc-500 mb-4">
+                    <div className="w-14 h-14 mx-auto bg-zinc-800 rounded-xl flex items-center justify-center text-zinc-400 mb-4">
                       <FaCrown size={22} />
                     </div>
                     <p className="text-zinc-300 font-semibold mb-2">You have currently no active subscriptions</p>
@@ -284,7 +284,7 @@ const Profile = async () => {
                   </div>
                   <h3 className="text-xl font-bold text-white font-heading">My Published Posts</h3>
                 </div>
-                <span className="text-xs font-bold text-zinc-500 bg-zinc-800 px-3 py-1 rounded-md">
+                <span className="text-xs font-bold text-zinc-400 bg-zinc-800 px-3 py-1 rounded-md">
                   {formattedPosts.length} {formattedPosts.length === 1 ? "Post" : "Posts"}
                 </span>
               </div>
@@ -365,7 +365,7 @@ const Profile = async () => {
                 </div>
                 <div className="flex items-center justify-between p-4 bg-zinc-800/30 rounded-xl border border-zinc-700/30">
                   <span className="text-sm text-zinc-400">Membership</span>
-                  <span className={`text-sm font-bold ${isActive ? "text-emerald-400" : "text-zinc-500"}`}>
+                  <span className={`text-sm font-bold ${isActive ? "text-emerald-400" : "text-zinc-400"}`}>
                     {isActive ? planName : "Inactive"}
                   </span>
                 </div>

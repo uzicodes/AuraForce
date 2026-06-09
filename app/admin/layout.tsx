@@ -67,6 +67,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* ----- Mobile overlay ----- */}
             {sidebarOpen && (
                 <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Close sidebar"
+                    onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') setSidebarOpen(false); }}
                     className="fixed inset-0 bg-black/60 z-40 lg:hidden"
                     onClick={() => setSidebarOpen(false)}
                 />
@@ -98,6 +102,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                     {/* Close on mobile */}
                     <button
+                        aria-label="Close sidebar"
                         onClick={() => setSidebarOpen(false)}
                         className="lg:hidden text-zinc-400 hover:text-white transition-colors"
                     >
@@ -133,6 +138,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 {/* Logout */}
                 <div className="px-3 py-4 border-t border-zinc-800">
                     <button
+                        aria-label="Logout"
                         onClick={handleLogout}
                         className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 border border-transparent hover:border-red-500/20"
                     >

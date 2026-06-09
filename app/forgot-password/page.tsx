@@ -100,12 +100,13 @@ const ForgotPassword = () => {
           // FORM 1: SEND EMAIL
           <form onSubmit={create} className="px-8 pb-8 space-y-4">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
+              <label htmlFor="email" className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaEnvelope className="w-3.5 h-3.5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -130,12 +131,13 @@ const ForgotPassword = () => {
             
             {/* Code Input */}
             <div className="space-y-1">
-              <label className="text-xs font-medium text-zinc-300 ml-1">Verification Code</label>
+              <label htmlFor="code" className="text-xs font-medium text-zinc-300 ml-1">Verification Code</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaKey className="w-3.5 h-3.5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
                 <input
+                  id="code"
                   type="text"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
@@ -148,12 +150,13 @@ const ForgotPassword = () => {
 
             {/* New Password Input */}
             <div className="space-y-1">
-              <label className="text-xs font-medium text-zinc-300 ml-1">New Password</label>
+              <label htmlFor="password" className="text-xs font-medium text-zinc-300 ml-1">New Password</label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <FaLock className="w-3.5 h-3.5 text-zinc-500 group-focus-within:text-emerald-500 transition-colors" />
                 </div>
                 <input
+                  id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

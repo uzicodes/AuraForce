@@ -75,13 +75,13 @@ const Trainer = ({ trainer }) => {
         <div className="mt-auto">
           <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Connect With Me</h3>
           <div className="flex items-center gap-x-3 mb-5">
-            <a href="#" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
+            <a href="#" aria-label="Facebook" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
               <FaFacebook className="w-5 h-5" />
             </a>
-            <a href="#" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
+            <a href="#" aria-label="Instagram" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
               <FaInstagram className="w-5 h-5" />
             </a>
-            <a href="#" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
+            <a href="#" aria-label="Twitter" className="text-gray-600 dark:text-white hover:text-green-600 dark:hover:text-green-500 transition-colors duration-200">
               <FaTwitterSquare className="w-5 h-5" />
             </a>
           </div>

@@ -165,11 +165,12 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
 
                 {/* DATE SELECTION */}
                 <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider font-satoshi">
+                    <label htmlFor="startMonth" className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider font-satoshi">
                         <FaCalendarAlt className="text-emerald-500" /> Select Start Month
                     </label>
                     <div className="relative">
                         <select
+                            id="startMonth"
                             className="w-full appearance-none bg-zinc-950 border border-zinc-800 px-4 py-4 text-white focus:outline-none focus:border-emerald-500 transition-colors rounded-none font-satoshi cursor-pointer hover:border-zinc-700"
                             value={selectedDate}
                             onChange={(e) => setSelectedDate(e.target.value)}

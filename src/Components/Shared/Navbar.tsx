@@ -167,6 +167,7 @@ const Navbar = () => {
             {isSignedIn && (
               <Link
                 href="/profile"
+                aria-label="View Profile"
                 className="relative flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400"
                 title="View Profile"
               >
@@ -198,6 +199,7 @@ const Navbar = () => {
           {isSignedIn && (
             <Link
               href="/profile"
+              aria-label="View Profile"
               className="lg:hidden relative flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400 mr-1"
             >
               {hasImage ? (
@@ -327,6 +329,10 @@ const Navbar = () => {
 
       {isOpen && (
         <div
+          role="button"
+          tabIndex={0}
+          aria-label="Close menu"
+          onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}
           className="fixed inset-0 bg-black/50 z-[45] transition-opacity duration-300 lg:hidden"
           onClick={() => setIsOpen(false)}
         />

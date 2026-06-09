@@ -96,6 +96,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
             <input
               type="text"
               placeholder="Search discussions..."
+              aria-label="Search discussions"
               className="w-full pl-11 pr-4 py-3 bg-zinc-950 border border-zinc-800 rounded-2xl focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-white placeholder-zinc-600"
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -147,6 +148,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
 
             {/* Close Button */}
             <button
+              aria-label="Close modal"
               onClick={() => setIsModalOpen(false)}
               className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors"
             >

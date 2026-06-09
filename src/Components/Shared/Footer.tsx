@@ -52,7 +52,7 @@ const Footer = () => {
                 AURA <span className="text-emerald-500">FORCE</span>
               </span>
             </Link>
-            <p className="text-zinc-500 text-sm leading-relaxed max-w-xs font-satoshi">
+            <p className="text-zinc-400 text-sm leading-relaxed max-w-xs font-satoshi">
               Empowering your fitness journey with data-driven workouts, expert coaching, and a community that never quits.
             </p>
 
@@ -67,6 +67,7 @@ const Footer = () => {
                 <a
                   key={name}
                   href="#"
+                  aria-label={name}
                   className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-300"
                 >
                   <Icon size={16} />
@@ -121,7 +122,7 @@ const Footer = () => {
           {/* Newsletter */}
           <div>
             <h3 className="text-white font-bold text-base mb-2 font-heading">Stay Updated</h3>
-            <p className="text-zinc-500 text-xs mb-2 font-satoshi">
+            <p className="text-zinc-400 text-xs mb-2 font-satoshi">
               Get the latest workout tips and exclusive offers sent to your inbox.
             </p>
             <form className="relative group">
@@ -139,7 +140,7 @@ const Footer = () => {
             </form>
             <Link
               href="/admin/login"
-              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-lg text-[10px] text-zinc-500 hover:text-emerald-400 hover:border-red-500/50 hover:bg-red-500/5 transition-all duration-300 group"
+              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-lg text-[10px] text-zinc-400 hover:text-emerald-400 hover:border-red-500/50 hover:bg-red-500/5 transition-all duration-300 group"
             >
               <Shield size={11} className="group-hover:text-emerald-400 transition-colors" />
               Admin Portal
