@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Crown, Dumbbell, CalendarCheck, Clock, Star } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface Membership {
     id: number;
@@ -45,47 +45,39 @@ const tierBadge: Record<string, string> = {
 };
 
 export default function PlansPage() {
-    const [membershipPlans, setMembershipPlans] = useState<Membership[]>([]);
-    const [gymClasses, setGymClasses] = useState<GymClass[]>([]);
-    const [trainers, setTrainers] = useState<Trainer[]>([]);
-    const [loading, setLoading] = useState(true);
+    const { data, isLoading: loading } = useQuery({
+        queryKey: ['admin-plans'],
+        queryFn: async () => {
+            const [memRes, classRes, trainerRes] = await Promise.all([
+                fetch('/api/admin/memberships'),
+                fetch('/api/admin/classes'),
+                fetch('/api/admin/trainers')
+            ]);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const [memRes, classRes, trainerRes] = await Promise.all([
-                    fetch('/api/admin/memberships'),
-                    fetch('/api/admin/classes'),
-                    fetch('/api/admin/trainers')
-                ]);
-
-                if (memRes.status === 429 || classRes.status === 429 || trainerRes.status === 429) {
-                    toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
-                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-                    });
-                    return;
-                }
-
-                if (!memRes.ok || !classRes.ok || !trainerRes.ok) throw new Error('Failed to fetch data');
-
-                const [memData, classData, trainerData] = await Promise.all([
-                    memRes.json(),
-                    classRes.json(),
-                    trainerRes.json()
-                ]);
-
-                setMembershipPlans(memData);
-                setGymClasses(classData);
-                setTrainers(trainerData);
-            } catch (err) {
-                console.error('Error fetching dashboard data:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+            if (memRes.status === 429 || classRes.status === 429 || trainerRes.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return null;
             }
+
+            if (!memRes.ok || !classRes.ok || !trainerRes.ok) throw new Error('Failed to fetch data');
+
+            const [memData, classData, trainerData] = await Promise.all([
+                memRes.json(),
+                classRes.json(),
+                trainerRes.json()
+            ]);
+
+            return {
+                membershipPlans: memData as Membership[],
+                gymClasses: classData as GymClass[],
+                trainers: trainerData as Trainer[],
+            };
         }
-        fetchData();
-    }, []);
+    });
+
+    const { membershipPlans = [], gymClasses = [], trainers = [] } = data || {};
 
     return (
         <div className="space-y-10">

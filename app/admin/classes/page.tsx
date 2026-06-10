@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { Search, Filter, CalendarCheck, Clock, User, Hash } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface ClassBooking {
     id: number;
@@ -36,26 +38,22 @@ function formatDate(dateStr: string | null): string {
 }
 
 export default function ClassesPage() {
-    const [bookings, setBookings] = useState<ClassBooking[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchBookings() {
-            try {
-                const res = await fetch('/api/admin/class-bookings');
-                if (!res.ok) throw new Error('Failed to fetch class bookings');
-                const data = await res.json();
-                setBookings(data);
-            } catch (err) {
-                console.error('Error fetching class bookings:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+    const { data: bookings = [], isLoading: loading } = useQuery<ClassBooking[]>({
+        queryKey: ['admin-class-bookings'],
+        queryFn: async () => {
+            const res = await fetch('/api/admin/class-bookings');
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return [];
             }
+            if (!res.ok) throw new Error('Failed to fetch class bookings');
+            return res.json();
         }
-        fetchBookings();
-    }, []);
+    });
 
     const filteredBookings = bookings.filter((b) => {
         const q = searchQuery.toLowerCase();

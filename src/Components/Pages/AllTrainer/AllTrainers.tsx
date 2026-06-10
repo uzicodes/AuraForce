@@ -179,7 +179,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
                   <FaLinkedin className="text-zinc-600 hover:text-white cursor-pointer transition-colors text-sm" />
                 </div>
 
-                <button
+                <button type="button"
                   onClick={() => handleBookClick(trainer.id)}
                   className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider"
                 >

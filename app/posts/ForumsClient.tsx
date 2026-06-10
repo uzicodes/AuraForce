@@ -71,7 +71,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
             </p>
           </div>
 
-          <button
+          <button type="button"
             onClick={() => {
               if (!isLoggedIn) {
                 toast.error("Please login to Post");
@@ -106,7 +106,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
           {/* Categories */}
           <div className="flex gap-2 overflow-x-auto w-full items-center pb-2 lg:pb-0 px-2 scrollbar-hide">
             {categories.map((cat) => (
-              <button
+              <button type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wide whitespace-nowrap transition-all border ${activeCategory === cat
@@ -148,7 +148,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-2xl p-8 relative shadow-2xl animate-in fade-in zoom-in duration-200">
 
             {/* Close Button */}
-            <button
+            <button type="button"
               aria-label="Close modal"
               onClick={() => setIsModalOpen(false)}
               className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors"

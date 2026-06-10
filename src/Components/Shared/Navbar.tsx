@@ -92,7 +92,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-1.5 group pl-1">
             <div className="relative w-8 h-8 rounded-full overflow-hidden flex items-center justify-center animate-breathe">
-              <Image
+              <Image sizes="100vw"
                 src="/for favicon.png"
                 alt="Aura Force Logo"
                 fill
@@ -173,7 +173,7 @@ const Navbar = () => {
                 title="View Profile"
               >
                 {hasImage ? (
-                  <Image
+                  <Image sizes="100vw"
                     src={displayImage!}
                     alt="Profile"
                     fill
@@ -204,7 +204,7 @@ const Navbar = () => {
               className="lg:hidden relative flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full overflow-hidden ring-2 ring-emerald-500/50 transition-all duration-300 hover:scale-110 hover:ring-emerald-400 mr-1"
             >
               {hasImage ? (
-                <Image
+                <Image sizes="100vw"
                   src={displayImage!}
                   alt="Profile"
                   fill
@@ -217,7 +217,7 @@ const Navbar = () => {
           )}
 
           {/* Mobile Menu Button */}
-          <button
+          <button type="button"
             className="lg:hidden menu-button focus:outline-none p-2 rounded-full hover:bg-white/10 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"

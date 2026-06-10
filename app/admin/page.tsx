@@ -11,7 +11,7 @@ import {
 import toast from 'react-hot-toast';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useReducer } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 interface Member {
     id: string;
@@ -42,81 +42,39 @@ function formatDate(dateStr: string): string {
     return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
 }
 
-interface DashboardState {
-    members: Member[];
-    trainerCount: number;
-    classCount: number;
-    payments: Payment[];
-    loading: boolean;
-}
-
-type DashboardAction =
-    | { type: 'SET_DATA'; payload: { members: Member[]; trainerCount: number; classCount: number; payments: Payment[] } }
-    | { type: 'SET_ERROR' };
-
-const initialDashboardState: DashboardState = {
-    members: [],
-    trainerCount: 0,
-    classCount: 0,
-    payments: [],
-    loading: true,
-};
-
-function dashboardReducer(state: DashboardState, action: DashboardAction): DashboardState {
-    switch (action.type) {
-        case 'SET_DATA':
-            return { ...state, ...action.payload, loading: false };
-        case 'SET_ERROR':
-            return { ...state, loading: false };
-        default:
-            return state;
-    }
-}
-
 export default function AdminDashboard() {
-    const [state, dispatch] = useReducer(dashboardReducer, initialDashboardState);
-    const { members, trainerCount, classCount, payments, loading } = state;
+    const { data, isLoading: loading } = useQuery({
+        queryKey: ['admin-dashboard'],
+        queryFn: async () => {
+            const [memRes, trainerRes, classRes, payRes] = await Promise.all([
+                fetch('/api/admin/members'),
+                fetch('/api/admin/trainers'),
+                fetch('/api/admin/classes'),
+                fetch('/api/admin/payments'),
+            ]);
 
-    useEffect(() => {
-        async function fetchDashboardData() {
-            try {
-                const [memRes, trainerRes, classRes, payRes] = await Promise.all([
-                    fetch('/api/admin/members'),
-                    fetch('/api/admin/trainers'),
-                    fetch('/api/admin/classes'),
-                    fetch('/api/admin/payments'),
-                ]);
-
-                if (memRes.status === 429 || trainerRes.status === 429 || classRes.status === 429) {
-                    toast.error("You are doing that too fast! Please wait a few seconds.", {
-                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-                    });
-                    dispatch({ type: 'SET_ERROR' });
-                    return;
-                }
-
-                const memData = memRes.ok ? await memRes.json() : [];
-                const trainerData = trainerRes.ok ? await trainerRes.json() : [];
-                const classData = classRes.ok ? await classRes.json() : [];
-                const payData = payRes.ok ? await payRes.json() : [];
-
-                dispatch({
-                    type: 'SET_DATA',
-                    payload: {
-                        members: memData,
-                        trainerCount: trainerData.length,
-                        classCount: classData.length,
-                        payments: Array.isArray(payData) ? payData : [],
-                    }
+            if (memRes.status === 429 || trainerRes.status === 429 || classRes.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
                 });
-            } catch (err) {
-                console.error('Dashboard fetch error:', err);
-                toast.error('Failed to load dashboard data.');
-                dispatch({ type: 'SET_ERROR' });
+                return null;
             }
+
+            const memData = memRes.ok ? await memRes.json() : [];
+            const trainerData = trainerRes.ok ? await trainerRes.json() : [];
+            const classData = classRes.ok ? await classRes.json() : [];
+            const payData = payRes.ok ? await payRes.json() : [];
+
+            return {
+                members: memData as Member[],
+                trainerCount: trainerData.length as number,
+                classCount: classData.length as number,
+                payments: (Array.isArray(payData) ? payData : []) as Payment[],
+            };
         }
-        fetchDashboardData();
-    }, []);
+    });
+
+    const { members = [], trainerCount = 0, classCount = 0, payments = [] } = data || {};
 
     const totalRevenue = payments
         .reduce((sum, p) => sum + p.amount, 0);

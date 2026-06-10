@@ -90,7 +90,7 @@ const Newsletter = () => {
               </div>
               <h3 className="text-3xl font-bold text-white mb-2 font-heading">Welcome to the Inner Circle!</h3>
               <p className="text-zinc-400 font-satoshi">Keep an eye on your inbox. Your first workout guide is on its way.</p>
-              <button
+              <button type="button"
                 onClick={() => setStatus("idle")}
                 className="mt-8 text-sm text-zinc-500 hover:text-white underline underline-offset-4 transition-colors"
               >

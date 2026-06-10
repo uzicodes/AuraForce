@@ -96,7 +96,7 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
 
       {/* Delete Button for Owner */}
       {isOwner && (
-        <button
+        <button type="button"
           onClick={handleDelete}
           className="absolute top-4 right-4 z-20 p-2 bg-red-500/10 text-red-500 rounded-full hover:bg-red-500 hover:text-white transition-all opacity-0 group-hover:opacity-100"
           title="Delete Post"
@@ -108,7 +108,7 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
       {/* Author Header */}
       <div className="p-6 pb-4 flex items-start gap-4">
         <div className="relative flex-shrink-0 w-12 h-12">
-          <Image
+          <Image sizes="100vw"
             src={post.author_img}
             alt={post.author_name}
             fill
@@ -157,7 +157,7 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
 
         {/* Vote Buttons */}
         <div className="flex items-center bg-zinc-900 rounded-lg border border-zinc-800 p-1">
-          <button
+          <button type="button"
             onClick={() => handleVote("UP")}
             className={`p-1.5 rounded-md transition-colors ${optimisticState.userVote === "UP" ? "text-emerald-400 bg-emerald-400/10" : "text-zinc-500 hover:text-white"
               }`}
@@ -167,7 +167,7 @@ const Post = ({ post, isOwner = false }: { post: any, isOwner?: boolean }) => {
           <span className={`px-2 text-sm font-bold ${optimisticState.userVote === "UP" ? "text-emerald-400" : optimisticState.userVote === "DOWN" ? "text-red-400" : "text-zinc-400"}`}>
             {optimisticState.upvotes}
           </span>
-          <button
+          <button type="button"
             onClick={() => handleVote("DOWN")}
             className={`p-1.5 rounded-md transition-colors ${optimisticState.userVote === "DOWN" ? "text-red-400 bg-red-400/10" : "text-zinc-500 hover:text-white"
               }`}

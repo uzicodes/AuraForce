@@ -154,7 +154,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
               </ul>
 
 
-              <button
+              <button type="button"
                 onClick={() => handleSubscribe(pkg.id)}
                 className={`w-full py-3 rounded-none font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
                   ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"

@@ -121,7 +121,7 @@ const Register = () => {
 
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-zinc-950/90 z-10" />
-        <Image
+        <Image sizes="100vw"
           src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=2075&auto=format&fit=crop"
           alt="Dark Gym Atmosphere"
           fill
@@ -134,7 +134,7 @@ const Register = () => {
 
         <div className="px-6 pt-4 pb-2 text-center">
           <div className="relative w-8 h-8 mx-auto mb-2">
-            <Image
+            <Image sizes="100vw"
               src="/for favicon.png"
               alt="Aura Force Logo"
               fill

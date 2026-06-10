@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -31,18 +31,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const router = useRouter();
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [isAuthed, setIsAuthed] = useState(false);
-
-    useEffect(() => {
-        const admin = localStorage.getItem('auraforce_admin');
-        if (!admin && pathname !== '/admin/login') {
-            router.push('/admin/login');
-        } else {
-            setIsAuthed(true);
-        }
-    }, [pathname, router]);
 
     const handleLogout = () => {
+        document.cookie = 'auraforce_admin=; path=/; max-age=0';
         localStorage.removeItem('auraforce_admin');
         router.push('/admin/login');
     };
@@ -50,15 +41,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     // Login page - render without the dashboard shell
     if (pathname === '/admin/login') {
         return <>{children}</>;
-    }
-
-    // Show nothing until auth check completes
-    if (!isAuthed) {
-        return (
-            <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
-                <div className="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
-            </div>
-        );
     }
 
     return (
@@ -88,7 +70,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="flex items-center justify-between px-5 py-5 border-b border-zinc-800">
                     <Link href="/admin" className="flex items-center gap-2 group">
                         <div className="relative w-8 h-8 transition-transform duration-300 group-hover:scale-110">
-                            <Image
+                            <Image sizes="100vw"
                                 src="/for favicon.png"
                                 alt="Aura Force Logo"
                                 fill
@@ -101,7 +83,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </Link>
 
                     {/* Close on mobile */}
-                    <button
+                    <button type="button"
                         aria-label="Close sidebar"
                         onClick={() => setSidebarOpen(false)}
                         className="lg:hidden text-zinc-400 hover:text-white transition-colors"
@@ -137,7 +119,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 {/* Logout */}
                 <div className="px-3 py-4 border-t border-zinc-800">
-                    <button
+                    <button type="button"
                         aria-label="Logout"
                         onClick={handleLogout}
                         className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 border border-transparent hover:border-red-500/20"

@@ -166,7 +166,7 @@ const Footer = () => {
       </div>
 
       {/* Scroll to Top Button */}
-      <button
+      <button type="button"
         onClick={scrollToTop}
         className={`fixed bottom-8 right-8 w-12 h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full shadow-2xl shadow-emerald-900/50 flex items-center justify-center transition-all duration-500 z-50 group ${showScrollButton ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0 pointer-events-none"
           }`}

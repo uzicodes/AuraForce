@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { Search, Filter, CreditCard, DollarSign, Calendar, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface Payment {
     id: number;
@@ -35,34 +37,24 @@ function formatTime(dateStr: string | null): string {
 }
 
 export default function PaymentsPage() {
-    const [payments, setPayments] = useState<Payment[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchPayments() {
-            try {
-                const res = await fetch('/api/admin/payments');
+    const { data: payments = [], isLoading: loading } = useQuery<Payment[]>({
+        queryKey: ['admin-payments'],
+        queryFn: async () => {
+            const res = await fetch('/api/admin/payments');
 
-                if (res.status === 429) {
-                    toast.error("You are doing that too fast! Please wait a few seconds.", {
-                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-                    });
-                    return;
-                }
-
-                if (!res.ok) throw new Error('Failed to fetch payments');
-                const data = await res.json();
-                setPayments(data);
-            } catch (err) {
-                console.error('Error fetching payments:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return [];
             }
+
+            if (!res.ok) throw new Error('Failed to fetch payments');
+            return res.json();
         }
-        fetchPayments();
-    }, []);
+    });
 
     const totalRevenue = payments.reduce((sum, p) => sum + p.amount, 0);
 

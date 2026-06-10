@@ -39,7 +39,7 @@ const Banner = () => {
 
       {/* Background Image Container */}
       <div className="absolute inset-0">
-        <Image
+        <Image sizes="100vw"
           src="/images/banner/banner.jpg"
           alt="Fitness Banner"
           fill

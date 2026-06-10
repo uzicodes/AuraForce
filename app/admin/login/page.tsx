@@ -66,7 +66,7 @@ const AdminLogin = () => {
         await new Promise((res) => setTimeout(res, 600));
 
         if (enteredPin === ADMIN_PIN) {
-            localStorage.setItem('auraforce_admin', 'true');
+            document.cookie = 'auraforce_admin=true; path=/; max-age=86400';
             toast.success('Access granted!');
             router.push('/admin');
         } else {
@@ -142,9 +142,11 @@ const AdminLogin = () => {
 
                         {/* PIN Input Grid */}
                         <div className="flex justify-center gap-3 mb-8" onPaste={handlePaste}>
-                            {pin.map((digit, index) => (
+                            {[1, 2, 3, 4, 5].map((id, index) => {
+                                const digit = pin[index];
+                                return (
                                 <input
-                                    key={`pin-${index}`}
+                                    key={`pin-input-${id}`}
                                     ref={(el) => { inputRefs.current[index] = el; }}
                                     type="password"
                                     inputMode="numeric"
@@ -162,11 +164,11 @@ const AdminLogin = () => {
                     focus:border-emerald-500 focus:shadow-[0_0_20px_rgba(16,185,129,0.2)] focus:ring-0
                   `}
                                 />
-                            ))}
+                            )})}
                         </div>
 
                         {/* Submit Button */}
-                        <button
+                        <button type="button"
                             onClick={handleSubmit}
                             disabled={loading || pin.some((d) => !d)}
                             className="w-full py-3 text-sm font-bold text-black bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-xl hover:from-emerald-400 hover:to-emerald-300 focus:outline-none transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] transform active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-[0_0_20px_rgba(16,185,129,0.25)] flex items-center justify-center gap-2"

@@ -36,7 +36,7 @@ export default async function NutritionPage() {
       <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden">
 
         {/* --- BACKGROUND IMAGE START --- */}
-        <Image
+        <Image sizes="100vw"
           src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?q=80&w=2080&auto=format&fit=crop"
           alt="Nutrition Background"
           fill
@@ -87,7 +87,7 @@ export default async function NutritionPage() {
     <section className="min-h-screen relative py-20 px-4 overflow-hidden">
 
       {/* --- BACKGROUND IMAGE START --- */}
-      <Image
+      <Image sizes="100vw"
         src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=2053&auto=format&fit=crop"
         alt="Healthy Food Background"
         fill

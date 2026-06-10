@@ -102,7 +102,7 @@ const ForgotPassword = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-zinc-950/90 z-10" />
-        <Image 
+        <Image sizes="100vw" 
           src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
           alt="Background"
           fill

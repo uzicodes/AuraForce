@@ -201,7 +201,7 @@ export default function CheckoutClient({
                         </div>
 
                         {/* Pay Button */}
-                        <button
+                        <button type="button"
                             onClick={handlePayment}
                             disabled={loading}
                             className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-none transition-all duration-200 shadow-lg shadow-emerald-900/30 flex items-center justify-center gap-2.5 disabled:opacity-60 disabled:cursor-not-allowed transform active:scale-[0.98] text-sm tracking-wide font-satoshi"

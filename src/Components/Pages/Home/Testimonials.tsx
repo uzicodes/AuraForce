@@ -143,7 +143,7 @@ const Testimonials = () => {
 
                   <div className="flex items-center gap-4 border-t border-zinc-800 pt-6 mt-auto">
                     <div className="relative w-12 h-12">
-                      <Image
+                      <Image sizes="100vw"
                         src={testimonial.image}
                         alt={testimonial.name}
                         fill

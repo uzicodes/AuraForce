@@ -146,7 +146,7 @@ const GearArsenal = () => {
                         >
                             {/* Product Image */}
                             <div className="relative h-36 overflow-hidden bg-zinc-800">
-                                <Image
+                                <Image sizes="100vw"
                                     src={item.image}
                                     alt={item.name}
                                     fill

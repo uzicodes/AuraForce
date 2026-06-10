@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { Search, Filter, Crown, User, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface MembershipBooking {
     id: number;
@@ -33,34 +35,24 @@ function formatDate(dateStr: string | null): string {
 }
 
 export default function MembershipsPage() {
-    const [bookings, setBookings] = useState<MembershipBooking[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchBookings() {
-            try {
-                const res = await fetch('/api/admin/membership-bookings');
+    const { data: bookings = [], isLoading: loading } = useQuery<MembershipBooking[]>({
+        queryKey: ['admin-membership-bookings'],
+        queryFn: async () => {
+            const res = await fetch('/api/admin/membership-bookings');
 
-                if (res.status === 429) {
-                    toast.error("You are doing that too fast! Please wait a few seconds.", {
-                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-                    });
-                    return;
-                }
-
-                if (!res.ok) throw new Error('Failed to fetch membership bookings');
-                const data = await res.json();
-                setBookings(data);
-            } catch (err) {
-                console.error('Error fetching membership bookings:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return [];
             }
+
+            if (!res.ok) throw new Error('Failed to fetch membership bookings');
+            return res.json();
         }
-        fetchBookings();
-    }, []);
+    });
 
     const filteredBookings = bookings.filter((b) => {
         const q = searchQuery.toLowerCase();

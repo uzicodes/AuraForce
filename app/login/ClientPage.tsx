@@ -64,7 +64,7 @@ const Login = () => {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-zinc-950/90 z-10" />
-        <Image
+        <Image sizes="100vw"
           src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop"
           alt="Gym Background"
           fill
@@ -77,7 +77,7 @@ const Login = () => {
 
         <div className="px-8 pt-8 pb-6 text-center">
           <div className="relative w-12 h-12 mx-auto mb-4">
-            <Image
+            <Image sizes="100vw"
               src="/for favicon.png"
               alt="Aura Force Logo"
               fill

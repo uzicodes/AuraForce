@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Users, Search, Filter } from 'lucide-react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface Member {
     id: string;
@@ -46,32 +47,22 @@ function formatDate(dateStr: string): string {
 }
 
 export default function MembersPage() {
-    const [members, setMembers] = useState<Member[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchMembers() {
-            try {
-                const res = await fetch('/api/admin/members');
-                if (res.status === 429) {
-                    toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
-                        style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
-                    });
-                    return;
-                }
-                if (!res.ok) throw new Error('Failed to fetch members');
-                const data = await res.json();
-                setMembers(data);
-            } catch (err) {
-                console.error('Error fetching members:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+    const { data: members = [], isLoading: loading } = useQuery<Member[]>({
+        queryKey: ['admin-members'],
+        queryFn: async () => {
+            const res = await fetch('/api/admin/members');
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return [];
             }
+            if (!res.ok) throw new Error('Failed to fetch members');
+            return res.json();
         }
-        fetchMembers();
-    }, []);
+    });
 
     const filteredMembers = members.filter((m) => {
         const q = searchQuery.toLowerCase();

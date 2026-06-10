@@ -37,7 +37,7 @@ const NavbarMobileMenu = ({
       >
         <div className="flex flex-col h-full pt-20 p-6 overflow-y-auto">
           <div className="absolute top-4 right-4">
-            <button
+            <button type="button"
               onClick={() => setIsOpen(false)}
               className="focus:outline-none p-2"
               aria-label="Close menu"
@@ -91,7 +91,7 @@ const NavbarMobileMenu = ({
                       : "bg-emerald-500 flex items-center justify-center text-white text-xs"
                   }`}>
                     {hasImage ? (
-                      <Image
+                      <Image sizes="100vw"
                         src={displayImage!}
                         alt="Profile"
                         fill

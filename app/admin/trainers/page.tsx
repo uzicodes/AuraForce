@@ -1,8 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 import { Search, Filter, Dumbbell, Clock, User } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
 
 interface TrainerBooking {
     id: number;
@@ -20,26 +22,22 @@ const planColorMap: Record<string, string> = {
 };
 
 export default function TrainersPage() {
-    const [bookings, setBookings] = useState<TrainerBooking[]>([]);
-    const [loading, setLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchBookings() {
-            try {
-                const res = await fetch('/api/admin/trainer-bookings');
-                if (!res.ok) throw new Error('Failed to fetch trainer bookings');
-                const data = await res.json();
-                setBookings(data);
-            } catch (err) {
-                console.error('Error fetching trainer bookings:', err);
-                toast.error('Something went wrong. Please try again.');
-            } finally {
-                setLoading(false);
+    const { data: bookings = [], isLoading: loading } = useQuery<TrainerBooking[]>({
+        queryKey: ['admin-trainer-bookings'],
+        queryFn: async () => {
+            const res = await fetch('/api/admin/trainer-bookings');
+            if (res.status === 429) {
+                toast.error("You are doing that too fast! Please wait a few seconds and try again.", {
+                    style: { background: '#18181b', color: '#fff', border: '1px solid #27272a' }
+                });
+                return [];
             }
+            if (!res.ok) throw new Error('Failed to fetch trainer bookings');
+            return res.json();
         }
-        fetchBookings();
-    }, []);
+    });
 
     const filteredBookings = bookings.filter((b) => {
         const q = searchQuery.toLowerCase();
