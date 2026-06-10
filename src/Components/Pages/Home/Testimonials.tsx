@@ -86,7 +86,7 @@ const Testimonials = () => {
             Voices of the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Stong</span>
             <MessageSquareDashed className="inline-block ml-4 text-emerald-400/80 mb-2 w-14 h-14" />
           </motion.h2>
-          <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-400 leading-relaxed font-satoshi">
+          <motion.p variants={scaleRevealVariant} className="text-lg text-zinc-300 leading-relaxed font-satoshi">
             Real results from real athletes! Don't just take our word, hear from the community what they say.
           </motion.p>
         </motion.div>
@@ -128,7 +128,7 @@ const Testimonials = () => {
 
                   <div className="flex justify-between items-start mb-6">
                     <div className="w-10 h-10 bg-zinc-800 rounded-full flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
-                      <FaQuoteLeft className="text-zinc-400 group-hover:text-emerald-500 transition-colors" />
+                      <FaQuoteLeft className="text-zinc-300 group-hover:text-emerald-500 transition-colors" />
                     </div>
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
@@ -154,7 +154,7 @@ const Testimonials = () => {
                       <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors font-heading">
                         {testimonial.name}
                       </h4>
-                      <p className="text-xs text-zinc-400 font-mono uppercase tracking-wide">
+                      <p className="text-xs text-zinc-300 font-mono uppercase tracking-wide">
                         {testimonial.location}
                       </p>
                     </div>

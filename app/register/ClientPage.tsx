@@ -5,11 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { useSignUp } from "@clerk/nextjs/legacy";
+import { useSignUp } from "@clerk/nextjs";
 import { useState } from "react";
 
 const Register = () => {
-  const { isLoaded, signUp, setActive } = useSignUp() as any;
+  const { isLoaded, signUp, setActive } = useSignUp();
   const router = useRouter();
 
   const [verifying, setVerifying] = useState(false);
@@ -106,10 +106,10 @@ const Register = () => {
     e.preventDefault();
     if (!signUp) return;
     try {
-      await signUp.sso({
+      await signUp.authenticateWithRedirect({
         strategy: "oauth_google",
-        redirectCallbackUrl: "/sso-callback",
-        redirectUrl: "/"
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/"
       });
     } catch (err) {
       toast.error("Google Sign Up failed");

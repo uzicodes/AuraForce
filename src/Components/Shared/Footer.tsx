@@ -80,14 +80,14 @@ const Footer = () => {
             {/* Social Icons */}
             <div className="flex gap-3">
               {socialLinks.map(({ Icon, name }) => (
-                <a
+                <button
+                  type="button"
                   key={name}
-                  href="#"
                   aria-label={name}
                   className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500/10 transition-all duration-300"
                 >
                   <Icon size={16} />
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -132,7 +132,9 @@ const Footer = () => {
               Get the latest workout tips and exclusive offers sent to your inbox.
             </p>
             <form className="relative group">
+              <label htmlFor="newsletterEmail" className="sr-only">Email address</label>
               <input
+                id="newsletterEmail"
                 type="email"
                 placeholder="Email address"
                 className="w-full pl-3 pr-10 py-1.5 bg-zinc-900/50 border border-zinc-800 rounded-lg text-zinc-300 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600 text-xs"
@@ -155,7 +157,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-zinc-900 pt-4 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-zinc-600">
+        <div className="border-t border-zinc-900 pt-4 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-zinc-400">
           <p>© {currentYear} <span style={{ fontFamily: 'Tenada, sans-serif' }}>AURA FORCE</span>. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-emerald-500 transition-colors">Privacy Policy</a>

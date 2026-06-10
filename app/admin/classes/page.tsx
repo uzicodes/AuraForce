@@ -89,6 +89,7 @@ export default function ClassesPage() {
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
+                        aria-label="Search by class, name, or status"
                         placeholder="Search by class, name, or status..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Image from "next/image";
-import { useSignIn } from "@clerk/nextjs/legacy";
+import { useSignIn } from "@clerk/nextjs";
 import { useState } from "react";
 
 const Login = () => {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn() as any;
+  const { isLoaded, signIn, setActive } = useSignIn();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {

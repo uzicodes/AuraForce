@@ -131,12 +131,10 @@ const NavbarMobileMenu = ({
       </div>
 
       {isOpen && (
-        <div
-          role="button"
-          tabIndex={0}
+        <button type="button"
           aria-label="Close menu"
           onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}
-          className="fixed inset-0 bg-black/50 z-[45] transition-opacity duration-300 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-[45] transition-opacity duration-300 lg:hidden w-full cursor-default border-none outline-none"
           onClick={() => setIsOpen(false)}
         />
       )}

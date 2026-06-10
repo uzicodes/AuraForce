@@ -48,12 +48,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             {/* ----- Mobile overlay ----- */}
             {sidebarOpen && (
-                <div
-                    role="button"
-                    tabIndex={0}
+                <button type="button"
                     aria-label="Close sidebar"
                     onKeyDown={(e) => { if(e.key === 'Enter' || e.key === ' ') setSidebarOpen(false); }}
-                    className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+                    className="fixed inset-0 bg-black/60 z-40 lg:hidden w-full cursor-default"
                     onClick={() => setSidebarOpen(false)}
                 />
             )}

@@ -162,8 +162,9 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
 
               {/* Title */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Title</label>
+                <label htmlFor="postTitle" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Title</label>
                 <input
+                  id="postTitle"
                   type="text"
                   name="title"
                   placeholder="What's on your mind?"
@@ -174,8 +175,8 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
 
               {/* Category */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Category</label>
-                <select name="category" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none">
+                <label htmlFor="postCategory" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Category</label>
+                <select id="postCategory" name="category" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none">
                   {categories.filter(c => c !== "All").map(cat => (
                     <option key={cat} value={cat}>{cat}</option>
                   ))}
@@ -184,8 +185,9 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
 
               {/* Content */}
               <div className="space-y-2">
-                <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Content</label>
+                <label htmlFor="postContent" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Content</label>
                 <textarea
+                  id="postContent"
                   name="content"
                   rows={6}
                   placeholder="Share your thoughts, questions, or progress..."

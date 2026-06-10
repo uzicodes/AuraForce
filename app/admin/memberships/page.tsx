@@ -86,6 +86,7 @@ export default function MembershipsPage() {
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
+                        aria-label="Search by member ID, name, plan, or status"
                         placeholder="Search by member ID, name, plan, or status..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

@@ -118,10 +118,11 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
 
                 {/* DATE SELECTION */}
                 <div>
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider font-satoshi">
+                    <label htmlFor="startDate" className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-3 uppercase tracking-wider font-satoshi">
                         <FaCalendarAlt className="text-emerald-500" /> Select Start Date
                     </label>
                     <input
+                        id="startDate"
                         type="date"
                         min={today}
                         value={selectedDate}

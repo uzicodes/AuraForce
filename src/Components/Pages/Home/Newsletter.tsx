@@ -109,7 +109,9 @@ const Newsletter = () => {
               </p>
               <form onSubmit={handleSubmit} className="max-w-md mx-auto relative">
                 <div className="relative group/input">
+                  <label htmlFor="newsletterSubscribeEmail" className="sr-only">Enter your email address to subscribe</label>
                   <input
+                    id="newsletterSubscribeEmail"
                     type="email"
                     placeholder="Enter your email address"
                     value={email}

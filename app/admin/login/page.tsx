@@ -148,6 +148,7 @@ const AdminLogin = () => {
                                 <input
                                     key={`pin-input-${id}`}
                                     ref={(el) => { inputRefs.current[index] = el; }}
+                                    aria-label={`Digit ${index + 1}`}
                                     type="password"
                                     inputMode="numeric"
                                     maxLength={1}

@@ -98,6 +98,7 @@ export default function PaymentsPage() {
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
+                        aria-label="Search by member ID, name, transaction ID, or booking type"
                         placeholder="Search by member ID, name, transaction ID, or booking type..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

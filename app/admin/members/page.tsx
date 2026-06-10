@@ -99,6 +99,7 @@ export default function MembersPage() {
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
+                        aria-label="Search members"
                         placeholder="Search members..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

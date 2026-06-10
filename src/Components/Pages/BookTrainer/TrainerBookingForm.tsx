@@ -92,6 +92,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
                     <div className="grid grid-cols-2 gap-4">
                         {/* Weekly Card */}
                         <motion.button
+                            aria-label="Select Weekly Subscription Plan"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("WEEKLY")}
@@ -118,6 +119,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
 
                         {/* Monthly Card */}
                         <motion.button
+                            aria-label="Select Monthly Subscription Plan"
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             onClick={() => setPlanType("MONTHLY")}

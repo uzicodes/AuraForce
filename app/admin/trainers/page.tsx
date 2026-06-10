@@ -73,6 +73,7 @@ export default function TrainersPage() {
                     <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
                     <input
                         type="text"
+                        aria-label="Search by member ID, trainer, or plan"
                         placeholder="Search by member ID, trainer, or plan..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}

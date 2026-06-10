@@ -50,24 +50,24 @@ const ProfileHeader = ({ dbUser, isActive, avatarUrl, memberSince, statItems }: 
               {dbUser.name}
             </h1>
             {dbUser.role === "ADMIN" && (
-              <span className="inline-flex items-center gap-1 bg-amber-500/15 text-amber-400 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest border border-amber-500/20">
+              <span className="inline-flex items-center gap-1 bg-amber-500/15 text-amber-300 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest border border-amber-500/20">
                 <FaCrown className="text-[9px]" /> Admin
               </span>
             )}
             {dbUser.role === "TRAINER" && (
-              <span className="inline-flex items-center gap-1 bg-sky-500/15 text-sky-400 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest border border-sky-500/20">
+              <span className="inline-flex items-center gap-1 bg-sky-500/15 text-sky-300 text-[10px] font-bold px-3 py-1 rounded-md uppercase tracking-widest border border-sky-500/20">
                 <FaUserTie className="text-[9px]" /> Trainer
               </span>
             )}
           </div>
 
           {/* Meta Tags */}
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 text-sm text-zinc-400 mb-5">
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-3 text-sm text-zinc-300 mb-5">
             <span className="flex items-center gap-1.5 bg-zinc-800/70 px-3 py-1.5 rounded-lg border border-zinc-700/50 text-xs font-medium">
               <FaIdCard className="text-emerald-500 text-[11px]" /> ID: {dbUser.id.slice(-6).toUpperCase()}
             </span>
-            <span className="flex items-center gap-1.5 text-xs text-zinc-400">
-              <FaCalendarAlt className="text-zinc-500" /> Joined {memberSince}
+            <span className="flex items-center gap-1.5 text-xs text-zinc-300">
+              <FaCalendarAlt className="text-zinc-400" /> Joined {memberSince}
             </span>
           </div>
 
@@ -81,8 +81,8 @@ const ProfileHeader = ({ dbUser, isActive, avatarUrl, memberSince, statItems }: 
                 >
                   <span className="text-emerald-400 text-sm">{stat.icon}</span>
                   <div className="text-left">
-                    <p className="text-[10px] text-zinc-500 uppercase tracking-wider font-semibold">{stat.label}</p>
-                    <p className="text-sm text-zinc-200 font-bold">{stat.value}</p>
+                    <p className="text-[10px] text-zinc-300 uppercase tracking-wider font-semibold">{stat.label}</p>
+                    <p className="text-sm text-zinc-100 font-bold">{stat.value}</p>
                   </div>
                 </div>
               ))}
