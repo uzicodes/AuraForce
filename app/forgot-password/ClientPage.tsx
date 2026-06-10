@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useSignIn } from '@clerk/nextjs';
+import { useSignIn } from "@clerk/nextjs/legacy";
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FaEnvelope, FaLock, FaKey } from 'react-icons/fa';
@@ -98,7 +98,6 @@ const ForgotPassword = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-zinc-950 overflow-hidden">
-      
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-zinc-950/90 z-10" />
@@ -110,7 +109,6 @@ const ForgotPassword = () => {
           priority
         />
       </div>
-
       <div className="relative z-20 w-full max-w-sm bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-2xl shadow-2xl overflow-hidden">
         
         <div className="px-8 pt-8 pb-6 text-center">
@@ -126,7 +124,7 @@ const ForgotPassword = () => {
 
         {!successfulCreation ? (
           // FORM 1: SEND EMAIL
-          <form onSubmit={create} className="px-8 pb-8 space-y-4">
+          (<form onSubmit={create} className="px-8 pb-8 space-y-4">
             <div className="space-y-1">
               <label htmlFor="email" className="text-xs font-medium text-zinc-300 ml-1">Email Address</label>
               <div className="relative group">
@@ -152,11 +150,10 @@ const ForgotPassword = () => {
                  Back to Login
                </Link>
             </div>
-          </form>
+          </form>)
         ) : (
           // FORM 2: VERIFY CODE & NEW PASSWORD
-          <form onSubmit={reset} className="px-8 pb-8 space-y-4">
-            
+          (<form onSubmit={reset} className="px-8 pb-8 space-y-4">
             {/* Code Input */}
             <div className="space-y-1">
               <label htmlFor="code" className="text-xs font-medium text-zinc-300 ml-1">Verification Code</label>
@@ -175,7 +172,6 @@ const ForgotPassword = () => {
                 />
               </div>
             </div>
-
             {/* New Password Input */}
             <div className="space-y-1">
               <label htmlFor="password" className="text-xs font-medium text-zinc-300 ml-1">New Password</label>
@@ -194,11 +190,10 @@ const ForgotPassword = () => {
                 />
               </div>
             </div>
-
             <button type="submit" disabled={loading} className="w-full py-2.5 text-sm font-bold text-black bg-emerald-500 rounded-lg hover:bg-emerald-400 transition-all disabled:opacity-50">
               {loading ? "Resetting..." : "Reset Password"}
             </button>
-          </form>
+          </form>)
         )}
       </div>
     </section>

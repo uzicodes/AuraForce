@@ -88,30 +88,27 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider
-      signInUrl="/login"
-      signUpUrl="/register"
-      signInFallbackRedirectUrl="/"
-      signUpFallbackRedirectUrl="/"
-      afterSignOutUrl="/"
+    <html
+      lang="en"
+      className={`${ubuntu.variable} ${satoshi.variable} ${tenada.variable} ${parket.variable}`}
     >
-      <html
-        lang="en"
-        className={`${ubuntu.variable} ${satoshi.variable} ${tenada.variable} ${parket.variable}`}
-      >
-        <head>
-          {/* Preconnect to Clerk frontend API domain for faster connection */}
-          <link rel="preconnect" href="https://api.clerk.dev" />
-          <link rel="dns-prefetch" href="https://api.clerk.dev" />
-          
-          {/* Preconnect to Clerk JS bundles */}
-          <link rel="preconnect" href="https://cdn.clerk.com" />
-          <link rel="dns-prefetch" href="https://cdn.clerk.com" />
-        </head>
-        <body className="bg-zinc-950 text-white selection:bg-emerald-500/30">
+      <head>
+        {/* Preconnect to Clerk frontend API domain for faster connection */}
+        <link rel="preconnect" href="https://api.clerk.dev" />
+        <link rel="dns-prefetch" href="https://api.clerk.dev" />
+        
+        {/* Preconnect to Clerk JS bundles */}
+        <link rel="preconnect" href="https://cdn.clerk.com" />
+        <link rel="dns-prefetch" href="https://cdn.clerk.com" />
+      </head>
+      <body className="bg-zinc-950 text-white selection:bg-emerald-500/30"><ClerkProvider
+          signInUrl="/login"
+          signUpUrl="/register"
+          signInFallbackRedirectUrl="/"
+          signUpFallbackRedirectUrl="/"
+          afterSignOutUrl="/">
           <LayoutInner>{children}</LayoutInner>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider></body>
+    </html>
   );
 }

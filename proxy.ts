@@ -27,6 +27,14 @@ const isProtectedRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // Check if we're trying to access an admin route
+  if (req.nextUrl.pathname.startsWith('/admin') && req.nextUrl.pathname !== '/admin/login') {
+    const isAdmin = req.cookies.get('auraforce_admin')?.value === 'true';
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL('/admin/login', req.url));
+    }
+  }
+
   // Rate limit API routes (exclude admin routes — they're behind admin auth)
   if (req.nextUrl.pathname.startsWith('/api/') && !req.nextUrl.pathname.startsWith('/api/admin/')) {
     const ip = req.headers.get('x-forwarded-for') ?? '127.0.0.1';

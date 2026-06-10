@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Image from "next/image";
-import { useSignIn } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs/legacy";
 import { useState } from "react";
 
 const Login = () => {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signIn, setActive } = useSignIn() as any;
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -46,15 +46,16 @@ const Login = () => {
 
   const handleGoogleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!signIn) return;
     try {
       await signIn.authenticateWithRedirect({
         strategy: "oauth_google",
         redirectUrl: "/sso-callback",
         redirectUrlComplete: "/"
       });
-    } catch (err) {
-      toast.error("Google Login failed");
+    } catch (err: any) {
+      console.error("Google SSO Error:", err);
+      toast.error("Google Login failed: " + (err?.message || JSON.stringify(err) || "Unknown error"));
     }
   };
 

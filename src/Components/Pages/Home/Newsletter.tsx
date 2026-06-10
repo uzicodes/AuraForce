@@ -62,10 +62,8 @@ const Newsletter = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
-
       {/* Background Ambient Glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 blur-[120px] rounded-full pointer-events-none" />
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* The Card Container */}
@@ -84,7 +82,7 @@ const Newsletter = () => {
 
           {status === "success" ? (
             // SUCCESS STATE UI
-            <div className="animate-in fade-in zoom-in duration-300 py-10">
+            (<div className="animate-in fade-in zoom-in duration-300 py-10">
               <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle className="w-10 h-10 text-emerald-500" />
               </div>
@@ -96,22 +94,19 @@ const Newsletter = () => {
               >
                 Subscribe another email
               </button>
-            </div>
+            </div>)
           ) : (
             // FORM STATE UI
-            <>
+            (<>
               <div className="inline-flex items-center justify-center w-16 h-16 bg-zinc-800 rounded-2xl mb-8 shadow-lg shadow-emerald-900/10 border border-zinc-700">
                 <Mail className="w-8 h-8 text-emerald-500" />
               </div>
-
               <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight font-heading">
                 Don't Miss the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Gains !</span>
               </h2>
-
               <p className="text-lg text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed font-satoshi">
                 Join 10,000+ athletes receiving weekly workout tips, nutrition hacks, and exclusive gear discounts. No spam, just power.
               </p>
-
               <form onSubmit={handleSubmit} className="max-w-md mx-auto relative">
                 <div className="relative group/input">
                   <input
@@ -147,7 +142,7 @@ const Newsletter = () => {
                   By subscribing, you agree to our Terms & Privacy Policy.
                 </p>
               </form>
-            </>
+            </>)
           )}
         </div>
       </div>
