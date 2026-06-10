@@ -10,12 +10,12 @@ import { useState } from "react";
 
 const Login = () => {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { signIn } = useSignIn();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!signIn) return;
     setLoading(true);
 
     const form = e.currentTarget;
@@ -23,22 +23,28 @@ const Login = () => {
     const password = (form.elements.namedItem('password') as HTMLInputElement).value;
 
     try {
-      const result = await signIn.create({
+      const { error } = await signIn.create({
         identifier: email,
         password,
       });
 
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
+      if (error) {
+        toast.error(error.message || "Login failed. Check your credentials.");
+        console.error("Login error:", error);
+        return;
+      }
+
+      if (signIn.status === "complete") {
+        await signIn.finalize();
         toast.success("Welcome back, athlete!");
         router.push("/");
       } else {
-        console.log(result);
-        toast.error("Login failed. Check your credentials.");
+        console.log("Status:", signIn.status);
+        toast.error("Further action required.");
       }
     } catch (err: any) {
-      console.error("error", err.errors[0]?.longMessage);
-      toast.error(err.errors[0]?.longMessage || "Invalid credentials");
+      console.error("Unexpected error:", err);
+      toast.error(err?.errors?.[0]?.longMessage || "Invalid credentials");
     } finally {
       setLoading(false);
     }
@@ -48,10 +54,10 @@ const Login = () => {
     e.preventDefault();
     if (!signIn) return;
     try {
-      await signIn.authenticateWithRedirect({
+      await signIn.sso({
         strategy: "oauth_google",
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/"
+        redirectCallbackUrl: "/sso-callback",
+        redirectUrl: "/"
       });
     } catch (err: any) {
       console.error("Google SSO Error:", err);

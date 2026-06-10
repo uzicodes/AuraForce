@@ -9,7 +9,7 @@ import { useSignUp } from "@clerk/nextjs";
 import { useState } from "react";
 
 const Register = () => {
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { signUp } = useSignUp();
   const router = useRouter();
 
   const [verifying, setVerifying] = useState(false);
@@ -18,7 +18,7 @@ const Register = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!signUp) return;
 
     const form = e.currentTarget;
     const fullName = (form.elements.namedItem('name') as HTMLInputElement).value;
@@ -44,7 +44,7 @@ const Register = () => {
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(" ") || "";
 
-      await signUp.create({
+      const { error } = await signUp.create({
         emailAddress: email,
         password,
         firstName: firstName,
@@ -55,7 +55,12 @@ const Register = () => {
         }
       });
 
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      if (error) {
+        toast.error(error.message || "Registration failed");
+        return;
+      }
+
+      await (signUp as any).prepareEmailAddressVerification({ strategy: "email_code" });
 
       setVerifying(true);
       toast.success("Verification code sent to email!");
@@ -69,7 +74,7 @@ const Register = () => {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
+    if (!signUp) return;
 
     const cleanCode = code.trim();
     if (!cleanCode) {
@@ -80,16 +85,16 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
+      const completeSignUp = await (signUp as any).attemptEmailAddressVerification({
         code: cleanCode,
       });
 
       if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
+        await signUp.finalize();
         toast.success("Account Created Successfully!");
         router.push("/");
       } else if (completeSignUp.status === "missing_requirements") {
-        console.log("Missing:", completeSignUp.missingFields);
+        console.log("Missing requirements.");
         toast.error("Further steps required. Check console.");
       } else {
         toast.error("Verification failed. Try again.");
@@ -106,10 +111,10 @@ const Register = () => {
     e.preventDefault();
     if (!signUp) return;
     try {
-      await signUp.authenticateWithRedirect({
+      await signUp.sso({
         strategy: "oauth_google",
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/"
+        redirectCallbackUrl: "/sso-callback",
+        redirectUrl: "/"
       });
     } catch (err) {
       toast.error("Google Sign Up failed");
