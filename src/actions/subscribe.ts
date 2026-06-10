@@ -2,8 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
+import { auth } from "@clerk/nextjs/server";
 
 export async function subscribeToNewsletter(formData: FormData) {
+  const { userId } = await auth();
+  if (!userId) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const email = formData.get("email") as string;
 
   if (!email || !email.includes("@")) {

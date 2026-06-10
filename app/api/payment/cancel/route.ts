@@ -38,8 +38,3 @@ export async function POST(req: NextRequest) {
 
   return htmlRedirect("/?payment=cancelled");
 }
-
-// GET handler only redirects — no database mutations to prevent CSRF/prefetch issues
-export async function GET() {
-  return htmlRedirect("/?payment=cancelled");
-}

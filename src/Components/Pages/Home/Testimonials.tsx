@@ -178,8 +178,8 @@ const Testimonials = () => {
         </motion.div>
       </div>
 
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style>
+        {`
         .custom-pagination .swiper-pagination-bullet {
           width: 10px;
           height: 10px;
@@ -194,7 +194,8 @@ const Testimonials = () => {
           width: 24px;
           border-radius: 999px;
         }
-      `}} />
+      `}
+      </style>
     </section>
   );
 };
