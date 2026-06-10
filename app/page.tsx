@@ -17,3 +17,8 @@ export default async function HomePage() {
 
   return <Home dbPrices={memberships} />;
 }
+
+export const metadata = {
+  title: 'Home',
+  description: 'Home page',
+};

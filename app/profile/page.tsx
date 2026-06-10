@@ -257,3 +257,7 @@ const Profile = async () => {
 };
 
 export default Profile;
+export const metadata = {
+  title: 'Profile',
+  description: 'Profile page',
+};

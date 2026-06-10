@@ -72,3 +72,7 @@ export default async function BookTrainerPage({ params }: { params: Promise<{ id
         </div>
     );
 }
+export const metadata = {
+  title: 'Book-trainer Details',
+  description: 'Book-trainer Details page',
+};

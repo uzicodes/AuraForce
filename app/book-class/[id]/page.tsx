@@ -63,3 +63,8 @@ export default async function BookClassPage({ params }: { params: { id: string }
         </div>
     );
 }
+
+export const metadata = {
+  title: 'Book-class Details',
+  description: 'Book-class Details page',
+};

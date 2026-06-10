@@ -179,3 +179,7 @@ export default async function NutritionPage() {
     </section>
   );
 }
+export const metadata = {
+  title: 'Nutrition',
+  description: 'Nutrition page',
+};

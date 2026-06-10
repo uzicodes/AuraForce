@@ -56,3 +56,8 @@ export default async function ForumsPage() {
 }
 
 
+
+export const metadata = {
+  title: 'Posts',
+  description: 'Posts page',
+};

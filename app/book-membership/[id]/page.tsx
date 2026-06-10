@@ -37,3 +37,8 @@ export default async function BookMembershipPage({ params }: { params: { id: str
         </div>
     );
 }
+
+export const metadata = {
+  title: 'Book-membership Details',
+  description: 'Book-membership Details page',
+};

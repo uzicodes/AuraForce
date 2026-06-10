@@ -115,3 +115,7 @@ export default async function CheckoutPage({
     />
   );
 }
+export const metadata = {
+  title: 'Checkout',
+  description: 'Checkout page',
+};

@@ -54,3 +54,7 @@ export default async function EditProfilePage() {
     </div>
   );
 }
+export const metadata = {
+  title: 'Edit',
+  description: 'Edit page',
+};

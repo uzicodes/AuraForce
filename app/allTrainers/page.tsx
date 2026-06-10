@@ -12,3 +12,7 @@ export default async function AllTrainersPage() {
 
   return <AllTrainers dbTrainers={formattedTrainers} />;
 }
+export const metadata = {
+  title: 'AllTrainers',
+  description: 'AllTrainers page',
+};
