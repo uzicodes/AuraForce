@@ -177,9 +177,10 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
               <div className="space-y-2">
                 <label htmlFor="postCategory" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Category</label>
                 <select id="postCategory" name="category" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none">
-                  {categories.filter(c => c !== "All").map(cat => (
-                    <option key={cat} value={cat}>{cat}</option>
-                  ))}
+                  {categories.reduce((acc: React.ReactNode[], cat) => {
+                    if (cat !== "All") acc.push(<option key={cat} value={cat}>{cat}</option>);
+                    return acc;
+                  }, [])}
                 </select>
               </div>
 

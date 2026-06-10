@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
-import { motion } from "framer-motion";
+import { m as motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { bookClass } from "@/actions/bookClass";
@@ -22,46 +22,45 @@ interface ClassBookingFormProps {
     classData: ClassData;
 }
 
+// Calculate upcoming 1st of the months (next 3 months)
+const getUpcomingMonths = () => {
+    const dates = [];
+    const today = new Date();
+
+    // Start from the next month 
+    let currentMonth = today.getMonth() + 1;
+    let currentYear = today.getFullYear();
+
+    for (let i = 0; i < 3; i++) {
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        const date = new Date(currentYear, currentMonth, 1);
+        dates.push(date);
+        currentMonth++;
+    }
+    return dates;
+};
+
+// Calculate end date (1 month after start)
+const getEndDate = (startDateStr: string) => {
+    if (!startDateStr) return "";
+    const start = new Date(startDateStr);
+
+    const end = new Date(start);
+    end.setMonth(start.getMonth() + 1);
+    // Subtract one day - last day of the month
+    end.setDate(end.getDate() - 1);
+    return format(end, "MMMM d, yyyy");
+};
+
 export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     const router = useRouter();
     const [isPending, setIsPending] = useState(false);
     const [selectedDate, setSelectedDate] = useState<string>("");
 
-    // Calculate upcoming 1st of the months (next 3 months)
-    const getUpcomingMonths = () => {
-        const dates = [];
-        const today = new Date();
-
-        // Start from the next month 
-        let currentMonth = today.getMonth() + 1;
-        let currentYear = today.getFullYear();
-
-        for (let i = 0; i < 3; i++) {
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            const date = new Date(currentYear, currentMonth, 1);
-            dates.push(date);
-            currentMonth++;
-        }
-        return dates;
-    };
-
     const upcomingMonths = getUpcomingMonths();
-
-    // Calculate end date (1 month after start)
-    const getEndDate = (startDateStr: string) => {
-        if (!startDateStr) return "";
-        const start = new Date(startDateStr);
-
-        const end = new Date(start);
-        end.setMonth(start.getMonth() + 1);
-        // Subtract one day - last day of the month
-        end.setDate(end.getDate() - 1);
-        return format(end, "MMMM d, yyyy");
-    };
-
     const endDateFormatted = getEndDate(selectedDate);
 
     const handleBooking = async () => {
@@ -198,22 +197,24 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
                 </div>
 
                 {/* SUBMIT BUTTON */}
-                <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={handleBooking}
-                    disabled={isPending || !selectedDate}
-                    className="w-full bg-white text-black font-bold text-lg py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-none font-satoshi mt-4"
-                >
-                    {isPending ? (
-                        <>
-                            <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                            <span>Processing...</span>
-                        </>
-                    ) : (
-                        "Confirm Booking"
-                    )}
-                </motion.button>
+                <LazyMotion features={domAnimation}>
+                    <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={handleBooking}
+                        disabled={isPending || !selectedDate}
+                        className="w-full bg-white text-black font-bold text-lg py-4 flex items-center justify-center gap-2 hover:bg-zinc-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-none font-satoshi mt-4"
+                    >
+                        {isPending ? (
+                            <>
+                                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                                <span>Processing...</span>
+                            </>
+                        ) : (
+                            "Confirm Booking"
+                        )}
+                    </motion.button>
+                </LazyMotion>
 
             </div>
         </div>

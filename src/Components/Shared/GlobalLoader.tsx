@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
+import { createContext, use, useState, useCallback, useEffect, useMemo } from 'react';
 import styles from './GlobalLoader.module.css';
 
 // --- Loader Context ---
@@ -17,7 +17,7 @@ const LoaderContext = createContext<LoaderContextType>({
   setRouteLoading: () => {},
 });
 
-export const useLoader = () => useContext(LoaderContext);
+export const useLoader = () => use(LoaderContext);
 
 export const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
   const [isInitialLoading, setIsInitialLoading] = useState(true);

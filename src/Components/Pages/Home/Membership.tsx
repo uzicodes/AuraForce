@@ -14,6 +14,36 @@ interface DbPrice {
   price: number;
 }
 
+const rawPackages = [
+  {
+    name: "Basic",
+    price: "৳4999",
+    period: "/month",
+    desc: "Essential access for the casual gym-goer.",
+    features: ["Access to Gym Equipment", "Locker Room Access", "Free WiFi", "1 Intro PT Session"],
+    button: "Get Basic",
+    highlight: false
+  },
+  {
+    name: "Standard",
+    price: "৳9999",
+    period: "/month",
+    desc: "Perfect for dedicated fitness enthusiasts.",
+    features: ["All Basic Features", "Group Fitness Classes", "Sauna & Steam Room", "Nutrition Guide", "Monthly Progress Check"],
+    button: "Join Now",
+    highlight: true
+  },
+  {
+    name: "Premium",
+    price: "৳14999",
+    period: "/month",
+    desc: "The ultimate all-inclusive experience.",
+    features: ["All Standard Features", "Unlimited Personal Training", "Massage Therapy Access", "Priority Support", "Exclusive Merch"],
+    button: "Go Premium",
+    highlight: false
+  }
+];
+
 const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
   const { isSignedIn } = useUser(); // current login status
   const router = useRouter();       // Initialize the router
@@ -37,35 +67,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
     }
   };
 
-  const rawPackages = [
-    {
-      name: "Basic",
-      price: "৳4999",
-      period: "/month",
-      desc: "Essential access for the casual gym-goer.",
-      features: ["Access to Gym Equipment", "Locker Room Access", "Free WiFi", "1 Intro PT Session"],
-      button: "Get Basic",
-      highlight: false
-    },
-    {
-      name: "Standard",
-      price: "৳9999",
-      period: "/month",
-      desc: "Perfect for dedicated fitness enthusiasts.",
-      features: ["All Basic Features", "Group Fitness Classes", "Sauna & Steam Room", "Nutrition Guide", "Monthly Progress Check"],
-      button: "Join Now",
-      highlight: true
-    },
-    {
-      name: "Premium",
-      price: "৳14999",
-      period: "/month",
-      desc: "The ultimate all-inclusive experience.",
-      features: ["All Standard Features", "Unlimited Personal Training", "Massage Therapy Access", "Priority Support", "Exclusive Merch"],
-      button: "Go Premium",
-      highlight: false
-    }
-  ];
+
 
   // Merge DB prices with hardcoded packages
   const packages = rawPackages.map((pkg) => {

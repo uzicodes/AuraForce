@@ -4,6 +4,29 @@ import CheckoutClient from "@/Components/Pages/Checkout/CheckoutClient";
 
 export const dynamic = "force-dynamic";
 
+const staticClassImages: Record<number, string> = {
+  1: "/images/classes/1.jpg",
+  2: "/images/classes/2.jpg",
+  3: "/images/classes/3.jpg",
+  4: "/images/classes/4.jpg",
+  5: "/images/classes/5.jpg",
+  6: "/images/classes/6.jpg",
+  7: "/images/classes/7.jpg",
+  8: "/images/classes/8.jpg",
+  9: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070&auto=format&fit=crop",
+};
+
+const staticImages: Record<number, string> = {
+  1: "/images/trainers/1.jpg",
+  2: "/images/trainers/2.jpg",
+  3: "/images/trainers/3.jpg",
+  4: "/images/trainers/4.jpg",
+  5: "/images/trainers/5.jpg",
+  6: "/images/trainers/6.jpg",
+  7: "/images/trainers/7.jpg",
+  8: "/images/trainers/8.jpg",
+};
+
 export default async function CheckoutPage({
   searchParams,
 }: {
@@ -51,17 +74,6 @@ export default async function CheckoutPage({
       amount = classItem.class_fees || 0;
 
       // Static images for classes (Copied from AllClasses.tsx)
-      const staticClassImages: Record<number, string> = {
-        1: "/images/classes/1.jpg",
-        2: "/images/classes/2.jpg",
-        3: "/images/classes/3.jpg",
-        4: "/images/classes/4.jpg",
-        5: "/images/classes/5.jpg",
-        6: "/images/classes/6.jpg",
-        7: "/images/classes/7.jpg",
-        8: "/images/classes/8.jpg",
-        9: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?q=80&w=2070&auto=format&fit=crop",
-      };
 
       details = {
         trainer: classItem.trainer,
@@ -82,16 +94,6 @@ export default async function CheckoutPage({
       amount = plan === "WEEKLY" ? (trainer.fee_per_week || 0) : (trainer.fee_per_month || 0);
 
       // Static images override (Copied from AllTrainers.tsx)
-      const staticImages: Record<number, string> = {
-        1: "/images/trainers/1.jpg",
-        2: "/images/trainers/2.jpg",
-        3: "/images/trainers/3.jpg",
-        4: "/images/trainers/4.jpg",
-        5: "/images/trainers/5.jpg",
-        6: "/images/trainers/6.jpg",
-        7: "/images/trainers/7.jpg",
-        8: "/images/trainers/8.jpg",
-      };
 
       details = {
         role: trainer.role,

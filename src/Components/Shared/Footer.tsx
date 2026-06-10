@@ -27,6 +27,10 @@ const serviceLinks = [
   { name: "Fitness Assessment", path: "/#features" }
 ];
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [showScrollButton, setShowScrollButton] = useState(false);
@@ -39,10 +43,6 @@ const Footer = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <footer className="bg-zinc-950 text-zinc-300 pt-8 pb-4 relative overflow-hidden border-t border-zinc-900">

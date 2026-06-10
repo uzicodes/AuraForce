@@ -75,7 +75,7 @@ const Newsletter = () => {
               className="absolute inset-0 w-[200%] h-[200%] animate-shine opacity-[0.05]"
               style={{
                 background: 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.8) 50%, transparent 100%)',
-                animationDuration: '2s'
+                animationDuration: '0.8s'
               }}
             />
           </div>

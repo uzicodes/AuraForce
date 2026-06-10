@@ -16,6 +16,21 @@ interface NavbarMobileMenuProps {
   displayImage: string | null | undefined;
 }
 
+const getNavLinkClass = (isActive: boolean, isDark: boolean) => {
+  const base = "flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300";
+  if (isActive) return `${base} text-gray-400 border-gray-400/50`;
+  return isDark
+    ? `${base} text-white border-gray-700 group-hover:text-[#16A34A]`
+    : `${base} text-gray-800 border-gray-200 group-hover:text-[#16A34A]`;
+};
+
+const getProfileLinkClass = (isDark: boolean) => {
+  const base = "flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300 group-hover:text-[#16A34A]";
+  return isDark
+    ? `${base} text-white border-gray-700`
+    : `${base} text-gray-800 border-gray-200`;
+};
+
 const NavbarMobileMenu = ({
   isOpen,
   setIsOpen,
@@ -61,13 +76,7 @@ const NavbarMobileMenu = ({
               >
                 <Link
                   href={link.path}
-                  className={`flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300 ${
-                    isActivePath(link.path)
-                      ? "text-gray-400 border-gray-400/50"
-                      : darkMode
-                      ? "text-white border-gray-700 group-hover:text-[#16A34A]"
-                      : "text-gray-800 border-gray-200 group-hover:text-[#16A34A]"
-                  }`}
+                  className={getNavLinkClass(!!isActivePath(link.path), darkMode)}
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
@@ -78,11 +87,7 @@ const NavbarMobileMenu = ({
               <li className="transform transition-all duration-300 ease-out" style={{ transitionDelay: '400ms', opacity: isOpen ? 1 : 0 }}>
                 <Link
                   href="/profile"
-                  className={`flex items-center gap-3 text-xl font-medium py-2 border-b relative group after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-[#16A34A] after:scale-x-0 after:group-hover:scale-x-100 after:origin-left after:transition-transform after:duration-300 ${
-                    darkMode ? "text-white" : "text-gray-800"
-                  } group-hover:text-[#16A34A] ${
-                    darkMode ? "border-gray-700" : "border-gray-200"
-                  }`}
+                  className={getProfileLinkClass(darkMode)}
                   onClick={() => setIsOpen(false)}
                 >
                   <span className={`w-8 h-8 rounded-full ${
