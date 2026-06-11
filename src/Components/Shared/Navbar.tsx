@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import { FaTimes, FaUser, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
@@ -20,11 +20,25 @@ const navLinks = [
 // Pages that should show active indicator
 const activeIndicatorPaths = ["/allTrainers", "/allClasses", "/posts"];
 
+const subscribeDarkMode = (callback: () => void) => {
+  if (typeof window === 'undefined') return () => {};
+  const query = window.matchMedia("(prefers-color-scheme: dark)");
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+};
+
+const getDarkModeSnapshot = () => {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+
+const getServerDarkModeSnapshot = () => false;
+
 const Navbar = () => {
   const { isSignedIn, user } = useUser();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const darkMode = useSyncExternalStore(subscribeDarkMode, getDarkModeSnapshot, getServerDarkModeSnapshot);
   const [dbImage, setDbImage] = useState<string | null>(null);
 
   // Fetch DB Image on Mount & Navigation ---
@@ -40,14 +54,6 @@ const Navbar = () => {
   // Determine which image to show (DB > Clerk > None)
   const displayImage = dbImage || user?.imageUrl;
   const hasImage = Boolean(displayImage);
-
-  useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    setDarkMode(darkModeMediaQuery.matches);
-    const handleChange = (e: MediaQueryListEvent) => setDarkMode(e.matches);
-    darkModeMediaQuery.addEventListener("change", handleChange);
-    return () => darkModeMediaQuery.removeEventListener("change", handleChange);
-  }, []);
 
   // Removed scroll-based hiding logic. Navbar will always stay visible.
 

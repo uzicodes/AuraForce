@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, use, useState, useCallback, useEffect, useMemo } from 'react';
+import { createContext, use, useState, useCallback, useEffect, useMemo, useSyncExternalStore } from 'react';
 import styles from './GlobalLoader.module.css';
 
 // --- Loader Context ---
@@ -19,29 +19,29 @@ const LoaderContext = createContext<LoaderContextType>({
 
 export const useLoader = () => use(LoaderContext);
 
+const subscribeReadyState = (callback: () => void) => {
+  if (typeof window === 'undefined') return () => {};
+  window.addEventListener('load', callback);
+  const timer = setTimeout(callback, 15000);
+  return () => {
+    window.removeEventListener('load', callback);
+    clearTimeout(timer);
+  };
+};
+
+const getReadyStateSnapshot = () => {
+  if (typeof document === 'undefined') return true;
+  return document.readyState !== 'complete';
+};
+
+const getServerReadySnapshot = () => true;
+
 export const LoaderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const isInitialLoading = useSyncExternalStore(subscribeReadyState, getReadyStateSnapshot, getServerReadySnapshot);
   const [isRouteLoading, setIsRouteLoading] = useState(false);
 
   const setRouteLoading = useCallback((loading: boolean) => {
     setIsRouteLoading(loading);
-  }, []);
-
-  useEffect(() => {
-    if (document.readyState === 'complete') {
-      setIsInitialLoading(false);
-      return;
-    }
-
-    const handleLoad = () => setIsInitialLoading(false);
-    window.addEventListener('load', handleLoad);
-
-    const timer = setTimeout(() => setIsInitialLoading(false), 15000);
-
-    return () => {
-      window.removeEventListener('load', handleLoad);
-      clearTimeout(timer);
-    };
   }, []);
 
   const contextValue = useMemo(() => ({
