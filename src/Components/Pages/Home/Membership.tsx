@@ -159,7 +159,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
               <button type="button"
                 onClick={() => handleSubscribe(pkg.id)}
                 className={`w-full py-3 rounded-none font-bold text-sm transition-all duration-300 flex items-center justify-center cursor-pointer ${pkg.highlight
-                  ? "bg-emerald-500 text-black hover:bg-emerald-400 shadow-lg shadow-emerald-500/20"
+                  ? "bg-emerald-500 text-black hover:bg-red-500 hover:text-white shadow-lg shadow-emerald-500/20 hover:shadow-red-500/20"
                   : pkg.name === "Basic"
                     ? "bg-zinc-800 text-white hover:bg-blue-600 hover:border-blue-600 border border-zinc-700"
                     : pkg.name === "Premium"
