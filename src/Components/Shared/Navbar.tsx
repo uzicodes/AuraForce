@@ -235,12 +235,14 @@ const Navbar = () => {
       <NavbarMobileMenu
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        darkMode={darkMode}
+        theme={darkMode ? "dark" : "light"}
         navLinks={navLinks}
         isActivePath={isActivePath}
-        isSignedIn={isSignedIn}
-        hasImage={hasImage}
-        displayImage={displayImage}
+        userProfile={{
+          isSignedIn: !!isSignedIn,
+          hasImage,
+          displayImage,
+        }}
       />
     </>
   );

@@ -8,12 +8,14 @@ import DynamicSignOutButtonWrapper from "./DynamicSignOutButton";
 interface NavbarMobileMenuProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
-  darkMode: boolean;
+  theme: "dark" | "light";
   navLinks: { name: string; path: string }[];
   isActivePath: (path: string) => boolean | null;
-  isSignedIn: boolean | undefined;
-  hasImage: boolean;
-  displayImage: string | null | undefined;
+  userProfile: {
+    isSignedIn: boolean;
+    hasImage: boolean;
+    displayImage?: string | null;
+  };
 }
 
 const getNavLinkClass = (isActive: boolean, isDark: boolean) => {
@@ -34,13 +36,13 @@ const getProfileLinkClass = (isDark: boolean) => {
 const NavbarMobileMenu = ({
   isOpen,
   setIsOpen,
-  darkMode,
+  theme,
   navLinks,
   isActivePath,
-  isSignedIn,
-  hasImage,
-  displayImage,
+  userProfile,
 }: NavbarMobileMenuProps) => {
+  const darkMode = theme === "dark";
+  const { isSignedIn, hasImage, displayImage } = userProfile;
   return (
     <>
       <div
