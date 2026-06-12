@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import toast from "react-hot-toast";
-import { FaLock, FaShieldAlt, FaCheck, FaUserTie, FaClock, FaCalendarAlt } from "react-icons/fa";
+import { FaLock, FaShieldAlt, FaCheck, FaUserTie, FaClock, FaCalendarAlt, FaArrowLeft } from "react-icons/fa";
 
 interface CheckoutClientProps {
     type: string;
@@ -20,6 +21,7 @@ export default function CheckoutClient({
     itemName,
     details,
 }: CheckoutClientProps) {
+    const router = useRouter();
     const { user } = useUser();
     const [loading, setLoading] = useState(false);
 
@@ -82,6 +84,14 @@ export default function CheckoutClient({
                     ? "bg-zinc-900/40 backdrop-blur-[80px] border border-white/10"
                     : "bg-zinc-900 border border-zinc-800"
                     }`}>
+
+                    <button 
+                        onClick={() => router.back()} 
+                        className="absolute top-4 left-4 w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 transition-colors text-white z-20"
+                        title="Go Back"
+                    >
+                        <FaArrowLeft className="text-xs" />
+                    </button>
 
                     {/* BG image for (Trainer / Class) booking */}
                     {details?.image && (
