@@ -7,6 +7,7 @@ import { m as motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaCalendarAlt, FaCheckCircle, FaDumbbell, FaLayerGroup, FaUser, FaClock, FaCalendarDay, FaMoneyBillWave, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { bookClass } from "@/actions/bookClass";
+import BackButton from "@/Components/BackButton";
 
 interface ClassData {
     id: number;
@@ -106,13 +107,7 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
     return (
         <div className="bg-zinc-900 border border-zinc-800 p-8 shadow-2xl rounded-none max-w-lg w-full">
             <div className="flex items-center gap-3 mb-2">
-                <button 
-                    onClick={() => router.back()} 
-                    className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center hover:bg-zinc-700 transition-colors text-white shrink-0"
-                    title="Go Back"
-                >
-                    <FaArrowLeft className="text-xs" />
-                </button>
+                <BackButton />
                 <h3 className="text-3xl font-bold text-white font-ubuntu">
                     Book Your Class
                 </h3>

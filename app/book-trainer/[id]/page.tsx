@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import TrainerBookingForm from "@/Components/Pages/BookTrainer/TrainerBookingForm";
+import BackButton from "@/Components/BackButton";
 
 // Fetch trainer details based on the ID in the URL
 export default async function BookTrainerPage({ params }: { params: Promise<{ id: string }> }) {
@@ -33,8 +34,11 @@ export default async function BookTrainerPage({ params }: { params: Promise<{ id
 
                     {/* LEFT SIDE: Trainer Info */}
                     <div>
-                        <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
-                            <span>Booking Setup</span>
+                        <div className="flex items-center gap-3 mb-6">
+                            <BackButton />
+                            <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20">
+                                <span>Booking Setup</span>
+                            </div>
                         </div>
 
                         <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 font-heading leading-tight">
