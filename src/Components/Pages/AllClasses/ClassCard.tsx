@@ -66,7 +66,7 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
 
       {/* CONTENT AREA */}
       <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors font-ubuntu">
+        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-500 transition-colors font-ubuntu">
           {singleClass.classname}
         </h3>
 
@@ -86,7 +86,7 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
         </div>
 
         {/* BUTTON */}
-        <Link href={`/book-class/${singleClass._id}`} className="w-full py-2 rounded-none bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-600 transition-colors flex items-center justify-center gap-2 group/btn">
+        <Link href={`/book-class/${singleClass._id}`} className="w-full py-2 rounded-none bg-zinc-800 text-white font-semibold text-sm hover:bg-emerald-500 transition-colors flex items-center justify-center gap-2 group/btn">
           Join Class
           <FaArrowRight className="text-xs transition-transform group-hover/btn:translate-x-1" />
         </Link>

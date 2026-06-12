@@ -157,7 +157,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
             {/* TEXT CONTENT */}
             <div className="p-5 pt-2 flex-grow flex flex-col">
               <div className="mb-4">
-                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-ubuntu">
+                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-amber-500 transition-colors font-ubuntu">
                   {/* Database Name */}
                   {trainer.name}
                 </h3>
@@ -181,7 +181,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
 
                 <button type="button"
                   onClick={() => handleBookClick(trainer.id)}
-                  className="text-xs font-bold text-emerald-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider"
+                  className="text-xs font-bold text-emerald-500 hover:text-amber-500 flex items-center gap-1 hover:gap-2 transition-all uppercase tracking-wider"
                 >
                   Book  <FaArrowRight />
                 </button>
