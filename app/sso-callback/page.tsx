@@ -2,7 +2,7 @@
 import { AuthenticateWithRedirectCallback } from '@clerk/nextjs';
 
 export default function SSOCallback() {
-  return <AuthenticateWithRedirectCallback />;
+  return <AuthenticateWithRedirectCallback signInForceRedirectUrl="/" signUpForceRedirectUrl="/" />;
 }
 export const metadata = {
   title: 'Sso-callback',

@@ -10,12 +10,12 @@ import { useState } from "react";
 
 const Login = () => {
   const router = useRouter();
-  const { isLoaded, signIn } = useSignIn();
+  const { signIn } = useSignIn();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!isLoaded || !signIn) return;
+    if (!signIn) return;
     setLoading(true);
 
     const form = e.currentTarget;
@@ -52,12 +52,12 @@ const Login = () => {
 
   const handleGoogleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!isLoaded || !signIn) return;
+    if (!signIn) return;
     try {
-      await signIn.authenticateWithRedirect({
+      await signIn.sso({
         strategy: "oauth_google",
-        redirectUrl: "/sso-callback",
-        redirectUrlComplete: "/"
+        redirectCallbackUrl: "/sso-callback",
+        redirectUrl: "/"
       });
     } catch (err: any) {
       console.error("Google SSO Error:", err);
