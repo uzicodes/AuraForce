@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AuraForce</string>
+    <string name="title_activity_main">AuraForce</string>
+    <string name="package_name">com.utsho.auraforce</string>
+    <string name="custom_url_scheme">com.utsho.auraforce</string>
+</resources>
