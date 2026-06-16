@@ -9,7 +9,7 @@ import { useSignUp } from "@clerk/nextjs";
 import { useState } from "react";
 
 const Register = () => {
-  const { signUp } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const router = useRouter();
 
   const [verifying, setVerifying] = useState(false);
@@ -18,7 +18,7 @@ const Register = () => {
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!signUp) return;
+    if (!isLoaded || !signUp) return;
 
     const form = e.currentTarget;
     const fullName = (form.elements.namedItem('name') as HTMLInputElement).value;
@@ -74,7 +74,7 @@ const Register = () => {
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!signUp) return;
+    if (!isLoaded || !signUp) return;
 
     const cleanCode = code.trim();
     if (!cleanCode) {
@@ -109,12 +109,12 @@ const Register = () => {
 
   const handleGoogleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!signUp) return;
+    if (!isLoaded || !signUp) return;
     try {
-      await signUp.sso({
+      await signUp.authenticateWithRedirect({
         strategy: "oauth_google",
-        redirectCallbackUrl: "/sso-callback",
-        redirectUrl: "/"
+        redirectUrl: "/sso-callback",
+        redirectUrlComplete: "/"
       });
     } catch (err) {
       toast.error("Google Sign Up failed");
