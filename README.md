@@ -147,8 +147,4 @@ UPSTASH_REDIS_REST_TOKEN=
 
 ```
 
-<div align="center">
-  <a href="[https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)">
-    <img src="[https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave)" alt="RepoStars" />
-  </a>
-</div>
+[![RepoStars](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave)](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)
