@@ -145,6 +145,7 @@ GMAIL_APP_PASSWORD=your-gmail-app-password
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
 
+```
 
 <div align="center">
   <a href="[https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)">
