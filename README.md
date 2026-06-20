@@ -137,8 +137,6 @@ UPLOADTHING_APP_ID=
 
 
 
-[![RepoStars](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave)](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)
-
 # Gmail / Nodemailer (for sending welcome emails)
 GMAIL_USER=your-email@gmail.com
 GMAIL_APP_PASSWORD=your-gmail-app-password
@@ -146,3 +144,10 @@ GMAIL_APP_PASSWORD=your-gmail-app-password
 # Upstash Redis (for rate limiting)
 UPSTASH_REDIS_REST_URL=
 UPSTASH_REDIS_REST_TOKEN=
+
+
+<div align="center">
+  <a href="[https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)">
+    <img src="[https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave)" alt="RepoStars" />
+  </a>
+</div>
