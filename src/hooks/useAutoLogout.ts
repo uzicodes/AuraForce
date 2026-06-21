@@ -5,7 +5,7 @@ import { useClerk, useAuth } from '@clerk/nextjs';
 
 export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => {
   const { signOut } = useClerk();
-  const { isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
 
   // Constants
   const TIMEOUT_MS = timeoutMinutes * 60 * 1000;
@@ -27,8 +27,14 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
   }, [signOut]);
 
   useEffect(() => {
-    // run this if the user is actually signed in
-    if (!isSignedIn) return;
+    if (!isLoaded) return;
+
+    // Clear stale tracking data when logged out
+    if (!isSignedIn) {
+      localStorage.removeItem(STORAGE_KEY_LAST_ACTIVE);
+      localStorage.removeItem(STORAGE_KEY_SESSION_START);
+      return;
+    }
 
     const now = Date.now();
 
@@ -106,5 +112,5 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
         window.removeEventListener(event, onUserActivity);
       });
     };
-  }, [isSignedIn, handleLogout, TIMEOUT_MS, ABSOLUTE_TIMEOUT_MS]);
+  }, [isLoaded, isSignedIn, handleLogout, TIMEOUT_MS, ABSOLUTE_TIMEOUT_MS]);
 };
