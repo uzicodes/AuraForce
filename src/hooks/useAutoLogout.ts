@@ -2,12 +2,10 @@
 
 import { useEffect, useCallback, useRef } from 'react';
 import { useClerk, useAuth } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 
 export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => {
   const { signOut } = useClerk();
   const { isSignedIn } = useAuth();
-  const router = useRouter();
 
   // Constants
   const TIMEOUT_MS = timeoutMinutes * 60 * 1000;
@@ -23,11 +21,10 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
       localStorage.removeItem(STORAGE_KEY_SESSION_START);
 
       await signOut();
-      router.push('/login');
     } catch (error) {
       console.error('Logout error:', error);
     }
-  }, [signOut, router]);
+  }, [signOut]);
 
   useEffect(() => {
     // run this if the user is actually signed in
@@ -35,21 +32,6 @@ export const useAutoLogout = (timeoutMinutes = 30, absoluteExpiryHours = 24) => 
 
     const now = Date.now();
 
-
-
-    // Check Inactivity (Persistence check for tab close/reopen)
-    // REMOVED immediate check to prevent auto-logout on page reload/revisiit.
-    // The session should only expire if the user is IDLE while the page is OPEN.
-    // if (storedLastActive) {
-    //   const lastActiveTime = parseInt(storedLastActive, 10);
-    //   // If time since last active > inactivity limit
-    //   if (now - lastActiveTime >= TIMEOUT_MS) {
-    //     // eslint-disable-next-line no-console
-    //     console.log("Session expired due to inactivity, Please login again.");
-    //     handleLogout();
-    //     return;
-    //   }
-    // }
 
     // Check Absolute Limit (24h)
     let sessionStart = localStorage.getItem(STORAGE_KEY_SESSION_START);
