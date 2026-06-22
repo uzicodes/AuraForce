@@ -151,7 +151,7 @@ export default function AdminDashboard() {
                                 {loading ? (
                                     <tr>
                                         <td colSpan={2} className="px-5 py-8 text-center">
-                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" role="status" aria-label="Loading members" />
                                         </td>
                                     </tr>
                                 ) : recentMembers.length === 0 ? (
@@ -215,7 +215,7 @@ export default function AdminDashboard() {
                                 {loading ? (
                                     <tr>
                                         <td colSpan={2} className="px-5 py-8 text-center">
-                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" role="status" aria-label="Loading payments" />
                                         </td>
                                     </tr>
                                 ) : recentPayments.length === 0 ? (

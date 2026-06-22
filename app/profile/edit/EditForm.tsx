@@ -223,6 +223,7 @@ export default function EditForm({ user }: { user: any }) {
                       id="heightInches"
                       type="number"
                       name="heightInches"
+                      aria-label="Height in inches"
                       defaultValue={user.heightInches || ""}
                       placeholder="Inches"
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 pl-10 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all"

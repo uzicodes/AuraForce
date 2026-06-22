@@ -132,6 +132,7 @@ const Forums = () => {
             </div>
             <input 
               type="text" 
+              aria-label="Search discussions"
               placeholder="Search discussions..." 
               className="w-full pl-11 pr-4 py-3 bg-zinc-950 border border-zinc-800 rounded-2xl focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all text-white placeholder-zinc-600"
               onChange={(e) => setSearchTerm(e.target.value)}

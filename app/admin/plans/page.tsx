@@ -141,7 +141,7 @@ export default function PlansPage() {
                                 {loading ? (
                                     <tr>
                                         <td colSpan={5} className="px-5 py-12 text-center">
-                                            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-6 h-6 border-2 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto" role="status" aria-label="Loading trainers" />
                                         </td>
                                     </tr>
                                 ) : trainers.length === 0 ? (
@@ -203,7 +203,7 @@ export default function PlansPage() {
                                 {loading ? (
                                     <tr>
                                         <td colSpan={6} className="px-5 py-12 text-center">
-                                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                                            <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto" role="status" aria-label="Loading classes" />
                                         </td>
                                     </tr>
                                 ) : gymClasses.length === 0 ? (

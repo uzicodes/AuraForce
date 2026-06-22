@@ -136,6 +136,7 @@ const AllClasses = ({ dbClasses }: { dbClasses: DbClass[] }) => {
           </div>
           <input
             type="text"
+            aria-label="Search by class name"
             className="block w-full pl-10 pr-3 py-3 border border-zinc-800 rounded-xl leading-5 bg-zinc-900/50 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:bg-zinc-900 focus:ring-1 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm transition-all shadow-lg"
             placeholder="Search by class name..."
             ref={inputRef}
