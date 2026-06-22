@@ -160,9 +160,9 @@ const Footer = () => {
         <div className="border-t border-zinc-900 pt-4 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-zinc-400">
           <p>© {currentYear} <span style={{ fontFamily: 'Tenada, sans-serif' }}>AURA FORCE</span>. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-emerald-500 transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-emerald-500 transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-emerald-500 transition-colors">Cookies</a>
+            <button type="button" className="hover:text-emerald-500 transition-colors">Privacy Policy</button>
+            <button type="button" className="hover:text-emerald-500 transition-colors">Terms of Service</button>
+            <button type="button" className="hover:text-emerald-500 transition-colors">Cookies</button>
           </div>
         </div>
       </div>
