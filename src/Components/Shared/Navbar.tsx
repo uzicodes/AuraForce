@@ -193,7 +193,7 @@ const Navbar = () => {
 
             {!isSignedIn && (
               <Link
-                href="/login"
+                href={`/login?redirect_url=${encodeURIComponent(pathname)}`}
                 className="flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium text-white bg-emerald-500/80 rounded-full hover:bg-emerald-400 transition-all duration-300"
               >
                 <FaSignInAlt className="text-xs" />

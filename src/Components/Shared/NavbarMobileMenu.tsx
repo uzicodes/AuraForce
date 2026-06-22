@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { FaTimes, FaUser } from "react-icons/fa";
 import DynamicSignOutButtonWrapper from "./DynamicSignOutButton";
 
@@ -43,6 +44,7 @@ const NavbarMobileMenu = ({
 }: NavbarMobileMenuProps) => {
   const darkMode = theme === "dark";
   const { isSignedIn, hasImage, displayImage } = userProfile;
+  const pathname = usePathname();
   return (
     <>
       <div
@@ -117,7 +119,7 @@ const NavbarMobileMenu = ({
           <div className="mt-auto space-y-3">
             {!isSignedIn && (
               <Link
-                href="/login"
+                href={`/login?redirect_url=${encodeURIComponent(pathname)}`}
                 className="block w-full py-3 px-4 bg-[#16A34A] text-center text-white font-medium rounded-lg hover:bg-[#22c55e] transition-all duration-200 transform hover:scale-105"
                 onClick={() => setIsOpen(false)}
               >

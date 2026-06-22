@@ -46,7 +46,7 @@ const Profile = async () => {
   // Check user
   // Check user
   const user = await checkUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/login?redirect_url=/profile");
 
   // Fetch all user-related data in parallel
   const [clerkUser, dbUser, activeMembership] = await Promise.all([
@@ -63,7 +63,7 @@ const Profile = async () => {
     })
   ]);
 
-  if (!dbUser) redirect("/login");
+  if (!dbUser) redirect("/login?redirect_url=/profile");
 
   // Check if membership is still valid (not expired)
   const isSubscriptionValid = activeMembership && activeMembership.endDate && new Date(activeMembership.endDate) > new Date();

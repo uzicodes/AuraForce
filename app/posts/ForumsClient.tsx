@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
 import Post from "@/Components/Pages/Forums/Posts";
 import { FaSearch, FaPlus, FaComments, FaTimes } from "react-icons/fa";
 import { createPost } from "@/actions/createPost";
@@ -15,6 +16,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
   const [activeCategory, setActiveCategory] = useState("All");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Use only DB posts
   const allPosts = dbPosts;
@@ -76,6 +78,7 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
             onClick={() => {
               if (!isLoggedIn) {
                 toast.error("Please login to Post");
+                router.push('/login?redirect_url=/posts');
                 return;
               }
               setIsModalOpen(true);

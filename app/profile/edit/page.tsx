@@ -11,7 +11,7 @@ export default async function EditProfilePage() {
   const clerkUser = await currentUser();
 
   if (!clerkUser) {
-    redirect("/login");
+    redirect("/login?redirect_url=/profile/edit");
   }
 
   const user = await db.user.findUnique({

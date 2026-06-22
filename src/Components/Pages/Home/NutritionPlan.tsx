@@ -82,7 +82,7 @@ const NutritionPlan = () => {
           color: '#fff',
         },
       });
-      router.push("/login");
+      router.push("/login?redirect_url=/nutrition");
     } else {
       router.push("/nutrition");
     }

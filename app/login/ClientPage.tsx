@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Image from "next/image";
@@ -11,7 +11,9 @@ import { useState } from "react";
 const Login = () => {
   const router = useRouter();
   const { signIn } = useSignIn();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
+  const redirectUrl = searchParams.get('redirect_url') || "/";
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ const Login = () => {
       if (signIn.status === "complete") {
         await signIn.finalize();
         toast.success("Welcome back, athlete!");
-        router.push("/");
+        router.push(redirectUrl);
       } else {
         console.log("Status:", signIn.status);
         toast.error("Further action required.");
@@ -57,7 +59,7 @@ const Login = () => {
       await signIn.sso({
         strategy: "oauth_google",
         redirectCallbackUrl: "/sso-callback",
-        redirectUrl: "/"
+        redirectUrl: redirectUrl
       });
     } catch (err: any) {
       console.error("Google SSO Error:", err);

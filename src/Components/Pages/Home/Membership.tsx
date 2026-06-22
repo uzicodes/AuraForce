@@ -63,7 +63,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
           border: '1px solid #27272a'
         },
       });
-      router.push('/login');
+      router.push(`/login?redirect_url=/book-membership/${planId}`);
     }
   };
 

@@ -50,7 +50,7 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
             toast.error("Please log in to proceed with booking.", {
                 style: { background: '#333', color: '#fff', borderRadius: '0px' }
             });
-            router.push("/login"); // Redirect to login page
+            router.push(`/login?redirect_url=/book-trainer/${trainerId}`); // Redirect to login page
             return;
         }
 

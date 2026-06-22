@@ -18,13 +18,13 @@ const calculateBMI = (weightKg: number, feet: number, inches: number) => {
 
 export default async function NutritionPage() {
   const user = await checkUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/login?redirect_url=/nutrition");
 
   const dbUser = await db.user.findUnique({
     where: { clerkUserId: user.clerkUserId },
   });
 
-  if (!dbUser) redirect("/login");
+  if (!dbUser) redirect("/login?redirect_url=/nutrition");
 
   // CHECK: Does user have required data?
   const hasData = dbUser.weight && dbUser.heightFeet && dbUser.heightInches;
