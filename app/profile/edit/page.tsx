@@ -4,12 +4,12 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import EditForm from "./EditForm";
 // 1. Import the ImageUpload component we created
-import ImageUpload from "@/Components/Shared/ImageUpload"; 
+import ImageUpload from "@/Components/Shared/ImageUpload";
 import { FaCamera } from "react-icons/fa";
 
 export default async function EditProfilePage() {
   const clerkUser = await currentUser();
-  
+
   if (!clerkUser) {
     redirect("/login");
   }
@@ -25,7 +25,7 @@ export default async function EditProfilePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-black to-zinc-900 pt-28 pb-16 px-4">
       <div className="max-w-5xl mx-auto space-y-8">
-        
+
         {/* --- NEW: PROFILE PICTURE UPLOAD SECTION --- */}
         <div className="bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="flex items-center gap-6">
@@ -42,19 +42,19 @@ export default async function EditProfilePage() {
           {/* The Upload Component */}
           {/* We pass the clerkUser.id so the uploader knows which user to update */}
           <div className="flex-shrink-0">
-             <ImageUpload clerkId={clerkUser.id} />
+            <ImageUpload clerkId={clerkUser.id} />
           </div>
         </div>
         {/* ------------------------------------------- */}
 
         {/* Existing Edit Form */}
         <EditForm user={user} />
-        
+
       </div>
     </div>
   );
 }
 export const metadata = {
-  title: 'Edit',
-  description: 'Edit page',
+  title: 'Edit Profile | AuraForce',
+  description: 'Edit Profile | AuraForce',
 };

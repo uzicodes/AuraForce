@@ -19,6 +19,6 @@ export default async function AllClassesPage() {
   return <AllClasses dbClasses={formattedClasses} />;
 }
 export const metadata = {
-  title: 'AllClasses',
-  description: 'AllClasses page',
+  title: 'AllClasses | AuraForce',
+  description: 'All Classes | AuraForce',
 };

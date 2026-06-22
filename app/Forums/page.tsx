@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Forums | AuraForce',
-  description: 'Forums page',
+  description: 'Forums | AuraForce',
 };
 
 export default function Page() {

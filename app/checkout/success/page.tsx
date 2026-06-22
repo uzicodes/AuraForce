@@ -40,6 +40,6 @@ const PaymentSuccess = () => {
 
 export default PaymentSuccess;
 export const metadata = {
-  title: 'Success',
-  description: 'Success page',
+  title: 'Success | AuraForce',
+  description: 'Success | AuraForce',
 };

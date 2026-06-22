@@ -77,6 +77,6 @@ export default async function BookTrainerPage({ params }: { params: Promise<{ id
     );
 }
 export const metadata = {
-  title: 'Book-trainer Details',
-  description: 'Book-trainer Details page',
+    title: 'Book-Trainer | AuraForce',
+    description: 'Book-Trainer | AuraForce',
 };

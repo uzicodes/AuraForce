@@ -159,7 +159,6 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
                         "Confirm Booking"
                     )}
                 </motion.button>
-
             </div>
         </div>
     );

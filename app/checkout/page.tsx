@@ -118,6 +118,6 @@ export default async function CheckoutPage({
   );
 }
 export const metadata = {
-  title: 'Checkout',
-  description: 'Checkout page',
+  title: 'Checkout | AuraForce',
+  description: 'Checkout | AuraForce',
 };

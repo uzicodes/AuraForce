@@ -39,6 +39,6 @@ export default async function BookMembershipPage({ params }: { params: { id: str
 }
 
 export const metadata = {
-  title: 'Book-membership Details',
-  description: 'Book-membership Details page',
+    title: 'Book-Membership | AuraForce',
+    description: 'Book-Membership | AuraForce',
 };

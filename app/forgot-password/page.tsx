@@ -4,8 +4,8 @@ import { auth } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Forgot-password | AuraForce',
-  description: 'Forgot-password page',
+  title: 'Forgot-Password | AuraForce',
+  description: 'Forgot-Password | AuraForce',
 };
 
 export default async function Page() {

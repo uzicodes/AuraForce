@@ -20,5 +20,5 @@ export default async function HomePage() {
 
 export const metadata = {
   title: 'AuraForce | Home',
-  description: 'Home page',
+  description: 'Home | AuraForce',
 };

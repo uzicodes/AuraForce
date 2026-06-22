@@ -20,7 +20,7 @@ export default async function BookClassPage({ params }: { params: { id: string }
     // use BigInt(id) if it's a valid integer string.
     let classData;
     let errorOccurred = false;
-    
+
     try {
         const bigIntId = BigInt(id);
 
@@ -65,6 +65,6 @@ export default async function BookClassPage({ params }: { params: { id: string }
 }
 
 export const metadata = {
-  title: 'Book-class Details',
-  description: 'Book-class Details page',
+    title: 'Book-Class | AuraForce',
+    description: 'Book-Class | AuraForce',
 };
