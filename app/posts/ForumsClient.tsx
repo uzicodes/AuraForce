@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Post from "@/Components/Pages/Forums/Posts";
 import { FaSearch, FaPlus, FaComments, FaTimes } from "react-icons/fa";
 import { createPost } from "@/actions/createPost";
@@ -143,81 +144,109 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
       </div>
 
       {/* CREATE POST MODAL */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-2xl p-8 relative shadow-2xl animate-in fade-in zoom-in duration-200">
+      {isModalOpen && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-md overflow-y-auto">
+          <div className="bg-zinc-900/80 backdrop-blur-xl border border-zinc-700/50 rounded-3xl w-full max-w-xl p-6 sm:p-8 relative shadow-2xl my-auto sm:my-8 animate-in fade-in zoom-in duration-300">
+
+            {/* Decorative Gradient */}
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-500/0 via-emerald-500 to-emerald-500/0 opacity-50 rounded-t-3xl" />
 
             {/* Close Button */}
             <button type="button"
               aria-label="Close modal"
               onClick={() => setIsModalOpen(false)}
-              className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors"
+              className="absolute top-4 right-4 p-2 bg-black/20 rounded-full text-zinc-400 hover:text-white hover:bg-black/40 transition-all backdrop-blur-sm"
             >
-              <FaTimes className="text-xl" />
+              <FaTimes className="text-lg" />
             </button>
 
-            <h2 className="text-2xl font-bold text-white mb-6 font-heading">Create New Post</h2>
+            <div className="mb-6 pr-10">
+                <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-400 mb-1.5 font-heading">
+                  Create New Post
+                </h2>
+                <p className="text-zinc-400 font-satoshi text-xs">
+                  Share your knowledge, ask a question, or start a discussion.
+                </p>
+            </div>
 
-            <form className="space-y-6" action={handleSubmit}>
+            <form className="space-y-4" action={handleSubmit}>
 
               {/* Title */}
-              <div className="space-y-2">
-                <label htmlFor="postTitle" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Title</label>
+              <div className="space-y-1.5 group">
+                <label htmlFor="postTitle" className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-widest flex items-center gap-2">
+                    Title
+                </label>
                 <input
                   id="postTitle"
                   type="text"
                   name="title"
                   placeholder="What's on your mind?"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600"
+                  className="w-full bg-black/40 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder-zinc-600 font-satoshi text-sm shadow-inner"
                   required
                 />
               </div>
 
               {/* Category */}
-              <div className="space-y-2">
-                <label htmlFor="postCategory" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Category</label>
-                <select id="postCategory" name="category" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all appearance-none">
-                  {categories.reduce((acc: React.ReactNode[], cat) => {
-                    if (cat !== "All") acc.push(<option key={cat} value={cat}>{cat}</option>);
-                    return acc;
-                  }, [])}
-                </select>
+              <div className="space-y-1.5 group">
+                <label htmlFor="postCategory" className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-widest flex items-center gap-2">
+                    Category
+                </label>
+                <div className="relative">
+                    <select id="postCategory" name="category" className="w-full bg-black/40 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all appearance-none font-satoshi text-sm shadow-inner cursor-pointer">
+                      {categories.reduce((acc: React.ReactNode[], cat) => {
+                        if (cat !== "All") acc.push(<option key={cat} value={cat} className="bg-zinc-900">{cat}</option>);
+                        return acc;
+                      }, [])}
+                    </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center text-zinc-500">
+                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                    </div>
+                </div>
               </div>
 
               {/* Content */}
-              <div className="space-y-2">
-                <label htmlFor="postContent" className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Content</label>
+              <div className="space-y-1.5 group">
+                <label htmlFor="postContent" className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-widest flex items-center gap-2">
+                    Content
+                </label>
                 <textarea
                   id="postContent"
                   name="content"
-                  rows={6}
+                  rows={4}
                   placeholder="Share your thoughts, questions, or progress..."
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all placeholder-zinc-600 resize-none"
+                  className="w-full bg-black/40 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500/50 focus:ring-2 focus:ring-emerald-500/20 transition-all placeholder-zinc-600 resize-y min-h-[100px] font-satoshi text-sm shadow-inner"
                   required
                 />
               </div>
 
               {/* Actions */}
-              <div className="flex gap-4 pt-2">
+              <div className="flex flex-col-reverse sm:flex-row gap-3 pt-4 mt-2 border-t border-zinc-800/50">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold py-3.5 rounded-xl transition-all"
+                  className="w-full sm:w-1/3 bg-zinc-800/50 hover:bg-zinc-700/50 text-zinc-300 font-bold py-3 text-sm rounded-xl transition-all border border-zinc-700/50 hover:border-zinc-600 backdrop-blur-sm"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-emerald-900/20 disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="w-full sm:w-2/3 bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 text-white font-bold py-3 text-sm rounded-xl transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  {loading ? "Publishing..." : "Publish Post"}
+                  {loading ? (
+                      <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>Publishing...</span>
+                      </>
+                  ) : (
+                      "Publish Post"
+                  )}
                 </button>
               </div>
 
             </form>
           </div>
-        </div>
+        </div>, document.body
       )}
 
     </section>
