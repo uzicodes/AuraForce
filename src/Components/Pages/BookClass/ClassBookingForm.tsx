@@ -123,30 +123,30 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
                     <div className="space-y-4">
                         <div className="flex items-start justify-between">
                             <div>
-                                <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaDumbbell className="text-emerald-500" /> Class
-                                </label>
+                                </div>
                                 <div className="text-yellow-400 text-xl font-bold font-satoshi">{classData.classname || "N/A"}</div>
                             </div>
                             <div className="text-right">
-                                <label className="block text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="block text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     Duration
-                                </label>
+                                </div>
                                 <div className="text-zinc-300 font-mono text-sm">{classData.duration || "1 Month"}</div>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4 pt-4 border-t border-zinc-900">
                             <div>
-                                <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaUser className="text-emerald-500" /> Trainer
-                                </label>
+                                </div>
                                 <div className="text-emerald-400 font-bold font-satoshi">{classData.trainer || "Expert Coach"}</div>
                             </div>
                             <div>
-                                <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaClock className="text-emerald-500" /> Schedule
-                                </label>
+                                </div>
                                 <div className="text-zinc-300 text-xs leading-relaxed font-satoshi">
                                     {classData.class_days || "Flexible"} <br />
                                     <span className="text-zinc-500">{classData.class_time || "Varies"}</span>
@@ -156,9 +156,9 @@ export default function ClassBookingForm({ classData }: ClassBookingFormProps) {
 
                         {/* FEES SECTION */}
                         <div className="pt-4 border-t border-zinc-900 flex justify-between items-center">
-                            <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-0 font-satoshi">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-0 font-satoshi">
                                 <FaMoneyBillWave className="text-emerald-500" /> Total Cost
-                            </label>
+                            </div>
                             <div className="text-yellow-400 font-bold font-satoshi text-lg">
                                 ৳ {classData.class_fees ? classData.class_fees.toLocaleString() : "N/A"} <span className="text-xs text-zinc-600 font-normal">/ Month</span>
                             </div>

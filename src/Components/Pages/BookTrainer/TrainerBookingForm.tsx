@@ -86,9 +86,9 @@ const TrainerBookingForm = ({ trainerId, trainerName, feePerWeek, feePerMonth, t
             <div className="space-y-8">
                 {/* PLAN SELECTION */}
                 <div className="mt-8">
-                    <label className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-4 uppercase tracking-wider font-satoshi">
+                    <div className="flex items-center gap-2 text-zinc-400 text-sm font-bold mb-4 uppercase tracking-wider font-satoshi">
                         <FaLayerGroup className="text-emerald-500" /> Select Subscription Plan
-                    </label>
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                         {/* Weekly Card */}
                         <motion.button

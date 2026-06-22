@@ -19,6 +19,6 @@ export default async function HomePage() {
 }
 
 export const metadata = {
-  title: 'Home',
+  title: 'AuraForce | Home',
   description: 'Home page',
 };

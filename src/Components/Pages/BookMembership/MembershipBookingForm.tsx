@@ -66,23 +66,23 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
                     <div className="space-y-4">
                         <div className="flex items-start justify-between">
                             <div>
-                                <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     <FaCrown className="text-emerald-500" /> Plan Name
-                                </label>
+                                </div>
                                 <div className="text-yellow-400 text-xl font-bold font-satoshi">{plan.name}</div>
                             </div>
                             <div className="text-right">
-                                <label className="block text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
+                                <div className="block text-zinc-500 text-xs font-bold uppercase tracking-wider mb-1 font-satoshi">
                                     Duration
-                                </label>
+                                </div>
                                 <div className="text-zinc-300 font-mono text-sm">1 Month</div>
                             </div>
                         </div>
 
                         <div className="pt-4 border-t border-zinc-900">
-                            <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2 font-satoshi">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2 font-satoshi">
                                 <FaInfoCircle className="text-emerald-500" /> Description
-                            </label>
+                            </div>
                             <p className="text-zinc-300 text-sm leading-relaxed font-satoshi">
                                 {descriptionMap[plan.name] || "Full access membership plan."}
                             </p>
@@ -91,9 +91,9 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
                         {/* FEATURES LIST */}
                         {plan.features && plan.features.length > 0 && (
                             <div className="pt-4 border-t border-zinc-900">
-                                <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2 font-satoshi">
+                                <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-2 font-satoshi">
                                     <FaCheck className="text-emerald-500" /> Key Features
-                                </label>
+                                </div>
                                 <ul className="space-y-1">
                                     {plan.features.map((feature) => (
                                         <li key={feature} className="text-zinc-400 text-xs flex items-start gap-2 font-satoshi">
@@ -106,9 +106,9 @@ export default function MembershipBookingForm({ plan }: { plan: MembershipPlan }
 
                         {/* FEES SECTION */}
                         <div className="pt-4 border-t border-zinc-900 flex justify-between items-center">
-                            <label className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-0 font-satoshi">
+                            <div className="flex items-center gap-2 text-zinc-500 text-xs font-bold uppercase tracking-wider mb-0 font-satoshi">
                                 <FaMoneyBillWave className="text-emerald-500" /> Total Cost
-                            </label>
+                            </div>
                             <div className="text-yellow-400 font-bold font-satoshi text-lg">
                                 ৳ {plan.price ? plan.price.toLocaleString() : "N/A"} <span className="text-xs text-zinc-600 font-normal">/ Month</span>
                             </div>
