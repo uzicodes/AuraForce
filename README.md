@@ -147,4 +147,4 @@ UPSTASH_REDIS_REST_TOKEN=
 
 ```
 
-[![RepoStars](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=synthwave)](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=synthwave)
+[![RepoStars](https://repostars.dev/api/embed?repo=uzicodes%2FAuraForce&theme=forest)](https://repostars.dev/?repos=uzicodes%2FAuraForce&theme=forest)
