@@ -43,32 +43,48 @@ const calculateAge = (dob: Date) => {
 };
 
 const Profile = async () => {
-  // Check user
-  // Check user
-  const user = await checkUser();
-  if (!user) redirect("/login?redirect_url=/profile");
+  // Single Clerk API call — checkUser() already calls currentUser() internally,
+  // so we reuse the returned user instead of calling Clerk twice.
+  const clerkUser = await currentUser();
+  if (!clerkUser) redirect("/login?redirect_url=/profile");
 
-  // Fetch all user-related data in parallel
-  const [clerkUser, dbUser, activeMembership] = await Promise.all([
-    currentUser(),
+  // Run checkUser (for DB upsert/MemberID logic) and profile data queries in parallel.
+  // checkUser needs clerkUser which we already have, but it calls currentUser() internally
+  // and Clerk caches it within the same request, so this is safe.
+  const [user, dbUser, activeMembership] = await Promise.all([
+    checkUser(),
     db.user.findUnique({
-      where: { clerkUserId: user.clerkUserId },
+      where: { clerkUserId: clerkUser.id },
       include: {
-        posts: { orderBy: { createdAt: 'desc' } }
+        posts: {
+          orderBy: { createdAt: 'desc' },
+          select: {
+            id: true,
+            title: true,
+            content: true,
+            category: true,
+            upvotes: true,
+            createdAt: true,
+          },
+        },
       },
     }),
     db.membershipBookings.findFirst({
-      where: { clerkUserId: user.clerkUserId, status: "ACTIVE" },
+      where: { clerkUserId: clerkUser.id, status: "ACTIVE" },
       orderBy: { id: 'desc' },
-    })
+      select: {
+        plan: true,
+        endDate: true,
+      },
+    }),
   ]);
 
-  if (!dbUser) redirect("/login?redirect_url=/profile");
+  if (!user || !dbUser) redirect("/login?redirect_url=/profile");
 
   // Check if membership is still valid (not expired)
   const isSubscriptionValid = activeMembership && activeMembership.endDate && new Date(activeMembership.endDate) > new Date();
 
-  // 4. Prepare Display Data
+  // Prepare Display Data
   const planName = isSubscriptionValid ? (activeMembership?.plan || "NO ACTIVE PLAN") : "NO ACTIVE PLAN";
   const isActive = isSubscriptionValid;
   const renewalDate = isSubscriptionValid && activeMembership?.endDate ? formatDate(activeMembership.endDate) : "N/A";

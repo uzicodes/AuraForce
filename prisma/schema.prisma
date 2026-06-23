@@ -41,6 +41,8 @@ model Post {
   authorId  String
   author    User     @relation(fields: [authorId], references: [id])
   votes     Vote[]
+
+  @@index([authorId, createdAt(sort: Desc)])
 }
 
 model Vote {
@@ -145,6 +147,8 @@ model MembershipBookings {
   startDate   DateTime? @db.Date
   endDate     DateTime? @db.Date
   status      String?   @default("ACTIVE")
+
+  @@index([clerkUserId, status])
 }
 
 enum VoteType {
