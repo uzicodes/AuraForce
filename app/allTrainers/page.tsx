@@ -2,7 +2,9 @@ import { db } from '@/lib/db';
 import AllTrainers from '@/Components/Pages/AllTrainer/AllTrainers';
 
 export default async function AllTrainersPage() {
-  const trainers = await db.trainers.findMany();
+  const trainers = await db.trainers.findMany({
+    select: { id: true, name: true, role: true },
+  });
 
   const formattedTrainers = trainers.map((trainer) => ({
     id: Number(trainer.id),

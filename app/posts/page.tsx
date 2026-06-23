@@ -6,26 +6,32 @@ export const dynamic = "force-dynamic";
 
 export default async function ForumsPage() {
   const user = await currentUser();
-  let userId = "";
 
-  if (user) {
-    const dbUser = await db.user.findUnique({
-      where: { clerkUserId: user.id },
-    });
-    if (dbUser) userId = dbUser.id;
-  }
-
-  // Fetch posts from DB
-  const posts = await db.post.findMany({
-    orderBy: { createdAt: "desc" },
-    include: {
-      author: true,
-      // @ts-ignore
-      votes: {
-        where: { userId: userId || "no-user" }
+  // Run user lookup and posts fetch in parallel instead of sequentially
+  const [dbUser, posts] = await Promise.all([
+    user
+      ? db.user.findUnique({
+          where: { clerkUserId: user.id },
+          select: { id: true },
+        })
+      : null,
+    db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: {
+            name: true,
+            location: true,
+            image: true,
+            role: true,
+          },
+        },
+        votes: user
+          ? { where: { user: { clerkUserId: user.id } } }
+          : { where: { userId: "no-user" }, take: 0 },
       },
-    },
-  });
+    }),
+  ]);
 
   // Map DB posts to the format expected by the UI
   const dbPosts = posts.map((post: any) => {

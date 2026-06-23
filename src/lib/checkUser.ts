@@ -73,8 +73,9 @@ export const checkUser = async () => {
       : 'https://auraforce.vercel.app';
 
 
-    // awaiting ensures it sends before the page loads.
-    await transporter.sendMail({
+    // Fire-and-forget: don't block the page load waiting for the email to send.
+    // The user gets logged in immediately; the email sends in the background.
+    transporter.sendMail({
       from: `"AuraForce Team" <${process.env.GMAIL_USER}>`,
       to: email,
       subject: "Welcome to the Inner Circle ⚡",
@@ -145,12 +146,15 @@ export const checkUser = async () => {
           </div>
         </div>
       `,
+    }).then(() => {
+      console.log("New user welcome email sent.");
+    }).catch((error: unknown) => {
+      // Silently fail - User still gets logged in, no toast, no crash.
+      console.error("Welcome email failed silently:", error);
     });
-    // Optional: Log to server console only (invisible to user)
-    console.log("New user welcome email sent.");
   } catch (error) {
-    // Silently fail - User still gets logged in, no toast, no crash.
-    console.error("Welcome email failed silently:", error);
+    // Silently fail if transporter creation itself fails
+    console.error("Welcome email setup failed silently:", error);
   }
 
   return newUser;

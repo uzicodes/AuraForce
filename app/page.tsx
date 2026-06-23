@@ -2,8 +2,9 @@
 import Home from '@/Components/Pages/Home/Home';
 import { db } from '@/lib/db';
 
-// Force dynamic rendering to ensure fresh data
-export const dynamic = 'force-dynamic';
+// Revalidate every 60 seconds — memberships data rarely changes,
+// so there's no need to hit the DB on every single request.
+export const revalidate = 60;
 
 export default async function HomePage() {
   // Fetch specific fields: name and price

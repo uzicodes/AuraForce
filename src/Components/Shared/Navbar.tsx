@@ -7,7 +7,6 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import Image from "next/image";
 import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import { getNavProfileImage } from "@/actions/getNavData";
 import DynamicSignOutButtonWrapper from "./DynamicSignOutButton";
 import NavbarMobileMenu from "./NavbarMobileMenu";
 
@@ -39,20 +38,10 @@ const Navbar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const darkMode = useSyncExternalStore(subscribeDarkMode, getDarkModeSnapshot, getServerDarkModeSnapshot);
-  const [dbImage, setDbImage] = useState<string | null>(null);
 
-  // Fetch DB Image on Mount & Navigation ---
-  useEffect(() => {
-    if (isSignedIn) {
-      getNavProfileImage().then((img) => {
-        if (img) setDbImage(img);
-      });
-    }
-  }, [isSignedIn, pathname]); // Re-fetch when user logs in OR changes pages
-  // ------------------------------------------------
-
-  // Determine which image to show (DB > Clerk > None)
-  const displayImage = dbImage || user?.imageUrl;
+  // Use Clerk's imageUrl directly — it's already available client-side via useUser()
+  // with zero network cost. No need for a server action round-trip on every navigation.
+  const displayImage = user?.imageUrl;
   const hasImage = Boolean(displayImage);
 
   // Removed scroll-based hiding logic. Navbar will always stay visible.

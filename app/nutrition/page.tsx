@@ -1,10 +1,9 @@
-import React from "react";
+import React from "react";
 import Link from "next/link";
-// 1. Add Image import
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs/server";
 import { db } from "@/lib/db";
-import { checkUser } from "@/lib/checkUser";
 import { nutritionPlans } from "@/lib/nutritionData";
 import { FaExclamationTriangle, FaUserEdit, FaUtensils, FaDumbbell, FaLeaf } from "react-icons/fa";
 
@@ -17,11 +16,12 @@ const calculateBMI = (weightKg: number, feet: number, inches: number) => {
 };
 
 export default async function NutritionPage() {
-  const user = await checkUser();
-  if (!user) redirect("/login?redirect_url=/nutrition");
+  const clerkUser = await currentUser();
+  if (!clerkUser) redirect("/login?redirect_url=/nutrition");
 
   const dbUser = await db.user.findUnique({
-    where: { clerkUserId: user.clerkUserId },
+    where: { clerkUserId: clerkUser.id },
+    select: { weight: true, heightFeet: true, heightInches: true },
   });
 
   if (!dbUser) redirect("/login?redirect_url=/nutrition");
