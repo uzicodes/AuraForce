@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Prevent navbar shift when navigating between pages with different
+   content heights. Reserves scrollbar space so viewport width is constant. */
+html {
+    scrollbar-gutter: stable;
+}
+
 /* Fonts are loaded via next/font in app/layout.tsx and exposed as CSS variables.
    Use the variables below so local .woff2 fonts are used and no .ttf/.otf requests occur. */
 
