@@ -1,4 +1,3 @@
-import { Ubuntu } from 'next/font/google';
 import localFont from 'next/font/local';
 import { ClerkProvider } from '@clerk/nextjs';
 import '../src/index.css';
@@ -6,37 +5,6 @@ import '../src/App.css';
 import '../src/button.css';
 import LayoutInner from './LayoutInner';
 import SmoothScrolling from '../src/Components/SmoothScrolling';
-
-// Import Ubuntu from Google Fonts with optimization
-const ubuntu = Ubuntu({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  display: 'swap',
-  variable: '--font-ubuntu',
-});
-
-// Import Satoshi local font (.woff2)
-const satoshi = localFont({
-  src: [
-    {
-      path: '../public/fonts/Satoshi-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Satoshi-Medium.woff2',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/Satoshi-Bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
-  display: 'swap',
-  variable: '--font-satoshi',
-});
 
 // Import Tenada local font (.woff2)
 const tenada = localFont({
@@ -51,17 +19,30 @@ const tenada = localFont({
   variable: '--font-tenada',
 });
 
-// Import Parket local font (.woff2)
-const parket = localFont({
+// Import BebasNeue local font (.woff2)
+const bebas = localFont({
   src: [
     {
-      path: '../public/fonts/Parket.woff2',
+      path: '../public/fonts/BebasNeue.woff2',
       weight: '400',
       style: 'normal',
     },
   ],
   display: 'swap',
-  variable: '--font-parket',
+  variable: '--font-bebas',
+});
+
+// Import SpaceGrotesk local font (.woff2)
+const spaceGrotesk = localFont({
+  src: [
+    {
+      path: '../public/fonts/SpaceGrotesk.woff2',
+      weight: '400 700',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-space-grotesk',
 });
 
 export const metadata = {
@@ -91,7 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${ubuntu.variable} ${satoshi.variable} ${tenada.variable} ${parket.variable}`}
+      className={`${tenada.variable} ${bebas.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Preconnect to Clerk frontend API domain for faster connection */}
@@ -102,7 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://cdn.clerk.com" />
         <link rel="dns-prefetch" href="https://cdn.clerk.com" />
       </head>
-      <body className="bg-zinc-950 text-white selection:bg-emerald-500/30"><ClerkProvider
+      <body className="bg-zinc-950 text-white selection:bg-emerald-500/30 font-space-grotesk"><ClerkProvider
           signInUrl="/login"
           signUpUrl="/register"
           signInFallbackRedirectUrl="/"

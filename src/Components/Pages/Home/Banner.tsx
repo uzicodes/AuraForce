@@ -56,7 +56,7 @@ const Banner = () => {
         <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-0">
 
           {/* Main heading */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 mt-8 leading-tight tracking-tight font-heading">
+          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-6 mt-4 sm:mt-6 leading-tight tracking-tight font-heading">
             Your Only Limit is{" "}
             <span className="transparent-text bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">You</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">!</span>
@@ -64,7 +64,7 @@ const Banner = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-zinc-300 mb-10 max-w-2xl mx-auto leading-relaxed font-satoshi">
+          <p className="text-lg sm:text-xl text-zinc-300 mb-8 max-w-2xl mx-auto leading-relaxed font-satoshi">
             Track. Train. Triumph! Elevate your daily performance with the ultimate fitness companion designed to keep you focused, fueled & moving forward.
           </p>
 
@@ -90,7 +90,7 @@ const Banner = () => {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 mt-12 pt-8 border-t border-zinc-800/60">
+          <div className="grid grid-cols-3 gap-8 mt-6 pt-6 border-t border-zinc-800/60">
             <div className="text-center">
               <div className="text-3xl sm:text-4xl font-bold text-white mb-1">
                 <Counter value={5} suffix="K+" />

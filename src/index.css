@@ -8,22 +8,22 @@ html {
     scrollbar-gutter: stable;
 }
 
-/* Fonts are loaded via next/font in app/layout.tsx and exposed as CSS variables.
-   Use the variables below so local .woff2 fonts are used and no .ttf/.otf requests occur. */
-
-/* Satoshi font utility class for body text */
-.font-satoshi {
-    font-family: var(--font-satoshi), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+/* Default body font is Space Grotesk */
+body {
+    font-family: var(--font-space-grotesk), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Parket (headings) */
-.font-heading {
-    font-family: var(--font-parket), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    letter-spacing: 0.05em;
-}
-
+/* Space Grotesk font utility class for body and non-heading text */
+.font-space-grotesk,
+.font-satoshi,
 .font-ubuntu {
-    font-family: var(--font-ubuntu), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-family: var(--font-space-grotesk), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Bebas (headings) */
+.font-heading {
+    font-family: var(--font-bebas), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.05em;
 }
 
 /* Breathing/Pulsing animation like a heartbeat */

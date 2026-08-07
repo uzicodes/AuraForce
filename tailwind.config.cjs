@@ -7,10 +7,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        ubuntu: 'var(--font-ubuntu)',
-        satoshi: 'var(--font-satoshi)',
+        spaceGrotesk: 'var(--font-space-grotesk)',
+        satoshi: 'var(--font-space-grotesk)',
+        ubuntu: 'var(--font-space-grotesk)',
         tenada: 'var(--font-tenada)',
-        parket: 'var(--font-parket)',
+        bebas: 'var(--font-bebas)',
       },
     },
   },
