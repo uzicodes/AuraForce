@@ -22,6 +22,7 @@
     "@upstash/redis": "^1.36.2",
     "date-fns": "^3.6.0",
     "framer-motion": "^12.23.26",
+    "lenis": "^1.3.26",
     "lucide-react": "^0.511.0",
     "next": "16.2.6",
     "nodemailer": "^7.0.11",

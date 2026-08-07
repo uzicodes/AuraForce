@@ -5,6 +5,7 @@ import '../src/index.css';
 import '../src/App.css';
 import '../src/button.css';
 import LayoutInner from './LayoutInner';
+import SmoothScrolling from '../src/Components/SmoothScrolling';
 
 // Import Ubuntu from Google Fonts with optimization
 const ubuntu = Ubuntu({
@@ -107,7 +108,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           signInFallbackRedirectUrl="/"
           signUpFallbackRedirectUrl="/"
           afterSignOutUrl="/">
-          <LayoutInner>{children}</LayoutInner>
+          <SmoothScrolling>
+            <LayoutInner>{children}</LayoutInner>
+          </SmoothScrolling>
         </ClerkProvider></body>
     </html>
   );
