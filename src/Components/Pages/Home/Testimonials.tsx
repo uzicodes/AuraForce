@@ -79,7 +79,7 @@ const Testimonials = () => {
           className="text-center mb-16 max-w-3xl mx-auto"
         >
           <motion.div variants={scaleRevealVariant} className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
-            <span>Success Stories</span>
+            <span>SUCCESS STORIES</span>
           </motion.div>
 
           <motion.h2 variants={scaleRevealVariant} className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-heading">
@@ -151,7 +151,7 @@ const Testimonials = () => {
                       />
                     </div>
                     <div>
-                      <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors font-heading">
+                      <h4 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors font-heading uppercase">
                         {testimonial.name}
                       </h4>
                       <p className="text-xs text-zinc-300 font-mono uppercase tracking-wide">

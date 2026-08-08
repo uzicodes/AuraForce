@@ -92,7 +92,7 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
           <Reveal>
             <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
               <FaTags />
-              <span>Membership Plans</span>
+              <span>MEMBERSHIP PLANS</span>
             </div>
           </Reveal>
 
@@ -127,12 +127,12 @@ const Membership = ({ dbPrices }: { dbPrices: DbPrice[] }) => {
             >
               {pkg.highlight && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-black text-xs font-bold px-4 py-1 rounded-full uppercase tracking-wider flex items-center gap-1">
-                  <FaCrown className="text-xs" /> Most Popular
+                  <FaCrown className="text-xs" /> MOST POPULAR
                 </div>
               )}
 
               <div className="mb-6">
-                <h3 className={`text-xl font-bold mb-2 font-ubuntu ${pkg.name === "Basic" ? "text-blue-400" :
+                <h3 className={`text-xl font-bold mb-2 font-ubuntu uppercase ${pkg.name === "Basic" ? "text-blue-400" :
                   pkg.name === "Standard" ? "text-red-400" :
                     pkg.name === "Premium" ? "text-amber-400" : "text-white"
                   }`}>{pkg.name}</h3>

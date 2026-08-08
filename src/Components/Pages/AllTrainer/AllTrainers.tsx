@@ -103,7 +103,7 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
       <div className="relative max-w-4xl mx-auto mb-20 text-center z-10">
         <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
           <FaDumbbell />
-          <span>The Coaching Staff</span>
+          <span>THE COACHING STAFF</span>
         </div>
 
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-heading">

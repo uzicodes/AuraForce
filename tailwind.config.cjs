@@ -12,6 +12,8 @@ module.exports = {
         ubuntu: 'var(--font-space-grotesk)',
         tenada: 'var(--font-tenada)',
         bebas: 'var(--font-bebas)',
+        slunkyn: 'var(--font-slunkyn)',
+        heading: 'var(--font-slunkyn)',
       },
     },
   },

@@ -109,7 +109,7 @@ const GearArsenal = () => {
                     <Reveal>
                         <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
                             <FaDumbbell className="text-xs" />
-                            <span>Elite Equipment</span>
+                            <span>ELITE EQUIPMENT</span>
                         </div>
                     </Reveal>
 
@@ -162,7 +162,7 @@ const GearArsenal = () => {
 
                             {/* Product Info */}
                             <div className="px-3 py-2.5">
-                                <h3 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors duration-300 font-ubuntu truncate">
+                                <h3 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors duration-300 font-ubuntu truncate uppercase">
                                     {item.name}
                                 </h3>
                                 <div className="mt-2 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-emerald-500 to-emerald-400/50 transition-all duration-500 rounded-full" />

@@ -117,7 +117,7 @@ const AllClasses = ({ dbClasses }: { dbClasses: DbClass[] }) => {
       <div className="text-center mb-12 relative z-10">
         <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
           <FaFire />
-          <span>Sweat & Glory</span>
+          <span>SWEAT & GLORY</span>
         </div>
 
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">

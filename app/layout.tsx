@@ -19,6 +19,19 @@ const tenada = localFont({
   variable: '--font-tenada',
 });
 
+// Import Slunkyn local font (.woff2) for Headings
+const slunkyn = localFont({
+  src: [
+    {
+      path: '../public/fonts/slunkyn.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-slunkyn',
+});
+
 // Import BebasNeue local font (.woff2)
 const bebas = localFont({
   src: [
@@ -72,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${tenada.variable} ${bebas.variable} ${spaceGrotesk.variable}`}
+      className={`${tenada.variable} ${bebas.variable} ${slunkyn.variable} ${spaceGrotesk.variable}`}
     >
       <head>
         {/* Preconnect to Clerk frontend API domain for faster connection */}

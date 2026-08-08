@@ -105,7 +105,7 @@ const NutritionPlan = () => {
             transition={{ duration: 0.6 }}
             className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default"
           >
-            <span>The Ideal Diet</span>
+            <span>THE IDEAL DIET</span>
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -181,7 +181,7 @@ const NutritionPlan = () => {
                   {item.icon}
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-heading">
+                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors font-heading uppercase">
                     {item.title}
                   </h3>
                   <p className="text-zinc-400 text-xs leading-relaxed font-satoshi">

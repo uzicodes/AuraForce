@@ -45,7 +45,7 @@ const AboutUs = () => {
 
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
-            <span>Our Story</span>
+            <span>OUR STORY</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight flex items-center justify-center flex-wrap font-heading">
@@ -57,7 +57,7 @@ const AboutUs = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
           <div className="order-2 lg:order-1 space-y-8">
-            <h3 className="text-3xl font-bold text-white leading-tight font-ubuntu">
+            <h3 className="text-3xl font-bold text-white leading-tight font-ubuntu uppercase">
               Empowering Your Fitness Journey <br />
               <span className="text-emerald-500">Since Day One.</span>
             </h3>
@@ -133,7 +133,7 @@ const AboutUs = () => {
               <div className="absolute bottom-6 left-6 right-6 z-30 bg-zinc-900/80 backdrop-blur-md p-6 rounded-xl border border-zinc-700 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-white font-bold text-lg">Ready to start?</h4>
+                    <h4 className="text-white font-bold text-lg uppercase">Ready to start?</h4>
                     <p className="text-zinc-400 text-sm font-satoshi">Join the strongest community today.</p>
                   </div>
                   <Link href="/allClasses">

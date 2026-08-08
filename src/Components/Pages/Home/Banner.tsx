@@ -56,15 +56,15 @@ const Banner = () => {
         <div className="max-w-4xl mx-auto text-center pt-16 sm:pt-0">
 
           {/* Main heading */}
-          <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold text-white mb-6 mt-4 sm:mt-6 leading-tight tracking-tight font-heading">
-            Your Only Limit is{" "}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-6 -mt-6 sm:-mt-10 md:-mt-14 leading-tight tracking-tight font-heading">
+            YOUR ONLY LIMIT IS{" "}
             <span className="transparent-text bg-gradient-to-r from-emerald-400 to-emerald-600 bg-clip-text text-transparent">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">You</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">!</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">YOU</span> <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">!</span>
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg sm:text-xl text-zinc-300 mb-8 max-w-2xl mx-auto leading-relaxed font-satoshi">
+          <p className="text-lg sm:text-xl text-zinc-300 mt-12 sm:mt-16 md:mt-20 mb-8 max-w-2xl mx-auto leading-relaxed font-satoshi">
             Track. Train. Triumph! Elevate your daily performance with the ultimate fitness companion designed to keep you focused, fueled & moving forward.
           </p>
 

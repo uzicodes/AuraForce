@@ -76,7 +76,7 @@ const Features = () => {
           <Reveal>
             <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-800 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest text-emerald-500 mb-6 hover:bg-zinc-800 transition-colors cursor-default">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Premium Facilities</span>
+              <span>PREMIUM FACILITIES</span>
             </div>
           </Reveal>
 
@@ -161,7 +161,7 @@ const Features = () => {
 
                   {/* Text Content */}
                   <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors font-ubuntu">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors font-ubuntu uppercase">
                       {feature.title}
                     </h3>
                     <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">

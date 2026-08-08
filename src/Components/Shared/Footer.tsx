@@ -94,7 +94,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-bold text-base mb-2 font-heading">Quick Links</h3>
+            <h3 className="text-white font-bold text-base mb-2 font-heading uppercase">Quick Links</h3>
             <ul className="space-y-1">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -112,7 +112,7 @@ const Footer = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-bold text-base mb-2 font-heading">Services</h3>
+            <h3 className="text-white font-bold text-base mb-2 font-heading uppercase">Services</h3>
             <ul className="space-y-1">
               {serviceLinks.map((item) => (
                 <li key={item.name}>
@@ -127,7 +127,7 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-white font-bold text-base mb-2 font-heading">Stay Updated</h3>
+            <h3 className="text-white font-bold text-base mb-2 font-heading uppercase">Stay Updated</h3>
             <p className="text-zinc-400 text-xs mb-2 font-satoshi">
               Get the latest workout tips and exclusive offers sent to your inbox.
             </p>
