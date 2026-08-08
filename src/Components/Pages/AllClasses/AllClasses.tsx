@@ -120,8 +120,8 @@ const AllClasses = ({ dbClasses }: { dbClasses: DbClass[] }) => {
           <span>SWEAT & GLORY</span>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading">
-          Our Popular <span className="text-green-600">Classes</span>
+        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-heading uppercase">
+          OUR POPULAR <span className="text-green-600">CLASSES</span>
         </h1>
         <p className="text-zinc-400 max-w-2xl mx-auto font-satoshi">
           From high-intensity interval training to restorative yoga, we have a program designed to push your limits. Choose your class and ignite your potential !

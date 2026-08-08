@@ -85,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${tenada.variable} ${bebas.variable} ${slunkyn.variable} ${spaceGrotesk.variable}`}
     >
       <head>
@@ -96,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://cdn.clerk.com" />
         <link rel="dns-prefetch" href="https://cdn.clerk.com" />
       </head>
-      <body className="bg-zinc-950 text-white selection:bg-emerald-500/30 font-space-grotesk"><ClerkProvider
+      <body suppressHydrationWarning className="bg-zinc-950 text-white selection:bg-emerald-500/30 font-space-grotesk"><ClerkProvider
           signInUrl="/login"
           signUpUrl="/register"
           signInFallbackRedirectUrl="/"

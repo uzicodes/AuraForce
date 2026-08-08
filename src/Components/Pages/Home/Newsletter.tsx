@@ -101,8 +101,8 @@ const Newsletter = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-zinc-800 rounded-2xl mb-8 shadow-lg shadow-emerald-900/10 border border-zinc-700">
                 <Mail className="w-8 h-8 text-emerald-500" />
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight font-heading">
-                Don't Miss the <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Gains !</span>
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight font-heading uppercase">
+                DON'T MISS THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">GAINS !</span>
               </h2>
               <p className="text-lg text-zinc-400 max-w-lg mx-auto mb-10 leading-relaxed font-satoshi">
                 Join 10,000+ athletes receiving weekly workout tips, nutrition hacks, and exclusive gear discounts. No spam, just power.

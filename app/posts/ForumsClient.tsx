@@ -64,10 +64,10 @@ export default function ForumsClient({ dbPosts, isLoggedIn }: { dbPosts: any[], 
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-500 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-emerald-500/20 mb-6">
-              <FaComments /> Community
+              <FaComments /> COMMUNITY
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4 font-heading">
-              Join the <span className="text-emerald-500">Conversation.</span>
+            <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-4 font-heading uppercase">
+              JOIN THE <span className="text-emerald-500">CONVERSATION.</span>
             </h1>
             <p className="text-zinc-400 text-lg leading-relaxed font-satoshi">
               Ask questions, share your progress, and learn from over 10,000+ active members and certified trainers.

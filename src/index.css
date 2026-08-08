@@ -25,6 +25,7 @@ body {
 .font-slunkyn {
     font-family: var(--font-slunkyn), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
 }
 
 .font-bebas {

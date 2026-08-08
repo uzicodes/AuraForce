@@ -112,10 +112,10 @@ const NutritionPlan = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 font-heading"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 font-heading uppercase"
           >
 
-            Fuel Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">Aura</span>
+            FUEL YOUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">AURA</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

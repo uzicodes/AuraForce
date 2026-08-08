@@ -106,8 +106,8 @@ const AllTrainers = ({ dbTrainers }: { dbTrainers: DbTrainer[] }) => {
           <span>THE COACHING STAFF</span>
         </div>
 
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-heading">
-          Partners in Your <span className="text-green-600">Progress.</span>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight font-heading uppercase">
+          PARTNERS IN YOUR <span className="text-green-600">PROGRESS.</span>
         </h2>
 
         <p className="max-w-xl mx-auto text-zinc-400 text-lg leading-relaxed font-satoshi">

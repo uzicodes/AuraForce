@@ -114,10 +114,10 @@ const GearArsenal = () => {
                     </Reveal>
 
                     <Reveal delay={0.1}>
-                        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-heading">
-                            Our {" "}
+                        <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-heading uppercase">
+                            OUR {" "}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-red-400">
-                                Gears
+                                GEARS
                             </span>
                         </h2>
                     </Reveal>
@@ -161,12 +161,13 @@ const GearArsenal = () => {
                             </div>
 
                             {/* Product Info */}
-                            <div className="px-3 py-2.5">
-                                <h3 className="text-xs font-bold text-white group-hover:text-amber-400 transition-colors duration-300 font-ubuntu truncate uppercase">
+                            <div className="px-3 py-3 text-center flex flex-col items-center justify-center">
+                                <h3 className="text-sm sm:text-base font-bold text-white group-hover:text-amber-400 transition-colors duration-300 font-ubuntu truncate uppercase w-full text-center tracking-wide">
                                     {item.name}
                                 </h3>
-                                <div className="mt-2 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-emerald-500 to-emerald-400/50 transition-all duration-500 rounded-full" />
-                            </div>                        </motion.div>
+                                <div className="mt-2 h-[2px] w-0 group-hover:w-16 bg-gradient-to-r from-emerald-500 to-emerald-400/50 transition-all duration-500 rounded-full" />
+                            </div>
+                        </motion.div>
                     ))}
                 </motion.div>
 
