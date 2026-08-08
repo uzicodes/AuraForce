@@ -66,7 +66,7 @@ const ClassCard = ({ singleClass, index = 0 }: ClassCardProps) => {
 
       {/* CONTENT AREA */}
       <div className="p-5 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-500 transition-colors font-ubuntu">
+        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-500 transition-colors font-heading uppercase">
           {singleClass.classname}
         </h3>
 

@@ -161,10 +161,10 @@ const Features = () => {
 
                   {/* Text Content */}
                   <div className="transform transition-transform duration-300 group-hover:-translate-y-2">
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-amber-400 transition-colors font-ubuntu uppercase">
+                    <h3 className="text-2xl sm:text-3xl font-black text-white mb-3 group-hover:text-amber-400 transition-colors font-heading uppercase tracking-wide">
                       {feature.title}
                     </h3>
-                    <p className="text-zinc-400 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">
+                    <p className="text-zinc-200 font-semibold text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-24 transition-all duration-500 ease-in-out font-satoshi">
                       {feature.description}
                     </p>
                   </div>
