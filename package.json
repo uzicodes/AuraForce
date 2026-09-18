@@ -12,7 +12,6 @@
     "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
-    "@capacitor/android": "^8.5.2",
     "@capacitor/cli": "^8.5.2",
     "@capacitor/core": "^8.5.2",
     "@clerk/nextjs": "^7.9.4",
@@ -35,7 +34,6 @@
     "uploadthing": "^7.7.4"
   },
   "devDependencies": {
-    "@capacitor/assets": "^3.0.5",
     "@prisma/client": "^6.19.3",
     "@types/nodemailer": "^7.0.12",
     "@types/react": "^18.3.31",
